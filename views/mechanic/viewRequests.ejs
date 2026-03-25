@@ -2,631 +2,275 @@
 <html lang="en">
 <head>
 	<meta charset="UTF-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<meta name="theme-color" content="#3f51b5">
-	<link href="https://fonts.googleapis.com/css?family=Dosis:200,300,400,500,700" rel="stylesheet">
-	<link href="https://fonts.googleapis.com/css?family=Overpass:300,400,400i,600,700" rel="stylesheet">
+	<title>Roadside Service Quests | RoadAid</title>
 
-	<link rel="stylesheet" href="/assets/css/open-iconic-bootstrap.min.css">
-	<link rel="stylesheet" href="/assets/css/animate.css">
-	<link rel="stylesheet" href="/assets/css/owl.carousel.min.css">
-	<link rel="stylesheet" href="/assets/css/owl.theme.default.min.css">
-	<link rel="stylesheet" href="/assets/css/magnific-popup.css">
-	<link rel="stylesheet" href="/assets/css/aos.css">
-	<link rel="stylesheet" href="/assets/css/ionicons.min.css">
-	<link rel="stylesheet" href="/assets/css/bootstrap-datepicker.css">
-	<link rel="stylesheet" href="/assets/css/jquery.timepicker.css">
-	<link rel="stylesheet" href="/assets/css/font-awesome.min.css">
-	<link rel="stylesheet" href="/assets/css/flaticon.css">
-	<link rel="stylesheet" href="/assets/css/icomoon.css">
-	<link rel="stylesheet" href="/assets/css/style.css">
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
+	<!-- Fonts -->
+	<link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800&display=swap" rel="stylesheet">
+
+	<!-- CSS -->
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css">
-	<link rel="stylesheet" href="/assets/css/sidebar.css">
+	<link rel="stylesheet" href="/assets/css/dashboard-redesign.css">
 	<link rel="icon" type="image/png" href="/assets/images/FUEL AID_logo.png">
 
-	<title><%= typeof title != 'undefined' ? title : "FuelAid Mechanic" %></title>
-</head>
-
-<body>
-	<%- include('../partials/header') %>
-	<%- include('../partials/alerts') %>
-
 	<style>
-		/* Header Styling */
-		header {
-			background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%)!important;
-			box-shadow: 0 4px 15px rgba(0,0,0,0.2)!important;
-		}
-		header .navbar, .bg-dark, .navbar-dark, .navbar-light {
-			background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%)!important;
-			background-image: none !important;
-			box-shadow: none !important;
-		}
-		.logo-container img {
-			height: 0.9em;
-			width: auto;
+		body {
+			background-color: var(--primary-bg);
+			color: var(--text-light);
+			font-family: var(--font-main);
 		}
 
 		#main-wrapper {
-			overflow-y: scroll;
-			background: linear-gradient(135deg, #f5f7fa 0%, #e4e8ec 100%);
+			margin-left: 280px;
+			padding: 2.5rem;
 			min-height: 100vh;
 		}
 
-		#main-wrapper::-webkit-scrollbar {
-			display: none;
+		.quest-card {
+			background: var(--card-bg);
+			border-radius: 25px;
+			padding: 2.5rem;
+			margin-bottom: 2rem;
+			border: 1px solid #eee;
+			color: var(--text-dark);
+			transition: var(--transition);
+			position: relative;
+			overflow: hidden;
 		}
 
-		/* Animations */
-		@keyframes slideInDown {
-			from {
-				opacity: 0;
-				transform: translateY(-30px);
-			}
-			to {
-				opacity: 1;
-				transform: translateY(0);
-			}
+		.quest-card:hover {
+			transform: translateY(-5px);
+			box-shadow: 0 15px 40px rgba(0,0,0,0.1);
 		}
 
-		@keyframes slideInUp {
-			from {
-				opacity: 0;
-				transform: translateY(30px);
-			}
-			to {
-				opacity: 1;
-				transform: translateY(0);
-			}
-		}
-
-		@keyframes fadeInScale {
-			from {
-				opacity: 0;
-				transform: scale(0.95);
-			}
-			to {
-				opacity: 1;
-				transform: scale(1);
-			}
-		}
-
-		/* Page Header */
-		.page-header {
-			background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
-			padding: 25px 30px;
-			border-radius: 15px;
-			margin: 20px;
-			box-shadow: 0 8px 25px rgba(30, 60, 114, 0.3);
-			display: flex;
-			align-items: center;
-			gap: 15px;
-			animation: slideInDown 0.6s ease-out;
-		}
-
-		.page-header h5 {
-			color: white;
-			margin: 0;
-			font-size: 26px;
-			font-weight: 700;
-		}
-
-		.page-header i {
-			font-size: 24px;
-			color: white;
-		}
-
-		/* Content Container */
-		.content-container {
-			padding: 0 20px 30px;
-			animation: slideInUp 0.6s ease-out;
-		}
-
-		/* Empty State */
-		.empty-state {
-			text-align: center;
-			padding: 60px 40px;
-			color: #7f8c8d;
-			font-size: 18px;
-		}
-
-		.empty-state i {
-			font-size: 48px;
-			color: #bdc3c7;
-			margin-bottom: 20px;
-			display: block;
-		}
-
-		/* Request Card */
-		.request-card {
-			background: white;
-			border-radius: 15px;
-			padding: 25px;
-			margin-bottom: 20px;
-			box-shadow: 0 8px 25px rgba(0,0,0,0.08);
-			border-left: 5px solid #1e3c72;
-			transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-			animation: fadeInScale 0.6s ease-out;
-		}
-
-		.request-card:nth-child(1) { animation-delay: 0.1s; }
-		.request-card:nth-child(2) { animation-delay: 0.2s; }
-		.request-card:nth-child(3) { animation-delay: 0.3s; }
-		.request-card:nth-child(n+4) { animation-delay: 0.4s; }
-
-		.request-card:hover {
-			transform: translateY(-8px);
-			box-shadow: 0 15px 40px rgba(0,0,0,0.15);
-			border-left-color: #3498db;
-		}
-
-		.request-header {
-			display: flex;
-			align-items: center;
-			justify-content: space-between;
-			margin-bottom: 20px;
-			padding-bottom: 15px;
-			border-bottom: 2px solid #e9ecef;
-		}
-
-		.request-title {
-			font-size: 18px;
-			font-weight: 700;
-			color: #2c3e50;
-			display: flex;
-			align-items: center;
-			gap: 10px;
-		}
-
-		.request-title i {
-			color: #1e3c72;
-		}
-
-		.request-badge {
+		.quest-type-tag {
+			background: #111;
+			color: var(--accent-yellow);
+			padding: 0.5rem 1.25rem;
+			border-radius: 50px;
+			font-size: 0.7rem;
+			font-weight: 800;
+			text-transform: uppercase;
+			letter-spacing: 1.5px;
 			display: inline-block;
-			padding: 5px 12px;
-			background: linear-gradient(135deg, #3498db 0%, #2980b9 100%);
+			margin-bottom: 1.5rem;
+		}
+
+		.assigned-tag {
+			background: #27ae60;
 			color: white;
-			border-radius: 20px;
-			font-size: 12px;
-			font-weight: 600;
 		}
 
-		.request-info {
+		.info-grid {
 			display: grid;
-			grid-template-columns: 1fr 1fr;
-			gap: 15px;
-			margin-bottom: 20px;
+			grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+			gap: 2rem;
 		}
 
-		.info-item {
+		.info-block {
 			display: flex;
-			align-items: flex-start;
-			gap: 10px;
+			gap: 1rem;
 		}
 
-		.info-icon {
+		.info-block i {
+			font-size: 1.2rem;
+			color: var(--accent-yellow);
+			background: #111;
 			width: 40px;
 			height: 40px;
-			border-radius: 10px;
+			border-radius: 12px;
 			display: flex;
 			align-items: center;
 			justify-content: center;
-			font-size: 16px;
-			color: white;
 			flex-shrink: 0;
 		}
 
-		.info-content {
-			flex: 1;
-		}
-
 		.info-label {
-			font-size: 12px;
-			color: #7f8c8d;
+			font-size: 0.75rem;
+			font-weight: 700;
+			color: #888;
 			text-transform: uppercase;
-			letter-spacing: 0.5px;
-			font-weight: 600;
-			margin-bottom: 4px;
+			letter-spacing: 1px;
+			margin-bottom: 0.25rem;
 		}
 
 		.info-value {
-			font-size: 15px;
-			color: #2c3e50;
-			font-weight: 600;
+			font-weight: 700;
+			font-size: 0.95rem;
+			word-break: break-all;
 		}
 
-		.vehicle-photo {
-			margin: 20px 0;
+		.vehicle-preview {
+			width: 100%;
+			max-width: 300px;
+			border-radius: 20px;
+			margin-top: 1.5rem;
+			border: 1px solid #eee;
+			box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+		}
+
+		.empty-quest-state {
 			text-align: center;
+			padding: 5rem;
+			background: rgba(255,255,255,0.03);
+			border-radius: 30px;
+			border: 1px dashed #333;
+			color: #666;
 		}
 
-		.vehicle-photo img {
-			max-width: 250px;
-			border-radius: 12px;
-			box-shadow: 0 8px 20px rgba(0,0,0,0.12);
-			transition: all 0.3s ease;
+		.empty-quest-state i {
+			font-size: 4rem;
+			color: #333;
+			margin-bottom: 2rem;
 		}
 
-		.vehicle-photo img:hover {
-			transform: scale(1.05);
-			box-shadow: 0 12px 30px rgba(0,0,0,0.15);
-		}
-
-		/* Action Buttons */
-		.action-buttons {
-			display: flex;
-			gap: 12px;
-			margin-top: 20px;
-		}
-
-		.btn-custom {
-			flex: 1;
-			padding: 12px 20px;
-			border-radius: 10px;
-			font-weight: 600;
-			text-transform: uppercase;
-			font-size: 13px;
-			letter-spacing: 0.5px;
-			transition: all 0.3s ease;
-			border: none;
-			cursor: pointer;
-			display: flex;
-			align-items: center;
-			justify-content: center;
-			gap: 8px;
-		}
-
-		.btn-approve {
-			background: linear-gradient(135deg, #27ae60 0%, #2ecc71 100%);
-			color: white;
-			box-shadow: 0 8px 20px rgba(39, 174, 96, 0.3);
-		}
-
-		.btn-approve:hover {
-			transform: translateY(-3px);
-			box-shadow: 0 12px 30px rgba(39, 174, 96, 0.4);
-			color: white;
-		}
-
-		.btn-reject {
-			background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);
-			color: white;
-			box-shadow: 0 8px 20px rgba(231, 76, 60, 0.3);
-		}
-
-		.btn-reject:hover {
-			transform: translateY(-3px);
-			box-shadow: 0 12px 30px rgba(231, 76, 60, 0.4);
-			color: white;
-		}
-
-		/* Responsive */
-		@media (max-width: 768px) {
-			.page-header {
-				margin: 15px 10px;
-				padding: 20px;
-			}
-
-			.content-container {
-				padding: 0 10px 20px;
-			}
-
-			.request-card {
-				padding: 20px;
-			}
-
-			.request-info {
-				grid-template-columns: 1fr;
-			}
-
-			.action-buttons {
-				flex-direction: column;
-			}
+		@media (max-width: 991px) {
+			#main-wrapper { margin-left: 0; padding: 1.5rem; }
 		}
 	</style>
+</head>
 
-<main>
+<body class="dashboard-body">
+	<%- include('../partials/header') %>
 	<%- include('../partials/mechanicSidebar') %>
 
 	<div id="main-wrapper">
-		<!-- Page Header -->
-		<div class="page-header">
-			<i class="fas fa-list-check"></i>
-			<h5>Service Requests</h5>
+		<%- include('../partials/alerts') %>
+
+		<div class="d-flex justify-content-between align-items-end mb-5">
+			<div>
+				<h1 class="hero-title mb-0">Active <span>Quests</span></h1>
+				<p class="text-muted">Broadcast of pending and assigned service missions within your sector.</p>
+			</div>
+			<div class="text-end d-none d-md-block">
+				<div class="badge bg-dark p-3 rounded-pill">
+					<i class="fas fa-satellite-dish pulse me-2 text-warning"></i>
+					Scanning Sector 4
+				</div>
+			</div>
 		</div>
 
-		<!-- Content Container -->
-		<div class="content-container">
-			<% 
-			const filteredServices = requestedServices.filter(service => 
-				service.serviceCategory?.toLowerCase() !== 'fuel'
-			); 
-			%>
+		<% 
+		const filteredServices = requestedServices.filter(service => 
+			service.serviceCategory?.toLowerCase() !== 'fuel'
+		); 
+		%>
 
-			<!-- Assigned Services Section -->
-			<% if (assignedServices && assignedServices.length > 0) { %>
-				<div style="margin-bottom: 30px;">
-					<h6 style="color: #1e3c72; font-weight: 700; margin-bottom: 20px; font-size: 18px;">
-						<i class="fas fa-briefcase me-2" style="color: #27ae60;"></i>Assigned Services
-					</h6>
-					<% assignedServices.forEach((service, index) => { %>
-						<div class="request-card">
-							<!-- Card Header -->
-							<div class="request-header">
-								<h6 class="request-title">
-									<i class="fas fa-wrench"></i>
-									Assigned <%= index + 1 %>
-								</h6>
-								<span class="request-badge" style="background: linear-gradient(135deg, #27ae60 0%, #2ecc71 100%);"><%= service.serviceCategory || 'Service' %></span>
-							</div>
-
-							<!-- Request Info Grid -->
-							<div class="request-info">
-								<!-- Service Category -->
-								<div class="info-item">
-									<div class="info-icon" style="background: linear-gradient(135deg, #3498db 0%, #2980b9 100%);">
-										<i class="fas fa-cog"></i>
-									</div>
-									<div class="info-content">
-										<div class="info-label">Service Type</div>
-										<div class="info-value"><%= service.serviceCategory || 'N/A' %></div>
-									</div>
-								</div>
-
-								<!-- Sub-services -->
-								<div class="info-item">
-									<div class="info-icon" style="background: linear-gradient(135deg, #9b59b6 0%, #8e44ad 100%);">
-										<i class="fas fa-list"></i>
-									</div>
-									<div class="info-content">
-										<div class="info-label">Sub-services</div>
-										<div class="info-value">
-											<% if (service.subServices && service.subServices.length > 0) { %>
-												<%= service.subServices.slice(0, 2).join(", ") %>
-											<% } else { %>
-												None
-											<% } %>
-										</div>
-									</div>
-								</div>
-
-								<!-- Customer Name -->
-								<div class="info-item">
-									<div class="info-icon" style="background: linear-gradient(135deg, #27ae60 0%, #2ecc71 100%);">
-										<i class="fas fa-user"></i>
-									</div>
-									<div class="info-content">
-										<div class="info-label">Customer</div>
-										<div class="info-value"><%= service.customer.firstName %> <%= service.customer.lastName %></div>
-									</div>
-								</div>
-
-								<!-- Phone -->
-								<div class="info-item">
-									<div class="info-icon" style="background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);">
-										<i class="fas fa-phone"></i>
-									</div>
-									<div class="info-content">
-										<div class="info-label">Contact</div>
-										<div class="info-value"><%= service.customer.phone %></div>
-									</div>
-								</div>
-
-								<!-- Location -->
-								<div class="info-item">
-									<div class="info-icon" style="background: linear-gradient(135deg, #f39c12 0%, #e67e22 100%);">
-										<i class="fas fa-map-marker-alt"></i>
-									</div>
-									<div class="info-content">
-										<div class="info-label">Location</div>
-										<div class="info-value"><%= service.address %></div>
-									</div>
-								</div>
-							</div>
-
-							<!-- Vehicle Photo -->
-							<% if (service.vehiclePhotoPath) { %>
-								<div class="vehicle-photo">
-									<img src="/<%= service.vehiclePhotoPath %>" alt="Vehicle Photo">
-								</div>
-							<% } %>
-
-							<!-- Request Time -->
-							<% if (service.createdAt) { %>
-								<p style="font-size: 13px; color: #7f8c8d; margin-bottom: 15px;">
-									<i class="fas fa-clock me-2"></i>
-									Assigned on <%= new Date(service.createdAt).toLocaleDateString('en-IN', { year: 'numeric', month: 'short', day: 'numeric' }) %>
-									at <%= new Date(service.createdAt).toLocaleTimeString('en-IN', { hour: '2-digit', minute: '2-digit' }) %>
-								</p>
-							<% } %>
-
-							<!-- Action Buttons -->
-							<div class="action-buttons">
-								<form action="/mechanic/service/accept/<%= service._id %>" method="POST" style="flex: 1;">
-									<button type="submit" class="btn-custom btn-approve w-100">
-										<i class="fas fa-check-circle"></i>
-										Accept
-									</button>
-								</form>
-								<form action="/mechanic/service/reject/<%= service._id %>" method="POST" style="flex: 1;">
-									<button type="submit" class="btn-custom btn-reject w-100">
-										<i class="fas fa-times-circle"></i>
-										Reject
-									</button>
-								</form>
+		<!-- Assigned Section -->
+		<% if (assignedServices && assignedServices.length > 0) { %>
+			<h3 class="section-title mb-4"><i class="fas fa-user-tag me-2"></i> Directly <span>Assigned</span></h3>
+			<% assignedServices.forEach((service, index) => { %>
+				<div class="quest-card" style="border-left: 8px solid #27ae60;">
+					<div class="quest-type-tag assigned-tag">Direct Command</div>
+					<div class="info-grid">
+						<div class="info-block">
+							<i class="fas fa-tools"></i>
+							<div>
+								<div class="info-label">Operation</div>
+								<div class="info-value"><%= service.serviceCategory || 'Standard Repair' %></div>
 							</div>
 						</div>
-					<% }); %>
-				</div>
-			<% } %>
-
-			<!-- Available Service Requests Section -->
-			<% if (filteredServices.length > 0) { %>
-				<div>
-					<h6 style="color: #1e3c72; font-weight: 700; margin-bottom: 20px; font-size: 18px;">
-						<i class="fas fa-list-check me-2" style="color: #3498db;"></i>Available Requests
-					</h6>
-					<% filteredServices.forEach((service, index) => { %>
-					<div class="request-card">
-						<!-- Card Header -->
-						<div class="request-header">
-							<h6 class="request-title">
-								<i class="fas fa-wrench"></i>
-								Request <%= index + 1 %>
-							</h6>
-							<span class="request-badge"><%= service.serviceCategory || 'Service' %></span>
+						<div class="info-block">
+							<i class="fas fa-list-ul"></i>
+							<div>
+								<div class="info-label">Specialties</div>
+								<div class="info-value">
+									<% if (service.subServices && service.subServices.length > 0) { %>
+										<%= service.subServices.join(", ") %>
+									<% } else { %>Basic Fix<% } %>
+								</div>
+							</div>
 						</div>
-
-						<!-- Request Info Grid -->
-						<div class="request-info">
-							<!-- Service Category -->
-							<div class="info-item">
-								<div class="info-icon" style="background: linear-gradient(135deg, #3498db 0%, #2980b9 100%);">
-									<i class="fas fa-cog"></i>
-								</div>
-								<div class="info-content">
-									<div class="info-label">Service Type</div>
-									<div class="info-value"><%= service.serviceCategory || 'N/A' %></div>
-								</div>
+						<div class="info-block">
+							<i class="fas fa-user-circle"></i>
+							<div>
+								<div class="info-label">Client</div>
+								<div class="info-value"><%= service.customer.firstName %> <%= service.customer.lastName %></div>
 							</div>
-
-							<!-- Sub-services -->
-							<div class="info-item">
-								<div class="info-icon" style="background: linear-gradient(135deg, #9b59b6 0%, #8e44ad 100%);">
-									<i class="fas fa-list"></i>
-								</div>
-								<div class="info-content">
-									<div class="info-label">Sub-services</div>
-									<div class="info-value">
-										<% if (service.subServices && service.subServices.length > 0) { %>
-											<%= service.subServices.slice(0, 2).join(", ") %>
-										<% } else { %>
-											None
-										<% } %>
-									</div>
-								</div>
-							</div>
-
-							<!-- Customer Name -->
-							<div class="info-item">
-								<div class="info-icon" style="background: linear-gradient(135deg, #27ae60 0%, #2ecc71 100%);">
-									<i class="fas fa-user"></i>
-								</div>
-								<div class="info-content">
-									<div class="info-label">Customer</div>
-									<div class="info-value"><%= service.customer.firstName %> <%= service.customer.lastName %></div>
-								</div>
-							</div>
-
-							<!-- Phone -->
-							<div class="info-item">
-								<div class="info-icon" style="background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);">
-									<i class="fas fa-phone"></i>
-								</div>
-								<div class="info-content">
-									<div class="info-label">Contact</div>
-									<div class="info-value"><%= service.customer.phone %></div>
-								</div>
-							</div>
-
-							<!-- Location -->
-							<div class="info-item">
-								<div class="info-icon" style="background: linear-gradient(135deg, #f39c12 0%, #e67e22 100%);">
-									<i class="fas fa-map-marker-alt"></i>
-								</div>
-								<div class="info-content">
-									<div class="info-label">Location</div>
-									<div class="info-value"><%= service.address %></div>
-								</div>
-							</div>
-
-							<!-- Distance -->
-							<% if (service.distance) { %>
-								<div class="info-item">
-									<div class="info-icon" style="background: linear-gradient(135deg, #1abc9c 0%, #16a085 100%);">
-										<i class="fas fa-road"></i>
-									</div>
-									<div class="info-content">
-										<div class="info-label">Distance</div>
-										<div class="info-value"><%= (service.distance / 1000).toFixed(2) %> km</div>
-									</div>
-								</div>
-							<% } %>
 						</div>
-
-						<!-- Vehicle Photo -->
-						<% if (service.vehiclePhotoPath) { %>
-							<div class="vehicle-photo">
-								<img src="/<%= service.vehiclePhotoPath %>" alt="Vehicle Photo">
+						<div class="info-block">
+							<i class="fas fa-map-marker-alt"></i>
+							<div>
+								<div class="info-label">Coordinates</div>
+								<div class="info-value"><%= service.address %></div>
 							</div>
-						<% } %>
-
-						<!-- Request Time -->
-						<% if (service.createdAt) { %>
-							<p style="font-size: 13px; color: #7f8c8d; margin-bottom: 15px;">
-								<i class="fas fa-clock me-2"></i>
-								Requested on <%= new Date(service.createdAt).toLocaleDateString('en-IN', { year: 'numeric', month: 'short', day: 'numeric' }) %>
-								at <%= new Date(service.createdAt).toLocaleTimeString('en-IN', { hour: '2-digit', minute: '2-digit' }) %>
-							</p>
-						<% } %>
-
-						<!-- Action Buttons -->
-						<div class="action-buttons">
-							<form action="/mechanic/service/accept/<%= service._id %>" method="POST" style="flex: 1;">
-								<button type="submit" class="btn-custom btn-approve w-100">
-									<i class="fas fa-check-circle"></i>
-									Approve
-								</button>
-							</form>
-							<form action="/mechanic/service/reject/<%= service._id %>" method="POST" style="flex: 1;">
-								<button type="submit" class="btn-custom btn-reject w-100">
-									<i class="fas fa-times-circle"></i>
-									Reject
-								</button>
-							</form>
 						</div>
 					</div>
-				<% }); %>
-			</div>
-			<% } else if (assignedServices.length === 0) { %>
-				<div class="empty-state">
-					<i class="fas fa-inbox"></i>
-					<p>No service requests available at the moment.</p>
-					<small>Check back later for new requests in your area.</small>
+
+					<% if (service.vehiclePhotoPath) { %>
+						<img src="/<%= service.vehiclePhotoPath %>" class="vehicle-preview" alt="Intel Photo">
+					<% } %>
+
+					<div class="mt-4 pt-4 border-top d-flex gap-3">
+						<form action="/mechanic/service/accept/<%= service._id %>" method="POST" class="flex-grow-1">
+							<button type="submit" class="btn-yellow w-100">Establish Connection (Accept)</button>
+						</form>
+						<form action="/mechanic/service/reject/<%= service._id %>" method="POST">
+							<button type="submit" class="btn btn-outline-danger px-4" style="border-radius: 15px; height: 55px;">Abort</button>
+						</form>
+					</div>
 				</div>
-			<% } %>
-		</div>
+			<% }); %>
+		<% } %>
+
+		<!-- Available Section -->
+		<h3 class="section-title mb-4 mt-5"><i class="fas fa-broadcast-tower me-2"></i> Open <span>Signals</span></h3>
+		<% if (filteredServices.length > 0) { %>
+			<% filteredServices.forEach((service, index) => { %>
+				<div class="quest-card">
+					<div class="quest-type-tag"><%= service.serviceCategory || 'Public Request' %></div>
+					<div class="info-grid">
+						<div class="info-block">
+							<i class="fas fa-tachometer-alt"></i>
+							<div>
+								<div class="info-label">Distance</div>
+								<div class="info-value"><%= service.distance ? (service.distance / 1000).toFixed(2) + ' km' : 'Calculating...' %></div>
+							</div>
+						</div>
+						<div class="info-block">
+							<i class="fas fa-clock"></i>
+							<div>
+								<div class="info-label">Transmission Time</div>
+								<div class="info-value"><%= new Date(service.createdAt).toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'}) %></div>
+							</div>
+						</div>
+						<div class="info-block">
+							<i class="fas fa-map-pin"></i>
+							<div>
+								<div class="info-label">Sector</div>
+								<div class="info-value"><%= service.address.substring(0, 40) %>...</div>
+							</div>
+						</div>
+					</div>
+
+					<div class="mt-4 pt-4 border-top">
+						<form action="/mechanic/service/accept/<%= service._id %>" method="POST">
+							<button type="submit" class="btn-yellow px-5">Intercept Quest</button>
+						</form>
+					</div>
+				</div>
+			<% }); %>
+		<% } else if (!assignedServices || assignedServices.length === 0) { %>
+			<div class="empty-quest-state">
+				<i class="fas fa-radar"></i>
+				<h4>No active signals detected in your sector.</h4>
+				<p>Stand by for incoming transmissions from nearby clients.</p>
+			</div>
+		<% } %>
 	</div>
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
-<script src="/assets/js/script.js"></script>
-<script>
-	// Check if the user's browser supports Geolocation API
-	if (navigator.geolocation) {
-	  navigator.geolocation.getCurrentPosition(
-		(position) => {
-		  const lat = position.coords.latitude;
-		  const lon = position.coords.longitude;
-		  
-		  console.log(`Location: ${lat}, ${lon}`);
-		  
-		  fetch('/mechanic/updateLocation', {
-			method: 'POST',
-			headers: {
-			  'Content-Type': 'application/json',
-			},
-			body: JSON.stringify({ latitude: lat, longitude: lon }),
-		  });
-		},
-		(error) => {
-		  console.error('Geolocation error:', error);
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+	<script>
+		if (navigator.geolocation) {
+			navigator.geolocation.getCurrentPosition((pos) => {
+				fetch('/mechanic/updateLocation', {
+					method: 'POST',
+					headers: { 'Content-Type': 'application/json' },
+					body: JSON.stringify({ latitude: pos.coords.latitude, longitude: pos.coords.longitude }),
+				});
+			});
 		}
-	  );
-	}
-</script>
-  
+	</script>
 </body>
 </html>

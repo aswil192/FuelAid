@@ -1,0 +1,363 @@
+/* 
+   RoadAid Modern Dashboard Redesign Foundation
+   Consistent Color Scheme: Black, Yellow (#F7B71D), White
+*/
+
+:root {
+    --primary-bg: #000000;
+    --accent-yellow: #F7B71D;
+    --accent-orange: #FF6600;
+    --card-bg: #FFFFFF;
+    --card-border: #333;
+    --text-light: #FFFFFF;
+    --text-dark: #000000;
+    --text-gray: #b0b0b0;
+    --font-main: 'Poppins', sans-serif;
+    --border-radius: 15px;
+    --shadow-premium: 0 10px 30px rgba(0, 0, 0, 0.1);
+    --transition: all 0.3s ease;
+}
+
+body.dashboard-body {
+    background-color: var(--primary-bg);
+    font-family: var(--font-main);
+    color: var(--text-light);
+    margin: 0;
+    overflow-x: hidden;
+}
+
+/* Typography */
+.dashboard-heading {
+    font-weight: 700;
+    color: var(--text-light);
+    margin-bottom: 2rem;
+}
+
+.dashboard-heading span {
+    color: var(--accent-yellow);
+}
+
+/* Layout */
+.dashboard-container {
+    padding: 2rem;
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+.dashboard-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+/* Premium White Cards */
+.modern-card {
+    background: var(--card-bg);
+    border-radius: var(--border-radius);
+    padding: 1.5rem;
+    box-shadow: var(--shadow-premium);
+    border: 1px solid var(--card-border);
+    transition: var(--transition);
+    color: var(--text-dark);
+}
+
+.modern-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+}
+
+.modern-card h3 {
+    font-weight: 700;
+    font-size: 1.25rem;
+    margin-bottom: 1rem;
+    color: var(--text-dark);
+}
+
+/* Buttons */
+.btn-yellow {
+    background-color: var(--accent-yellow);
+    color: var(--text-dark);
+    font-weight: 600;
+    border: none;
+    border-radius: 50px;
+    padding: 0.75rem 1.5rem;
+    transition: var(--transition);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    font-size: 0.9rem;
+}
+
+.btn-yellow:hover {
+    background-color: #e0a61a;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(247, 183, 29, 0.4);
+    color: var(--text-dark);
+}
+
+.btn-outline-yellow {
+    background: transparent;
+    color: var(--accent-yellow);
+    border: 2px solid var(--accent-yellow);
+    border-radius: 50px;
+    padding: 0.75rem 1.5rem;
+    transition: var(--transition);
+    font-weight: 600;
+}
+
+.btn-outline-yellow:hover {
+    background: var(--accent-yellow);
+    color: var(--text-dark);
+}
+
+/* Status Badges */
+.badge-modern {
+    padding: 0.5rem 1rem;
+    border-radius: 50px;
+    font-weight: 600;
+    font-size: 0.8rem;
+}
+
+.badge-yellow {
+    background: rgba(247, 183, 29, 0.2);
+    color: var(--accent-yellow);
+}
+
+.badge-orange {
+    background: rgba(255, 102, 0, 0.2);
+    color: var(--accent-orange);
+}
+
+/* Tables */
+.modern-table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0 10px;
+}
+
+.modern-table tr {
+    background: var(--card-bg);
+    box-shadow: var(--shadow-premium);
+    transition: var(--transition);
+}
+
+.modern-table tr:hover {
+    transform: scale(1.01);
+}
+
+.modern-table td,
+.modern-table th {
+    padding: 1.25rem;
+    border: none;
+    color: var(--text-dark);
+}
+
+.modern-table th {
+    background: transparent;
+    color: var(--text-gray);
+    font-weight: 600;
+    text-transform: uppercase;
+    font-size: 0.8rem;
+    padding-bottom: 0.5rem;
+}
+
+.modern-table td:first-child {
+    border-radius: var(--border-radius) 0 0 var(--border-radius);
+}
+
+.modern-table td:last-child {
+    border-radius: 0 var(--border-radius) var(--border-radius) 0;
+}
+
+/* Dashboard Sidebar Standard Stylings (Overview) */
+.dashboard-sidebar {
+    background: #111;
+    border-right: 1px solid #333;
+    height: 100vh;
+    padding: 2rem 1rem;
+}
+
+.sidebar-link {
+    display: flex;
+    align-items: center;
+    padding: 1rem;
+    color: var(--text-gray);
+    border-radius: 10px;
+    transition: var(--transition);
+    margin-bottom: 0.5rem;
+    text-decoration: none;
+}
+
+.sidebar-link i {
+    margin-right: 1rem;
+    font-size: 1.2rem;
+}
+
+.sidebar-link:hover,
+.sidebar-link.active {
+    background: var(--accent-yellow);
+    color: var(--text-dark);
+}
+
+/* Dashboard Header/Navbar Fixes */
+header {
+    background: transparent !important;
+    position: relative;
+    z-index: 1002;
+}
+
+/* Sidebar Toggle & Animation System */
+#sidebar,
+#main-wrapper,
+.dashboard-body .navbar {
+    transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+
+/* Hidden state: Sidebar completely moves out of frame */
+body.sidebar-hidden #sidebar {
+    transform: translateX(-100%);
+    box-shadow: none;
+}
+
+body.sidebar-hidden #main-wrapper {
+    margin-left: 0 !important;
+}
+
+body.sidebar-hidden .dashboard-body .navbar {
+    margin-left: 0 !important;
+}
+
+/* Hide toggle artifacts from previous version */
+body.sidebar-collapsed #sidebar,
+body.sidebar-collapsed #main-wrapper,
+body.sidebar-collapsed .dashboard-body .navbar {
+    display: inherit;
+    /* Reset */
+}
+
+/* Toggle Button Styling (Inside Sidebar) */
+.sidebar-close-btn {
+    position: absolute;
+    top: 25px;
+    right: 20px;
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid #444;
+    color: var(--accent-yellow);
+    width: 35px;
+    height: 35px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: var(--transition);
+    z-index: 1011;
+}
+
+.sidebar-close-btn:hover {
+    background: var(--accent-yellow);
+    color: #111;
+    transform: scale(1.1);
+}
+
+/* Persistent Floating Open Button (Appears when sidebar hidden) */
+.sidebar-open-btn {
+    position: fixed;
+    top: 50%;
+    left: 0;
+    transform: translateY(-50%) translateX(-100%);
+    background: var(--accent-yellow);
+    color: #111;
+    width: 45px;
+    height: 60px;
+    border-radius: 0 15px 15px 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 1010;
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    box-shadow: 5px 0 20px rgba(0, 0, 0, 0.5);
+}
+
+body.sidebar-hidden .sidebar-open-btn {
+    transform: translateY(-50%) translateX(0);
+}
+
+.sidebar-open-btn:hover {
+    width: 50px;
+}
+
+#main-wrapper {
+    margin-left: 280px !important;
+    padding-top: 2rem;
+}
+
+.dashboard-body .navbar {
+    padding: 0.5rem 2rem !important;
+    min-height: 70px;
+    background: rgba(0, 0, 0, 0.8) !important;
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid #222;
+    margin-left: 280px !important;
+}
+
+.dashboard-body .logo-container {
+    font-size: 1.5rem !important;
+    gap: 12px !important;
+}
+
+.dashboard-body .logo-container img {
+    height: 35px !important;
+    width: auto !important;
+}
+
+.dashboard-body .navbar-brand {
+    font-size: 1.5rem !important;
+    font-weight: 800 !important;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.dashboard-body .navbar-brand span {
+    color: var(--accent-yellow);
+}
+
+.dashboard-body .nav-link {
+    font-weight: 600 !important;
+    font-size: 0.9rem !important;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: #888 !important;
+    transition: var(--transition);
+}
+
+.dashboard-body .nav-link:hover {
+    color: var(--accent-yellow) !important;
+}
+
+.dashboard-body .user-avatar-img {
+    width: 35px;
+    height: 35px;
+    border: 2px solid var(--accent-yellow);
+}
+
+#main-wrapper {
+    padding-top: 2rem;
+}
+
+/* Mobile Responsiveness */
+@media (max-width: 991px) {
+
+    .dashboard-body .navbar,
+    #main-wrapper {
+        margin-left: 0 !important;
+    }
+}
+
+/* Mobile Responsiveness */
+@media (max-width: 768px) {
+    .dashboard-container {
+        padding: 1rem;
+    }
+}

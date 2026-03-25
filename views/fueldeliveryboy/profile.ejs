@@ -2,603 +2,318 @@
 <html lang="en">
 <head>
 	<meta charset="UTF-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<meta name="theme-color" content="#27ae60">
-	<link href="https://fonts.googleapis.com/css?family=Dosis:200,300,400,500,700" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css?family=Overpass:300,400,400i,600,700" rel="stylesheet">
+	<title>Partner Profile | FuelAid</title>
 
-    <link rel="stylesheet" href="/assets/css/open-iconic-bootstrap.min.css">
-    <link rel="stylesheet" href="/assets/css/animate.css">
-    
-    <link rel="stylesheet" href="/assets/css/owl.carousel.min.css">
-    <link rel="stylesheet" href="/assets/css/owl.theme.default.min.css">
-    <link rel="stylesheet" href="/assets/css/magnific-popup.css">
+	<!-- Fonts -->
+	<link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800&display=swap" rel="stylesheet">
 
-    <link rel="stylesheet" href="/assets/css/aos.css">
-
-    <link rel="stylesheet" href="/assets/css/ionicons.min.css">
-
-    <link rel="stylesheet" href="/assets/css/bootstrap-datepicker.css">
-    <link rel="stylesheet" href="/assets/css/jquery.timepicker.css">
-
-    <link rel="stylesheet" href="/assets/css/font-awesome.min.css">
-    
-    <link rel="stylesheet" href="/assets/css/flaticon.css">
-    <link rel="stylesheet" href="/assets/css/icomoon.css">
-	<link rel="stylesheet" href="/assets/css/style.css">
-    
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" integrity="sha512-1ycn6IcaQQ40/MKBW2W4Rhis/DbILU74C1vSrLJxCq57o941Ym01SwNsOMqvEBFlcgUa6xLiPY/NS5R+E6ztJQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
-	<link rel="stylesheet" href="/assets/css/sidebar.css">
+	<!-- CSS -->
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css">
+	<link rel="stylesheet" href="/assets/css/dashboard-redesign.css">
 	<link rel="icon" type="image/png" href="/assets/images/FUEL AID_logo.png">
-	<title> <%= typeof title != 'undefined' ? title : "FuelAid" %> </title>
+
+	<style>
+		body {
+			background-color: var(--primary-bg);
+			color: var(--text-light);
+			font-family: var(--font-main);
+		}
+
+		#main-wrapper {
+			margin-left: 280px;
+			padding: 2.5rem;
+			min-height: 100vh;
+		}
+
+		.profile-hero {
+			background: var(--card-bg);
+			border-radius: 30px;
+			padding: 4rem 2rem;
+			text-align: center;
+			margin-bottom: 3rem;
+			position: relative;
+			overflow: hidden;
+			border: 1px solid #eee;
+		}
+
+		.profile-avatar-giant {
+			width: 180px;
+			height: 180px;
+			border-radius: 50%;
+			object-fit: cover;
+			border: 8px solid #f8f9fa;
+			box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+			margin-bottom: 1.5rem;
+		}
+
+		.avatar-edit-trigger {
+			position: absolute;
+			bottom: 15px;
+			right: 50%;
+			transform: translateX(80px);
+			background: var(--accent-yellow);
+			width: 45px;
+			height: 45px;
+			border-radius: 50%;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			color: #000;
+			cursor: pointer;
+			box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+			transition: var(--transition);
+		}
+
+		.avatar-edit-trigger:hover { transform: translateX(80px) scale(1.1); }
+
+		.intel-section {
+			background: #fff;
+			border-radius: 25px;
+			padding: 2.5rem;
+			margin-bottom: 2rem;
+			border: 1px solid #eee;
+		}
+
+		.intel-header {
+			display: flex;
+			align-items: center;
+			gap: 1rem;
+			margin-bottom: 2rem;
+			border-bottom: 1px solid #f0f0f0;
+			padding-bottom: 1rem;
+		}
+
+		.intel-header i {
+			color: var(--accent-yellow);
+			font-size: 1.5rem;
+		}
+
+		.intel-header h5 {
+			margin: 0;
+			font-weight: 800;
+			color: #000;
+			text-transform: uppercase;
+			letter-spacing: 1px;
+		}
+
+		.form-floating > label { color: #888; font-weight: 600; }
+		.form-control {
+			border-radius: 12px;
+			border: 1px solid #e0e0e0;
+			font-weight: 600;
+			padding: 1rem;
+		}
+
+		.gender-tactical {
+			display: flex;
+			gap: 1rem;
+		}
+
+		.gender-btn {
+			flex: 1;
+			padding: 1rem;
+			border-radius: 15px;
+			border: 2px solid #f0f0f0;
+			text-align: center;
+			cursor: pointer;
+			transition: var(--transition);
+			color: #888;
+			font-weight: 700;
+		}
+
+		.gender-btn.active {
+			border-color: var(--accent-yellow);
+			background: rgba(247, 183, 29, 0.05);
+			color: #000;
+		}
+
+		.gender-btn input { display: none; }
+
+		@media (max-width: 991px) {
+			#main-wrapper { margin-left: 0; padding: 1.5rem; }
+		}
+	</style>
 </head>
 
-<body>
+<body class="dashboard-body">
 	<%- include('../partials/header') %>
-	<%- include('../partials/alerts') %>
-
-<style>
-	/* Header Styling */
-	header {
-		background: linear-gradient(135deg, #27ae60 0%, #2ecc71 100%)!important;
-		box-shadow: 0 4px 15px rgba(0,0,0,0.2)!important;
-	}
-	header .navbar, .bg-dark, .navbar-dark, .navbar-light {
-		background: linear-gradient(135deg, #27ae60 0%, #2ecc71 100%)!important;
-		background-image: none !important;
-		box-shadow: none !important;
-	}
-	.logo-container img {
-		height: 0.9em;
-		width: auto;
-	}
-
-	/* Global Animations */
-	@keyframes slideInDown {
-		from {
-			opacity: 0;
-			transform: translateY(-30px);
-		}
-		to {
-			opacity: 1;
-			transform: translateY(0);
-		}
-	}
-
-	@keyframes slideInUp {
-		from {
-			opacity: 0;
-			transform: translateY(30px);
-		}
-		to {
-			opacity: 1;
-			transform: translateY(0);
-		}
-	}
-
-	@keyframes fadeInScale {
-		from {
-			opacity: 0;
-			transform: scale(0.9);
-		}
-		to {
-			opacity: 1;
-			transform: scale(1);
-		}
-	}
-
-	/* Main Wrapper */
-	#main-wrapper {
-		overflow-y: scroll;
-		background: linear-gradient(135deg, #f5f7fa 0%, #e4e8eb 100%);
-		min-height: 100vh;
-	}
-
-	#main-wrapper::-webkit-scrollbar {
-		display: none;
-	}
-
-	/* Page Header */
-	.page-header {
-		background: linear-gradient(135deg, #27ae60 0%, #2ecc71 100%);
-		padding: 25px 30px;
-		border-radius: 15px;
-		margin: 20px;
-		box-shadow: 0 8px 25px rgba(39, 174, 96, 0.3);
-		display: flex;
-		align-items: center;
-		gap: 15px;
-		animation: slideInDown 0.6s ease-out;
-	}
-
-	.page-header h5 {
-		color: white;
-		margin: 0;
-		font-size: 26px;
-		font-weight: 700;
-	}
-
-	.page-header i {
-		font-size: 28px;
-		color: white;
-	}
-
-	/* Profile Card */
-	.profile-container {
-		padding: 0 20px 30px;
-	}
-
-	.profile-card {
-		background: white;
-		border-radius: 20px;
-		box-shadow: 0 10px 40px rgba(0,0,0,0.1);
-		overflow: hidden;
-		animation: slideInUp 0.6s ease-out;
-	}
-
-	/* Profile Header */
-	.profile-header {
-		background: linear-gradient(135deg, #27ae60 0%, #2ecc71 100%);
-		padding: 40px 30px;
-		text-align: center;
-		position: relative;
-	}
-
-	.profile-header::before {
-		content: '';
-		position: absolute;
-		bottom: 0;
-		left: 0;
-		right: 0;
-		height: 80px;
-		background: white;
-		border-radius: 50% 50% 0 0;
-	}
-
-	.avatar-wrapper {
-		position: relative;
-		width: 150px;
-		height: 150px;
-		margin: 0 auto;
-		z-index: 10;
-	}
-
-	.avatar-wrapper img {
-		width: 150px;
-		height: 150px;
-		border-radius: 50%;
-		object-fit: cover;
-		border: 5px solid white;
-		box-shadow: 0 8px 25px rgba(0,0,0,0.2);
-		transition: all 0.3s ease;
-	}
-
-	.avatar-wrapper:hover img {
-		transform: scale(1.05);
-	}
-
-	.avatar-edit {
-		position: absolute;
-		bottom: 10px;
-		right: 10px;
-		width: 45px;
-		height: 45px;
-		background: linear-gradient(135deg, #f39c12 0%, #e67e22 100%);
-		border-radius: 50%;
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		cursor: pointer;
-		box-shadow: 0 4px 15px rgba(0,0,0,0.2);
-		transition: all 0.3s ease;
-	}
-
-	.avatar-edit:hover {
-		transform: scale(1.1);
-	}
-
-	.avatar-edit i {
-		color: white;
-		font-size: 18px;
-	}
-
-	.avatar-edit input {
-		display: none;
-	}
-
-	.profile-name {
-		position: relative;
-		z-index: 10;
-		margin-top: 15px;
-	}
-
-	.profile-name h4 {
-		color: #2c3e50;
-		font-weight: 700;
-		margin-bottom: 5px;
-	}
-
-	.profile-name .role-badge {
-		background: linear-gradient(135deg, #27ae60 0%, #2ecc71 100%);
-		color: white;
-		padding: 5px 20px;
-		border-radius: 25px;
-		font-size: 13px;
-		font-weight: 600;
-		display: inline-block;
-	}
-
-	/* Form Sections */
-	.profile-form {
-		padding: 30px;
-	}
-
-	.form-section {
-		margin-bottom: 35px;
-		animation: fadeInScale 0.6s ease-out;
-	}
-
-	.form-section:nth-child(1) { animation-delay: 0.1s; }
-	.form-section:nth-child(2) { animation-delay: 0.2s; }
-	.form-section:nth-child(3) { animation-delay: 0.3s; }
-
-	.section-title {
-		color: #27ae60;
-		font-weight: 700;
-		margin-bottom: 25px;
-		padding-bottom: 12px;
-		border-bottom: 3px solid #e9ecef;
-		position: relative;
-		font-size: 20px;
-	}
-
-	.section-title::after {
-		content: '';
-		position: absolute;
-		bottom: -3px;
-		left: 0;
-		width: 60px;
-		height: 3px;
-		background: linear-gradient(90deg, #27ae60, #2ecc71);
-	}
-
-	.section-title i {
-		margin-right: 12px;
-		color: #f39c12;
-	}
-
-	/* Form Controls */
-	.form-label {
-		font-weight: 600;
-		color: #2c3e50;
-		margin-bottom: 8px;
-	}
-
-	.form-control {
-		border: 2px solid #e9ecef;
-		border-radius: 12px;
-		padding: 12px 15px;
-		font-size: 15px;
-		transition: all 0.3s ease;
-	}
-
-	.form-control:focus {
-		border-color: #27ae60;
-		box-shadow: 0 0 0 4px rgba(39, 174, 96, 0.1);
-	}
-
-	.form-control:disabled {
-		background: #f8f9fa;
-		color: #6c757d;
-	}
-
-	/* Gender Selection */
-	.gender-group {
-		display: flex;
-		gap: 15px;
-		margin-top: 10px;
-	}
-
-	.gender-option {
-		flex: 1;
-	}
-
-	.gender-option input {
-		display: none;
-	}
-
-	.gender-option label {
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		gap: 10px;
-		padding: 15px 20px;
-		border: 2px solid #e9ecef;
-		border-radius: 12px;
-		cursor: pointer;
-		transition: all 0.3s ease;
-		font-weight: 600;
-	}
-
-	.gender-option input:checked + label {
-		background: linear-gradient(135deg, #27ae60 0%, #2ecc71 100%);
-		color: white;
-		border-color: transparent;
-	}
-
-	.gender-option label:hover {
-		border-color: #27ae60;
-	}
-
-	/* Input Groups */
-	.input-icon-group {
-		position: relative;
-	}
-
-	.input-icon-group .icon-left {
-		position: absolute;
-		left: 15px;
-		top: 50%;
-		transform: translateY(-50%);
-		color: #6c757d;
-		font-size: 16px;
-	}
-
-	.input-icon-group .form-control {
-		padding-left: 45px;
-	}
-
-	/* Submit Button */
-	.submit-btn {
-		background: linear-gradient(135deg, #f39c12 0%, #e67e22 100%);
-		color: white;
-		border: none;
-		padding: 15px 40px;
-		border-radius: 30px;
-		font-size: 16px;
-		font-weight: 700;
-		cursor: pointer;
-		transition: all 0.3s ease;
-		display: block;
-		margin: 30px auto 0;
-		box-shadow: 0 8px 25px rgba(243, 156, 18, 0.3);
-	}
-
-	.submit-btn:hover {
-		transform: translateY(-3px);
-		box-shadow: 0 12px 35px rgba(243, 156, 18, 0.4);
-	}
-
-	.submit-btn i {
-		margin-right: 10px;
-	}
-
-	/* Responsive */
-	@media (max-width: 768px) {
-		.page-header {
-			flex-direction: column;
-			text-align: center;
-			margin: 15px 10px;
-		}
-
-		.profile-container {
-			padding: 0 10px 20px;
-		}
-
-		.avatar-wrapper {
-			width: 120px;
-			height: 120px;
-		}
-
-		.avatar-wrapper img {
-			width: 120px;
-			height: 120px;
-		}
-
-		.gender-group {
-			flex-direction: column;
-		}
-
-		.profile-form {
-			padding: 20px 15px;
-		}
-	}
-</style>
-
-<main>
 	<%- include('../partials/fuelSidebar') %>
-	
+
 	<div id="main-wrapper">
-		<!-- Page Header -->
-		<div class="page-header">
-			<i class="fas fa-user-circle"></i>
-			<h5>My Profile</h5>
+		<%- include('../partials/alerts') %>
+
+		<div class="mb-5">
+			<h1 class="hero-title mb-0">Partner <span>Profile</span></h1>
+			<p class="text-muted">Manage your tactical credentials and delivery logistics.</p>
 		</div>
 
-		<!-- Profile Container -->
-		<div class="profile-container">
-			<form action="/fueldeliveryboy/profile?_method=PUT" method="POST" enctype="multipart/form-data" class="profile-card">
-				<!-- Profile Header with Avatar -->
-				<div class="profile-header">
-					<div class="avatar-wrapper">
-						<img id="profilePreview" src="<%= currentUser.profilePic || 'data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 200 200%22%3E%3Ccircle cx=%22100%22 cy=%22100%22 r=%22100%22 fill=%22%23ddd%22/%3E%3Ctext x=%2250%25%22 y=%2250%25%22 dominant-baseline=%22middle%22 text-anchor=%22middle%22 font-size=%2260%22 fill=%22%23999%22%3E%3F%3C/text%3E%3C/svg%3E' %>" alt="Profile Picture">
-						<label for="profilePic" class="avatar-edit">
-							<i class="fas fa-camera"></i>
-							<input type="file" name="profilePic" id="profilePic" accept="image/*">
-						</label>
-					</div>
+		<form action="/fueldeliveryboy/profile?_method=PUT" method="POST" enctype="multipart/form-data">
+			<div class="profile-hero">
+				<div class="position-relative d-inline-block">
+					<img id="profilePreview" src="<%= currentUser.profilePic || '/assets/images/default-avatar.png' %>" class="profile-avatar-giant" alt="Partner Avatar">
+					<label for="profilePic" class="avatar-edit-trigger">
+						<i class="fas fa-camera"></i>
+					</label>
+					<input type="file" name="profilePic" id="profilePic" accept="image/*" class="d-none">
 				</div>
+				<h2 class="fw-800 mt-3 text-dark"><%= currentUser.firstName %> <%= currentUser.lastName %></h2>
+				<p class="text-muted fw-600"><i class="fas fa-gas-pump me-2 text-warning"></i>Certified Fuel Delivery Partner</p>
+			</div>
 
-				<div class="profile-name text-center pb-3">
-					<h4><%= currentUser.firstName %> <%= currentUser.lastName %></h4>
-					<span class="role-badge"><i class="fas fa-gas-pump me-1"></i> Fuel Delivery Partner</span>
-				</div>
-
-				<div class="profile-form">
-					<!-- Basic Information Section -->
-					<div class="form-section">
-						<h5 class="section-title"><i class="fas fa-user"></i>Basic Information</h5>
-						
-						<div class="row g-3">
-							<div class="col-md-6">
-								<label for="first-name" class="form-label">First Name</label>
-								<div class="input-icon-group">
-									<i class="fas fa-user icon-left"></i>
-									<input type="text" name="fueldeliveryboy[firstName]" class="form-control" id="first-name" placeholder="Enter first name" value="<%= currentUser.firstName %>" required>
-								</div>
-							</div>
-							<div class="col-md-6">
-								<label for="last-name" class="form-label">Last Name</label>
-								<div class="input-icon-group">
-									<i class="fas fa-user icon-left"></i>
-									<input type="text" name="fueldeliveryboy[lastName]" class="form-control" id="last-name" placeholder="Enter last name" value="<%= currentUser.lastName %>" required>
-								</div>
-							</div>
+			<div class="row">
+				<div class="col-lg-8">
+					<div class="intel-section">
+						<div class="intel-header">
+							<i class="fas fa-user-shield"></i>
+							<h5>Identity Intel</h5>
 						</div>
-
-						<div class="row g-3 mt-2">
+						<div class="row g-4">
 							<div class="col-md-6">
-								<label for="email" class="form-label">Email Address</label>
-								<div class="input-icon-group">
-									<i class="fas fa-envelope icon-left"></i>
-									<input type="email" id="email" class="form-control" value="<%= currentUser.email %>" disabled>
+								<div class="form-floating">
+									<input type="text" name="firstName" class="form-control" id="fName" value="<%= currentUser.firstName %>" required>
+									<label for="fName">First Name</label>
 								</div>
 							</div>
 							<div class="col-md-6">
-								<label for="phone" class="form-label">Phone Number</label>
-								<div class="input-icon-group">
-									<i class="fas fa-phone icon-left"></i>
-									<input type="text" name="fueldeliveryboy[phone]" class="form-control" id="phone" placeholder="Enter phone number" value="<%= currentUser.phone %>">
+								<div class="form-floating">
+									<input type="text" name="lastName" class="form-control" id="lName" value="<%= currentUser.lastName %>" required>
+									<label for="lName">Last Name</label>
 								</div>
 							</div>
-						</div>
-
-						<div class="mt-3">
-							<label class="form-label">Gender</label>
-							<div class="gender-group">
-								<div class="gender-option">
-									<input type="radio" name="fueldeliveryboy[gender]" id="male" value="male" <% if(currentUser.gender=='male'){%> checked <%}%>>
-									<label for="male">
-										<i class="fas fa-mars"></i> Male
+							<div class="col-12">
+								<div class="form-floating text-muted">
+									<input type="email" class="form-control bg-light" id="email" value="<%= currentUser.email %>" disabled>
+									<label for="email">Encrypted Comms ID (Email)</label>
+								</div>
+							</div>
+							<div class="col-12">
+								<label class="small fw-800 text-muted mb-2 text-uppercase">Partner Designation</label>
+								<div class="gender-tactical">
+									<label class="gender-btn <%= currentUser.gender === 'male' ? 'active' : '' %>">
+										<input type="radio" name="gender" value="male" <%= currentUser.gender === 'male' ? 'checked' : '' %>>
+										<i class="fas fa-mars me-2"></i> Male
 									</label>
-								</div>
-								<div class="gender-option">
-									<input type="radio" name="fueldeliveryboy[gender]" id="female" value="female" <% if(currentUser.gender=='female'){%> checked <%}%>>
-									<label for="female">
-										<i class="fas fa-venus"></i> Female
+									<label class="gender-btn <%= currentUser.gender === 'female' ? 'active' : '' %>">
+										<input type="radio" name="gender" value="female" <%= currentUser.gender === 'female' ? 'checked' : '' %>>
+										<i class="fas fa-venus me-2"></i> Female
 									</label>
 								</div>
 							</div>
 						</div>
-
-						<div class="mt-3">
-							<label for="address" class="form-label">Address</label>
-							<div class="input-icon-group">
-								<i class="fas fa-map-marker-alt icon-left"></i>
-								<input type="text" name="fueldeliveryboy[address]" class="form-control" id="address" placeholder="Enter your address" value="<%= currentUser.address || '' %>">
-							</div>
-						</div>
 					</div>
 
-					<!-- Professional Details Section -->
-					<div class="form-section">
-						<h5 class="section-title"><i class="fas fa-briefcase"></i>Professional Details</h5>
-						
-						<div class="row g-3">
-							<div class="col-md-6">
-								<label for="experience" class="form-label">Years of Experience</label>
-								<div class="input-icon-group">
-									<i class="fas fa-clock icon-left"></i>
-									<input type="number" name="fueldeliveryboy[experience]" class="form-control" id="experience" placeholder="e.g. 3" value="<%= currentUser.experience || '' %>">
+					<div class="intel-section">
+						<div class="intel-header">
+							<i class="fas fa-satellite-dish"></i>
+							<h5>Operational Contact</h5>
+						</div>
+						<div class="row g-4">
+							<div class="col-12">
+								<div class="form-floating">
+									<input type="text" name="address" class="form-control" id="addr" value="<%= currentUser.address %>">
+									<label for="addr">Base of Operations (Address)</label>
 								</div>
 							</div>
-							<div class="col-md-6">
-								<label for="availability" class="form-label">Available Time Slots</label>
-								<div class="input-icon-group">
-									<i class="fas fa-calendar-check icon-left"></i>
-									<input type="text" name="fueldeliveryboy[availability]" class="form-control" id="availability" placeholder="e.g. 9am - 6pm" value="<%= currentUser.availability || '' %>">
+							<div class="col-12">
+								<div class="form-floating">
+									<input type="tel" name="phone" class="form-control" id="tel" value="<%= currentUser.phone %>">
+									<label for="tel">Tactical Phone Line</label>
 								</div>
 							</div>
 						</div>
 					</div>
+				</div>
 
-					<!-- Vehicle Information Section -->
-					<div class="form-section">
-						<h5 class="section-title"><i class="fas fa-truck"></i>Vehicle Information</h5>
-						
-						<div class="row g-3">
-							<div class="col-md-6">
-								<label for="licensePlate" class="form-label">Vehicle Number</label>
-								<div class="input-icon-group">
-									<i class="fas fa-id-card icon-left"></i>
-									<input type="text" name="fueldeliveryboy[licensePlate]" class="form-control" id="licensePlate" placeholder="e.g. UP16 AB 1234" value="<%= currentUser.licensePlate || '' %>">
-								</div>
-							</div>
-							<div class="col-md-6">
-								<label for="vehicleModel" class="form-label">Vehicle Model</label>
-								<div class="input-icon-group">
-									<i class="fas fa-car icon-left"></i>
-									<input type="text" name="fueldeliveryboy[vehicleModel]" class="form-control" id="vehicleModel" placeholder="e.g. Hyundai i10" value="<%= currentUser.vehicleModel || '' %>">
-								</div>
-							</div>
+				<div class="col-lg-4">
+					<div class="intel-section">
+						<div class="intel-header">
+							<i class="fas fa-medal"></i>
+							<h5>Field Experience</h5>
+						</div>
+						<div class="form-floating mb-4">
+							<input type="number" name="experience" class="form-control" id="exp" value="<%= currentUser.experience || '' %>">
+							<label for="exp">Service Years</label>
+						</div>
+						<div class="form-floating">
+							<input type="text" name="availability" class="form-control" id="avail" value="<%= currentUser.availability || '' %>">
+							<label for="avail">Duty Cycles (Availability)</label>
 						</div>
 					</div>
 
-					<!-- Submit Button -->
-					<button type="submit" class="submit-btn">
-						<i class="fas fa-save"></i>Update Profile
+					<div class="intel-section">
+						<div class="intel-header">
+							<i class="fas fa-truck"></i>
+							<h5>Logistics Info</h5>
+						</div>
+						<div class="form-floating mb-4">
+							<input type="text" name="licensePlate" class="form-control" id="plate" value="<%= currentUser.licensePlate || '' %>">
+							<label for="plate">Unit Registration (License #)</label>
+						</div>
+						<div class="form-floating">
+							<input type="text" name="vehicleModel" class="form-control" id="model" value="<%= currentUser.vehicleModel || '' %>">
+							<label for="model">Unit Model</label>
+						</div>
+					</div>
+
+					<button type="submit" class="btn-yellow w-100 py-4 fw-800 text-uppercase letter-spacing-1">
+						<i class="fas fa-sync-alt me-2"></i> Save Profile Data
 					</button>
 				</div>
-			</form>
-		</div>
+			</div>
+		</form>
 	</div>
-</main>
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
-<script src="/assets/js/script.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+	<script src="/assets/js/script.js"></script>
+	<script>
+		// Image Sync Logic
+		const fileInput = document.getElementById('profilePic');
+		const previewImg = document.getElementById('profilePreview');
 
-<script>
-	// Profile Picture Preview and Sync
-	const fileInput = document.getElementById('profilePic');
-	const previewImg = document.getElementById('profilePreview');
-
-	if (fileInput && previewImg) {
-		fileInput.addEventListener('change', function () {
-			const file = this.files[0];
-			if (file && file.type.startsWith('image/')) {
-				const reader = new FileReader();
-				reader.onload = function (e) {
-					const imageData = e.target.result;
-					previewImg.src = imageData;
-					// Store in localStorage for header sync
-					localStorage.setItem('profilePhotoPreview', imageData);
-				};
-				reader.readAsDataURL(file);
-			}
-		});
-	}
-
-	// Form submission handler to sync header
-	const form = document.querySelector('form');
-	if (form) {
-		form.addEventListener('submit', function() {
-			// Clear the localStorage preview when actually submitting
-			localStorage.removeItem('profilePhotoPreview');
-		});
-	}
-
-	// Check for any stored preview on page load
-	window.addEventListener('load', function() {
-		if (previewImg) {
-			const storedPreview = localStorage.getItem('profilePhotoPreview');
-			if (storedPreview) {
-				previewImg.src = storedPreview;
-			}
+		if (fileInput && previewImg) {
+			fileInput.addEventListener('change', function () {
+				const file = this.files[0];
+				if (file && file.type.startsWith('image/')) {
+					const reader = new FileReader();
+					reader.onload = function (e) {
+						const imageData = e.target.result;
+						previewImg.src = imageData;
+						// Store in localStorage for header sync
+						localStorage.setItem('profilePhotoPreview', imageData);
+					};
+					reader.readAsDataURL(file);
+				}
+			});
 		}
-	});
-</script>
 
+		// Tactical Gender Toggle
+		document.querySelectorAll('.gender-btn').forEach(btn => {
+			btn.addEventListener('click', function() {
+				document.querySelectorAll('.gender-btn').forEach(b => b.classList.remove('active'));
+				this.classList.add('active');
+			});
+		});
+
+		// Form submission handler to sync header
+		const form = document.querySelector('form');
+		if (form) {
+			form.addEventListener('submit', function() {
+				// Clear the localStorage preview when actually submitting
+				localStorage.removeItem('profilePhotoPreview');
+			});
+		}
+
+		// Check for any stored preview on page load
+		window.addEventListener('load', function() {
+			if (previewImg) {
+				const storedPreview = localStorage.getItem('profilePhotoPreview');
+				if (storedPreview) {
+					previewImg.src = storedPreview;
+				}
+			}
+		});
+	</script>
 </body>
 </html>

@@ -1,173 +1,353 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
 	<meta charset="UTF-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<meta name="theme-color" content="#3f51b5">
-	<link href="https://fonts.googleapis.com/css?family=Dosis:200,300,400,500,700" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css?family=Overpass:300,400,400i,600,700" rel="stylesheet">
+	<title>Service Detailed Log | RoadAid Admin</title>
 
-    <link rel="stylesheet" href="/assets/css/open-iconic-bootstrap.min.css">
-    <link rel="stylesheet" href="/assets/css/animate.css">
-    
-    <link rel="stylesheet" href="/assets/css/owl.carousel.min.css">
-    <link rel="stylesheet" href="/assets/css/owl.theme.default.min.css">
-    <link rel="stylesheet" href="/assets/css/magnific-popup.css">
+	<!-- Fonts -->
+	<link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800&display=swap" rel="stylesheet">
 
-    <link rel="stylesheet" href="/assets/css/aos.css">
-
-    <link rel="stylesheet" href="/assets/css/ionicons.min.css">
-
-    <link rel="stylesheet" href="/assets/css/bootstrap-datepicker.css">
-    <link rel="stylesheet" href="/assets/css/jquery.timepicker.css">
-
-    <link rel="stylesheet" href="/assets/css/font-awesome.min.css">
-    
-    <link rel="stylesheet" href="/assets/css/flaticon.css">
-    <link rel="stylesheet" href="/assets/css/icomoon.css">
-	<link rel="stylesheet" href="/assets/css/style.css">
-    
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" integrity="sha512-1ycn6IcaQQ40/MKBW2W4Rhis/DbILU74C1vSrLJxCq57o941Ym01SwNsOMqvEBFlcgUa6xLiPY/NS5R+E6ztJQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
-	<link rel="stylesheet" href="/assets/css/sidebar.css">
+	<!-- CSS -->
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css">
+	<link rel="stylesheet" href="/assets/css/dashboard-redesign.css">
 	<link rel="icon" type="image/png" href="/assets/images/FUEL AID_logo.png">
-	<!-- <link rel="stylesheet" href="/assets/css/sidebar.css"> -->
-	<title> <%= typeof title != 'undefined' ? title : "FuelAid" %> </title>
+
+	<style>
+		body {
+			background-color: var(--primary-bg);
+			color: var(--text-light);
+			font-family: var(--font-main);
+		}
+
+		#main-wrapper {
+			margin-left: 280px;
+			padding: 2.5rem;
+			min-height: 100vh;
+		}
+
+		.page-header {
+			margin-bottom: 3rem;
+			border-left: 5px solid var(--accent-yellow);
+			padding-left: 1.5rem;
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+		}
+
+		.page-header h2 {
+			font-weight: 800;
+			margin: 0;
+			text-transform: uppercase;
+			letter-spacing: 1px;
+		}
+
+		.log-container {
+			display: grid;
+			grid-template-columns: 1fr 380px;
+			gap: 2.5rem;
+		}
+
+		/* Main Content */
+		.log-main-card {
+			background: var(--card-bg);
+			border-radius: 30px;
+			padding: 3rem;
+			border: 1px solid #333;
+			color: var(--text-dark);
+		}
+
+		.section-header-v {
+			font-size: 0.8rem;
+			font-weight: 800;
+			text-transform: uppercase;
+			color: #111;
+			letter-spacing: 2px;
+			margin-bottom: 2rem;
+			display: flex;
+			align-items: center;
+			gap: 1rem;
+		}
+
+		.section-header-v::after {
+			content: "";
+			flex: 1;
+			height: 1px;
+			background: #eee;
+		}
+
+		.service-info-grid {
+			display: grid;
+			grid-template-columns: repeat(2, 1fr);
+			gap: 2.5rem;
+			margin-bottom: 3.5rem;
+		}
+
+		.info-block label {
+			display: block;
+			font-size: 0.65rem;
+			text-transform: uppercase;
+			font-weight: 700;
+			color: #999;
+			margin-bottom: 0.5rem;
+		}
+
+		.info-block span {
+			font-size: 1.1rem;
+			font-weight: 700;
+			color: #111;
+			line-height: 1.4;
+		}
+
+		.sub-services-list {
+			list-style: none;
+			padding: 0;
+			margin: 0;
+			display: flex;
+			flex-wrap: wrap;
+			gap: 0.75rem;
+		}
+
+		.sub-service-chip {
+			background: #f0f0f0;
+			padding: 0.5rem 1.25rem;
+			border-radius: 50px;
+			font-size: 0.85rem;
+			font-weight: 700;
+			color: #111;
+			border: 1px solid #ddd;
+		}
+
+		/* Sidebar Info */
+		.log-sidebar {
+			display: flex;
+			flex-direction: column;
+			gap: 2rem;
+		}
+
+		.side-status-card {
+			background: #111;
+			border-radius: 25px;
+			padding: 2.5rem;
+			color: #fff;
+			text-align: center;
+		}
+
+		.current-status-hero {
+			display: block;
+			font-size: 0.7rem;
+			font-weight: 800;
+			text-transform: uppercase;
+			letter-spacing: 3px;
+			color: var(--accent-yellow);
+			margin-bottom: 1rem;
+		}
+
+		.status-badge-hero {
+			display: inline-block;
+			padding: 0.75rem 2rem;
+			border-radius: 12px;
+			background: rgba(255, 255, 255, 0.05);
+			border: 1px solid #333;
+			font-size: 1.5rem;
+			font-weight: 800;
+			text-transform: uppercase;
+		}
+
+		.provider-summary-card {
+			background: var(--card-bg);
+			border-radius: 25px;
+			padding: 2rem;
+			border: 1px solid #333;
+			overflow: hidden;
+			color: var(--text-dark);
+		}
+
+		.provider-avatar-badge {
+			width: 60px;
+			height: 60px;
+			background: #f0f0f0;
+			border-radius: 15px;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			font-size: 1.5rem;
+			font-weight: 800;
+			margin-bottom: 1.5rem;
+			border: 2px solid var(--accent-yellow);
+		}
+
+		.contact-action-box {
+			margin-top: 1.5rem;
+			padding-top: 1.5rem;
+			border-top: 1px solid #eee;
+		}
+
+		.btn-call-v {
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			gap: 0.75rem;
+			width: 100%;
+			padding: 0.8rem;
+			background: #111;
+			color: #fff;
+			border-radius: 12px;
+			text-decoration: none;
+			font-weight: 800;
+			font-size: 0.8rem;
+			text-transform: uppercase;
+			transition: var(--transition);
+		}
+
+		.btn-call-v:hover {
+			background: var(--accent-yellow);
+			color: #000;
+		}
+
+		@media (max-width: 1100px) {
+			.log-container {
+				grid-template-columns: 1fr;
+			}
+		}
+
+		@media (max-width: 991px) {
+			#main-wrapper {
+				margin-left: 0;
+				padding: 1.5rem;
+			}
+		}
+	</style>
 </head>
 
-<body>
+<body class="dashboard-body">
 	<%- include('../partials/header') %>
-	<%- include('../partials/alerts') %>
+		<%- include('../partials/adminSidebar', { title: 'Service Log Details' }) %>
 
-
-<style>
-    header{
-		background-color: #403d3d!important;
-	}
-   header .navbar, .bg-dark, .navbar-dark, .navbar-light {
-	background-color: #403d3d!important;
-      background-image: none !important;
-      box-shadow: none !important;
-   }
-   #main-wrapper{
-	overflow-y: scroll;  
-}
-
-#main-wrapper::-webkit-scrollbar {
-  display: none;                  /* For Chrome, Safari, Edge */
-}
-.butn{
-  background-color: #e69500 !important;
-      color: white;
-      border: none;
-      border-radius: 5px;
-      width:100%;
-}
-.butn:hover {
-      background: #f1c999;
-    }
-	.logo-container img {
-    height: 0.9em;
-    width: auto;
-}
-.mb-2 span{
-	color: #403d3d;
-}
-   </style>
-<main>
-	<%- include('../partials/adminSidebar') %>
-	
-	<div id="main-wrapper">
-		<br>
-		<div class="bg-white shadow-sm p-3">
-			<span class="me-3" id="sidebar-toggler-btn"><i class="fas fa-bars"></i></span>
-			<h5 class="m-0 color-theme d-inline-block">Delivery</h5>
-		</div>
-		
-		<div class="border m-4 my-3 p-4 bg-white rounded-2 shadow-sm">
-			<div class="mb-2">
-				<span><b>Customer Name:</b></span>
-				<span><%= donation.customer.firstName + " " + donation.customer.lastName %></span>
-			</div>
-			
-			<div class="mb-2">
-				<span><b>Service Category:</b></span>
-				<span><%= donation.serviceCategory %></span>
-			</div>
-			
-			<div class="mb-2">
-				<span><b>Sub-services:</b></span>
-				<ul class="mb-2">
-					<% donation.subServices.forEach(sub => { %>
-					  <li><%= sub %></li>
-					<% }) %>
-				  </ul>
-			</div>
-			
-			<% if (donation.quantity) { %>
-				<div class="mb-2">
-				  <span><b>Quantity:</b></span>
-				  <span><%= donation.quantity %></span>
+			<div id="main-wrapper">
+				<div class="page-header">
+					<h2>Detailed <span>Log</span></h2>
+					<p class="text-muted mb-0">Record #<%= donation._id.toString().toUpperCase().slice(-8) %>
+					</p>
 				</div>
-				<% } %>
-			
-			<div class="mb-2">
-				<span><b>Address:</b></span>
-				<span><%= donation.address %></span>
-			</div>
-			
-			<div class="mb-2">
-				<span><b>Phone:</b></span>
-				<span><%= donation.phone %></span>
+
+				<%- include('../partials/alerts') %>
+
+					<div class="log-container">
+						<!-- Main Content -->
+						<div class="log-main-card">
+							<div class="section-header-v"><i class="fas fa-file-invoice me-3"></i> Core Requirements
+							</div>
+
+							<div class="service-info-grid">
+								<div class="info-block">
+									<label>Assistance Category</label>
+									<span class="text-uppercase">
+										<%= donation.serviceCategory %> Assistance
+									</span>
+								</div>
+								<div class="info-block text-end">
+									<label>Recorded Timestamp</label>
+									<span>
+										<%= new Date(donation.createdAt).toLocaleString([], { dateStyle: 'medium' ,
+											timeStyle: 'short' }) %>
+									</span>
+								</div>
+								<div class="info-block" style="grid-column: span 2;">
+									<label>Sub-Services Manifest</label>
+									<div class="sub-services-list">
+										<% donation.subServices.forEach(sub=> { %>
+											<div class="sub-service-chip">
+												<%= sub %>
+											</div>
+											<% }) %>
+									</div>
+								</div>
+							</div>
+
+							<div class="section-header-v"><i class="fas fa-map-location-dot me-3"></i> Deployment
+								Logistics</div>
+
+							<div class="service-info-grid">
+								<div class="info-block" style="grid-column: span 2;">
+									<label>Mission Endpoint Address</label>
+									<span>
+										<%= donation.address %>
+									</span>
+								</div>
+								<% if (donation.quantity) { %>
+									<div class="info-block">
+										<label>Volume Metrics</label>
+										<span class="text-warning">
+											<%= donation.quantity %> Litres Authorized
+										</span>
+									</div>
+									<% } %>
+										<div class="info-block">
+											<label>Reference Auth Phone</label>
+											<span>+91 <%= donation.phone %></span>
+										</div>
+							</div>
+						</div>
+
+						<!-- Sidebar Info -->
+						<div class="log-sidebar">
+							<div class="side-status-card">
+								<span class="current-status-hero">Current Phase</span>
+								<div class="status-badge-hero">
+									<%= donation.status %>
+								</div>
+							</div>
+
+							<% if(donation.status==="completed" ) { %>
+								<div class="provider-summary-card">
+									<div class="section-header-v" style="margin-bottom: 1.5rem;">Fulfillment Partner
+									</div>
+
+									<% if(donation.serviceCategory==="fuel" ) { %>
+										<div class="provider-avatar-badge">
+											<i class="fas fa-shuttle-van"></i>
+										</div>
+										<h6 class="mb-1 text-uppercase fw-bold">
+											<%= donation.fueldeliveryboy.firstName %>
+												<%= donation.fueldeliveryboy.lastName %>
+										</h6>
+										<p class="small text-muted mb-3">Professional Dispatch Op</p>
+										<% } else { %>
+											<div class="provider-avatar-badge">
+												<i class="fas fa-wrench"></i>
+											</div>
+											<h6 class="mb-1 text-uppercase fw-bold">
+												<%= donation.mechanic.firstName %>
+													<%= donation.mechanic.lastName %>
+											</h6>
+											<p class="small text-muted mb-3">Certified Service Mechanic</p>
+											<% } %>
+
+												<div class="contact-action-box">
+													<a href="tel:+91<%= donation.phone %>" class="btn-call-v">
+														<i class="fas fa-phone"></i> Verify Terminal
+													</a>
+												</div>
+								</div>
+								<% } %>
+
+									<div class="provider-summary-card">
+										<div class="section-header-v" style="margin-bottom: 1.5rem;">Client Identity
+										</div>
+										<h6 class="mb-1 text-uppercase fw-bold">
+											<%= donation.customer.firstName %>
+												<%= donation.customer.lastName %>
+										</h6>
+										<p class="small text-muted mb-0">Platform Registered User</p>
+									</div>
+						</div>
+					</div>
 			</div>
 
-			<% if(donation.serviceCategory == "fuel" && donation.status == "completed") { %>
-			<div class="mb-2">
-				<span><b>Assigned delivery boy:</b></span>
-				<span><%= donation.fueldeliveryboy.firstName %> <%= donation.fueldeliveryboy.lastName %></span>
-			</div>
-			<% } %>
-
-			<% if(donation.serviceCategory != "fuel" && donation.status == "completed") { %>
-				<div class="mb-2">
-					<span><b>Assigned mechanic:</b></span>
-					<span><%= donation.mechanic.firstName %> <%= donation.mechanic.lastName %></span>
-				</div>
-				<% } %>
-			<!-- <% if(donation.customerToAdminMsg != "") { %>
-				<div class="mb-2">
-					<span>Message from customer:</span>
-					<div class="ms-3"><%= donation.customerToAdminMsg %></div>
-				</div>
-			<% } %> -->
-				
-			<div class="mb-2">
-				<span><b>Status:</b></span>
-				<span class="fw-bold text-<%= donation.status %>"><%= donation.status %></span>
-			</div>
-			
-			<!-- <% if(donation.status == "assigned" && donation.adminTomechanicMsg != "") { %>
-				<div class="mb-2">
-					<span>Your message to mechanic:</span>
-					<div class="ms-3"><%= donation.adminTomechanicMsg %></div>
-				</div>
-			<% } %> -->
-			
-			<!-- <div class="mt-4">
-				<% if(donation.status == "pending") { %>
-					<a href="/admin/donation/accept/<%= donation._id %>" class="btn">Accept</a>
-					<a href="/admin/donation/reject/<%= donation._id %>" class="btn btn-danger">Reject</a>
-				<% } else if(donation.status == "accepted") { %>
-					<a href="/admin/donation/assign/<%= donation._id %>" class="btn">Assign mechanic</a>
-				<% } %>
-			</div> -->
-			
-		</div>
-		
-	</div>
-</main>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
-	<script src="/assets/js/script.js"></script>
+			<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
+
 </html>

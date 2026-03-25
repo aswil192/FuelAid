@@ -22,7 +22,7 @@
 //           limit: 1,
 //         },
 //         headers: {
-//           'User-mechanic': 'Samvedana/1.0 (ribhanishal@gmail.com)', // Replace with your app name and contact email
+//           'User-mechanic': 'FuelAid/1.0 ([EMAIL_ADDRESS])', // Replace with your app name and contact email
 //         },
 //       });
 

@@ -2,475 +2,210 @@
 <html lang="en">
 <head>
 	<meta charset="UTF-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<meta name="theme-color" content="#1e3c72">
-	<link href="https://fonts.googleapis.com/css?family=Dosis:200,300,400,500,700" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css?family=Overpass:300,400,400i,600,700" rel="stylesheet">
+	<title>Finance Command | RoadAid</title>
 
-    <link rel="stylesheet" href="/assets/css/open-iconic-bootstrap.min.css">
-    <link rel="stylesheet" href="/assets/css/animate.css">
-    
-    <link rel="stylesheet" href="/assets/css/owl.carousel.min.css">
-    <link rel="stylesheet" href="/assets/css/owl.theme.default.min.css">
-    <link rel="stylesheet" href="/assets/css/magnific-popup.css">
+	<!-- Fonts -->
+	<link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800&display=swap" rel="stylesheet">
 
-    <link rel="stylesheet" href="/assets/css/aos.css">
-
-    <link rel="stylesheet" href="/assets/css/ionicons.min.css">
-
-    <link rel="stylesheet" href="/assets/css/bootstrap-datepicker.css">
-    <link rel="stylesheet" href="/assets/css/jquery.timepicker.css">
-
-    <link rel="stylesheet" href="/assets/css/font-awesome.min.css">
-    
-    <link rel="stylesheet" href="/assets/css/flaticon.css">
-    <link rel="stylesheet" href="/assets/css/icomoon.css">
-	<link rel="stylesheet" href="/assets/css/style.css">
-    
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" integrity="sha512-1ycn6IcaQQ40/MKBW2W4Rhis/DbILU74C1vSrLJxCq57o941Ym01SwNsOMqvEBFlcgUa6xLiPY/NS5R+E6ztJQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
-	<link rel="stylesheet" href="/assets/css/sidebar.css">
+	<!-- CSS -->
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css">
+	<link rel="stylesheet" href="/assets/css/dashboard-redesign.css">
 	<link rel="icon" type="image/png" href="/assets/images/FUEL AID_logo.png">
-	<title><%= typeof title != 'undefined' ? title : "My Earnings - FuelAid" %></title>
+
+	<style>
+		body {
+			background-color: var(--primary-bg);
+			color: var(--text-light);
+			font-family: var(--font-main);
+		}
+
+		#main-wrapper {
+			margin-left: 280px;
+			padding: 2.5rem;
+			min-height: 100vh;
+		}
+
+		.revenue-hero {
+			background: var(--card-bg);
+			border-radius: 30px;
+			padding: 4rem;
+			text-align: center;
+			margin-bottom: 3rem;
+			border: 1px solid #eee;
+			position: relative;
+			overflow: hidden;
+		}
+
+		.revenue-hero::after {
+			content: '\f156';
+			font-family: 'Font Awesome 6 Free';
+			font-weight: 900;
+			position: absolute;
+			font-size: 15rem;
+			color: rgba(0,0,0,0.03);
+			top: -2rem;
+			right: -2rem;
+		}
+
+		.revenue-amount {
+			font-size: 5rem;
+			font-weight: 900;
+			color: #000;
+			margin: 1rem 0;
+			letter-spacing: -2px;
+		}
+
+		.finance-tile {
+			background: #fff;
+			border-radius: 20px;
+			padding: 2rem;
+			border: 1px solid #eee;
+			text-align: center;
+			transition: var(--transition);
+		}
+
+		.finance-tile:hover { transform: translateY(-10px); }
+
+		.finance-icon {
+			width: 60px;
+			height: 60px;
+			background: #f8f9fa;
+			border-radius: 15px;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			margin: 0 auto 1.5rem;
+			color: var(--accent-yellow);
+			font-size: 1.5rem;
+		}
+
+		.ledger-card {
+			background: #fff;
+			border-radius: 25px;
+			border: 1px solid #eee;
+			overflow: hidden;
+		}
+
+		.ledger-header {
+			padding: 2rem;
+			border-bottom: 2px solid #f8f9fa;
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+		}
+
+		.credit-entry {
+			padding: 1.5rem 2rem;
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+			border-bottom: 1px solid #f8f9fa;
+			transition: var(--transition);
+		}
+
+		.credit-entry:hover { background: rgba(0,0,0,0.01); }
+
+		.intel-manual {
+			background: #111;
+			color: #fff;
+			border-radius: 25px;
+			padding: 3rem;
+			margin-top: 3rem;
+		}
+
+		@media (max-width: 991px) {
+			#main-wrapper { margin-left: 0; padding: 1.5rem; }
+		}
+	</style>
 </head>
 
-<body>
+<body class="dashboard-body">
 	<%- include('../partials/header') %>
-	<%- include('../partials/alerts') %>
-
-<style>
-	/* Header Styling */
-	header {
-		background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%)!important;
-		box-shadow: 0 4px 15px rgba(0,0,0,0.2)!important;
-	}
-	header .navbar, .bg-dark, .navbar-dark, .navbar-light {
-		background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%)!important;
-		background-image: none !important;
-		box-shadow: none !important;
-	}
-	.logo-container img {
-		height: 0.9em;
-		width: auto;
-	}
-
-	#main-wrapper {
-		overflow-y: scroll;
-		background: linear-gradient(135deg, #f5f7fa 0%, #e4e8ec 100%);
-		min-height: 100vh;
-	}
-
-	#main-wrapper::-webkit-scrollbar {
-		display: none;
-	}
-
-	/* Animations */
-	@keyframes slideInDown {
-		from {
-			opacity: 0;
-			transform: translateY(-30px);
-		}
-		to {
-			opacity: 1;
-			transform: translateY(0);
-		}
-	}
-
-	@keyframes slideInUp {
-		from {
-			opacity: 0;
-			transform: translateY(30px);
-		}
-		to {
-			opacity: 1;
-			transform: translateY(0);
-		}
-	}
-
-	@keyframes fadeInScale {
-		from {
-			opacity: 0;
-			transform: scale(0.95);
-		}
-		to {
-			opacity: 1;
-			transform: scale(1);
-		}
-	}
-
-	/* Page Header */
-	.page-header {
-		background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
-		padding: 25px 30px;
-		border-radius: 15px;
-		margin: 20px;
-		box-shadow: 0 8px 25px rgba(30, 60, 114, 0.3);
-		display: flex;
-		align-items: center;
-		gap: 15px;
-		animation: slideInDown 0.6s ease-out;
-	}
-
-	.page-header h5 {
-		color: white;
-		margin: 0;
-		font-size: 26px;
-		font-weight: 700;
-	}
-
-	.page-header i {
-		font-size: 24px;
-		color: white;
-	}
-
-	/* Earnings Overview */
-	.earnings-container {
-		padding: 0 20px 30px;
-	}
-
-	.earnings-card {
-		background: linear-gradient(135deg, #27ae60 0%, #2ecc71 100%);
-		border-radius: 20px;
-		padding: 40px;
-		margin-bottom: 25px;
-		box-shadow: 0 10px 30px rgba(39, 174, 96, 0.3);
-		text-align: center;
-		color: white;
-		position: relative;
-		overflow: hidden;
-		animation: slideInUp 0.6s ease-out;
-	}
-
-	.earnings-card::before {
-		content: '';
-		position: absolute;
-		top: -50%;
-		right: -30%;
-		width: 300px;
-		height: 300px;
-		background: rgba(255,255,255,0.1);
-		border-radius: 50%;
-	}
-
-	.earnings-card .label {
-		font-size: 16px;
-		text-transform: uppercase;
-		letter-spacing: 2px;
-		opacity: 0.9;
-		margin-bottom: 10px;
-	}
-
-	.earnings-card .amount {
-		font-size: 4rem;
-		font-weight: 700;
-		margin-bottom: 10px;
-		text-shadow: 0 2px 10px rgba(0,0,0,0.1);
-	}
-
-	.earnings-card .sub-label {
-		font-size: 14px;
-		opacity: 0.8;
-	}
-
-	/* Stats Grid */
-	.stats-grid {
-		display: grid;
-		grid-template-columns: repeat(3, 1fr);
-		gap: 20px;
-		margin-bottom: 25px;
-	}
-
-	.stat-box {
-		background: white;
-		border-radius: 15px;
-		padding: 25px;
-		text-align: center;
-		box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
-		animation: fadeInScale 0.6s ease-out;
-		transition: all 0.3s ease;
-	}
-
-	.stat-box:hover {
-		transform: translateY(-5px);
-		box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12);
-	}
-
-	.stat-box .icon {
-		width: 60px;
-		height: 60px;
-		border-radius: 50%;
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		margin: 0 auto 15px;
-	}
-
-	.stat-box .icon i {
-		font-size: 24px;
-		color: white;
-	}
-
-	.stat-box .value {
-		font-size: 28px;
-		font-weight: 700;
-		color: #2c3e50;
-		margin-bottom: 5px;
-	}
-
-	.stat-box .label {
-		font-size: 13px;
-		color: #7f8c8d;
-		text-transform: uppercase;
-		letter-spacing: 0.5px;
-	}
-
-	/* Recent Payments */
-	.section-card {
-		background: white;
-		border-radius: 15px;
-		box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
-		overflow: hidden;
-		animation: slideInUp 0.6s ease-out;
-	}
-
-	.section-header {
-		padding: 20px 25px;
-		border-bottom: 1px solid #e9ecef;
-		display: flex;
-		align-items: center;
-		gap: 10px;
-	}
-
-	.section-header h6 {
-		margin: 0;
-		font-size: 18px;
-		font-weight: 700;
-		color: #2c3e50;
-	}
-
-	.section-header h6 i {
-		color: #1e3c72;
-		margin-right: 10px;
-	}
-
-	.payment-list {
-		padding: 0;
-		margin: 0;
-		list-style: none;
-	}
-
-	.payment-item {
-		padding: 20px 25px;
-		border-bottom: 1px solid #f0f0f0;
-		display: flex;
-		justify-content: space-between;
-		align-items: center;
-		transition: all 0.3s ease;
-	}
-
-	.payment-item:hover {
-		background: #f8f9ff;
-	}
-
-	.payment-item:last-child {
-		border-bottom: none;
-	}
-
-	.payment-info {
-		display: flex;
-		align-items: center;
-		gap: 15px;
-	}
-
-	.payment-info .icon {
-		width: 45px;
-		height: 45px;
-		border-radius: 12px;
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		background: linear-gradient(135deg, #27ae60 0%, #2ecc71 100%);
-	}
-
-	.payment-info .icon i {
-		color: white;
-		font-size: 18px;
-	}
-
-	.payment-info .details h6 {
-		margin: 0 0 3px;
-		font-size: 15px;
-		font-weight: 600;
-		color: #333;
-	}
-
-	.payment-info .details p {
-		margin: 0;
-		font-size: 12px;
-		color: #666;
-	}
-
-	.payment-amount {
-		font-size: 18px;
-		font-weight: 700;
-		color: #27ae60;
-	}
-
-	/* Info Card */
-	.info-card {
-		background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
-		border-radius: 15px;
-		padding: 25px;
-		margin-top: 25px;
-		color: white;
-		animation: slideInUp 0.6s ease-out;
-	}
-
-	.info-card h6 {
-		font-weight: 700;
-		margin-bottom: 15px;
-		display: flex;
-		align-items: center;
-		gap: 10px;
-	}
-
-	.info-card ul {
-		padding-left: 20px;
-		margin: 0;
-	}
-
-	.info-card li {
-		margin-bottom: 10px;
-		opacity: 0.9;
-	}
-
-	/* Empty State */
-	.empty-state {
-		text-align: center;
-		padding: 40px 20px;
-		color: #666;
-	}
-
-	.empty-state i {
-		font-size: 50px;
-		color: #ddd;
-		margin-bottom: 15px;
-	}
-
-	/* Responsive */
-	@media (max-width: 768px) {
-		.page-header {
-			margin: 15px 10px;
-		}
-
-		.earnings-container {
-			padding: 0 10px 20px;
-		}
-
-		.earnings-card {
-			padding: 30px 20px;
-		}
-
-		.earnings-card .amount {
-			font-size: 3rem;
-		}
-
-		.stats-grid {
-			grid-template-columns: 1fr;
-		}
-	}
-</style>
-
-<main>
 	<%- include('../partials/mechanicSidebar') %>
-	
+
 	<div id="main-wrapper">
-		<!-- Page Header -->
-		<div class="page-header">
-			<i class="fas fa-wallet"></i>
-			<h5>My Earnings</h5>
+		<%- include('../partials/alerts') %>
+
+		<div class="mb-5">
+			<h1 class="hero-title mb-0">Finance <span>Command</span></h1>
+			<p class="text-muted">Secure visibility of your operational revenue and tactical earnings.</p>
 		</div>
 
-		<div class="earnings-container">
-			<!-- Main Earnings Card -->
-			<div class="earnings-card">
-				<div class="label">Pending Earnings</div>
-				<div class="amount">₹<%= (currentUser.pendingEarnings || 0).toLocaleString('en-IN') %></div>
-				<div class="sub-label">Available for withdrawal</div>
-			</div>
+		<div class="revenue-hero">
+			<span class="label-premium">Operational Credits Pending</span>
+			<div class="revenue-amount">₹<%= (currentUser.pendingEarnings || 0).toLocaleString('en-IN') %></div>
+			<p class="text-muted fw-700 text-uppercase letter-spacing-1 small">Validated & Awaiting Disbursement</p>
+			<button class="btn-yellow px-5 mt-3">Sync Wallet</button>
+		</div>
 
-			<!-- Stats Grid -->
-			<div class="stats-grid">
-				<div class="stat-box">
-					<div class="icon" style="background: linear-gradient(135deg, #27ae60 0%, #2ecc71 100%);">
-						<i class="fas fa-rupee-sign"></i>
-					</div>
-					<div class="value">₹<%= (currentUser.totalEarnings || 0).toLocaleString('en-IN') %></div>
-					<div class="label">Total Earnings</div>
-				</div>
-				<div class="stat-box">
-					<div class="icon" style="background: linear-gradient(135deg, #3498db 0%, #2980b9 100%);">
-						<i class="fas fa-check-circle"></i>
-					</div>
-					<div class="value"><%= completedJobs %></div>
-					<div class="label">Completed Jobs</div>
-				</div>
-				<div class="stat-box">
-					<div class="icon" style="background: linear-gradient(135deg, #9b59b6 0%, #8e44ad 100%);">
-						<i class="fas fa-percentage"></i>
-					</div>
-					<div class="value"><%= currentUser.commissionRate || 40 %>%</div>
-					<div class="label">Commission Rate</div>
+		<div class="row g-4 mb-5">
+			<div class="col-md-4">
+				<div class="finance-tile">
+					<div class="finance-icon"><i class="fas fa-vault"></i></div>
+					<h3 class="fw-800 text-dark">₹<%= (currentUser.totalEarnings || 0).toLocaleString('en-IN') %></h3>
+					<p class="text-muted small fw-700 text-uppercase">Cumulative Revenue</p>
 				</div>
 			</div>
+			<div class="col-md-4">
+				<div class="finance-tile">
+					<div class="finance-icon"><i class="fas fa-flag-checkered"></i></div>
+					<h3 class="fw-800 text-dark"><%= completedJobs %></h3>
+					<p class="text-muted small fw-700 text-uppercase">Mission Count</p>
+				</div>
+			</div>
+			<div class="col-md-4">
+				<div class="finance-tile">
+					<div class="finance-icon"><i class="fas fa-chart-pie"></i></div>
+					<h3 class="fw-800 text-dark"><%= currentUser.commissionRate || 40 %>%</h3>
+					<p class="text-muted small fw-700 text-uppercase">Commission Ratio</p>
+				</div>
+			</div>
+		</div>
 
-			<!-- Recent Payments -->
-			<div class="section-card">
-				<div class="section-header">
-					<h6><i class="fas fa-history"></i>Recent Payments</h6>
+		<div class="ledger-card">
+			<div class="ledger-header">
+				<h5 class="fw-800 text-dark mb-0 text-uppercase letter-spacing-1">Payment Chronology</h5>
+				<i class="fas fa-receipt text-muted"></i>
+			</div>
+			<% if (recentPayments.length === 0) { %>
+				<div class="p-5 text-center text-muted">
+					<i class="fas fa-coins mb-3 d-block" style="font-size: 3rem; opacity: 0.1;"></i>
+					<p>No credit events recorded in the current cycle.</p>
 				</div>
-				<% if (recentPayments.length === 0) { %>
-				<div class="empty-state">
-					<i class="fas fa-receipt"></i>
-					<p>No payments yet. Complete jobs to start earning!</p>
-				</div>
-				<% } else { %>
-				<ul class="payment-list">
-					<% recentPayments.forEach(payment => { %>
-					<li class="payment-item">
-						<div class="payment-info">
-							<div class="icon">
-								<i class="fas fa-check"></i>
-							</div>
-							<div class="details">
-								<h6><%= payment.serviceRequest?.serviceCategory?.toUpperCase() || 'Service' %></h6>
-								<p><%= payment.paidAt ? new Date(payment.paidAt).toLocaleDateString('en-IN', { dateStyle: 'medium' }) : 'N/A' %></p>
-							</div>
+			<% } else { %>
+				<% recentPayments.forEach(payment => { %>
+					<div class="credit-entry">
+						<div>
+							<h6 class="fw-800 text-dark mb-1 text-uppercase small"><%= payment.serviceRequest?.serviceCategory || 'Tactical Intervention' %></h6>
+							<p class="text-muted extra-small fw-600 mb-0"><%= payment.paidAt ? new Date(payment.paidAt).toLocaleDateString() : 'Pending Registry' %></p>
 						</div>
-						<div class="payment-amount">+₹<%= Math.round(payment.amount * (currentUser.commissionRate || 40) / 100) %></div>
-					</li>
-					<% }) %>
-				</ul>
-				<% } %>
-			</div>
+						<div class="text-end">
+							<h6 class="fw-900 text-success mb-0">+₹<%= Math.round(payment.amount * (currentUser.commissionRate || 40) / 100) %></h6>
+							<span class="badge bg-light text-dark extra-small">Verified</span>
+						</div>
+					</div>
+				<% }) %>
+			<% } %>
+		</div>
 
-			<!-- Info Card -->
-			<div class="info-card">
-				<h6><i class="fas fa-info-circle"></i> How Earnings Work</h6>
-				<ul>
-					<li>You receive <strong><%= currentUser.commissionRate || 40 %>%</strong> of each completed service payment.</li>
-					<li>Earnings are credited to your account after customers complete payment.</li>
-					<li>Pending earnings will be processed and paid out by the admin.</li>
-					<li>Contact admin for any payment-related queries.</li>
-				</ul>
+		<div class="intel-manual">
+			<h5 class="fw-800 text-warning mb-4 text-uppercase letter-spacing-1"><i class="fas fa-shield-halved me-2"></i> Revenue Directives</h5>
+			<div class="row g-4">
+				<div class="col-md-6">
+					<p class="small text-muted"><strong class="text-white">Ratio Allocation:</strong> You are authorized for a <%= currentUser.commissionRate || 40 %>% credit share on every successfully concluded intervention.</p>
+					<p class="small text-muted"><strong class="text-white">Credit Trigger:</strong> Revenue entry is triggered immediately upon client-side payment confirmation.</p>
+				</div>
+				<div class="col-md-6">
+					<p class="small text-muted"><strong class="text-white">Registry Sync:</strong> Disbursement cycles are managed by Central Command (HQ Admin).</p>
+					<p class="small text-muted"><strong class="text-white">Operational Help:</strong> For cryptography or credit synchronization errors, contact Technical HQ.</p>
+				</div>
 			</div>
 		</div>
 	</div>
-</main>
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
-<script src="/assets/js/script.js"></script>
-
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+	<script src="/assets/js/script.js"></script>
 </body>
 </html>

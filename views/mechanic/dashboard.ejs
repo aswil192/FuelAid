@@ -2,834 +2,443 @@
 <html lang="en">
 <head>
 	<meta charset="UTF-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<meta name="theme-color" content="#3f51b5">
-	<link href="https://fonts.googleapis.com/css?family=Dosis:200,300,400,500,700" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css?family=Overpass:300,400,400i,600,700" rel="stylesheet">
+	<title>Mechanic Command Center | RoadAid</title>
 
-    <link rel="stylesheet" href="/assets/css/open-iconic-bootstrap.min.css">
-    <link rel="stylesheet" href="/assets/css/animate.css">
-    
-    <link rel="stylesheet" href="/assets/css/owl.carousel.min.css">
-    <link rel="stylesheet" href="/assets/css/owl.theme.default.min.css">
-    <link rel="stylesheet" href="/assets/css/magnific-popup.css">
+	<!-- Fonts -->
+	<link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800&display=swap" rel="stylesheet">
 
-    <link rel="stylesheet" href="/assets/css/aos.css">
-
-    <link rel="stylesheet" href="/assets/css/ionicons.min.css">
-
-    <link rel="stylesheet" href="/assets/css/bootstrap-datepicker.css">
-    <link rel="stylesheet" href="/assets/css/jquery.timepicker.css">
-
-    <link rel="stylesheet" href="/assets/css/font-awesome.min.css">
-    
-    <link rel="stylesheet" href="/assets/css/flaticon.css">
-    <link rel="stylesheet" href="/assets/css/icomoon.css">
-	<link rel="stylesheet" href="/assets/css/style.css">
-    
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" integrity="sha512-1ycn6IcaQQ40/MKBW2W4Rhis/DbILU74C1vSrLJxCq57o941Ym01SwNsOMqvEBFlcgUa6xLiPY/NS5R+E6ztJQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
-	<link rel="stylesheet" href="/assets/css/sidebar.css">
+	<!-- CSS -->
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css">
+	<link rel="stylesheet" href="/assets/css/dashboard-redesign.css">
 	<link rel="icon" type="image/png" href="/assets/images/FUEL AID_logo.png">
-	<title> <%= typeof title != 'undefined' ? title : "FuelAid" %> </title>
+
+	<style>
+		body {
+			background-color: var(--primary-bg);
+			color: var(--text-light);
+			font-family: var(--font-main);
+		}
+
+		#main-wrapper {
+			margin-left: 280px;
+			padding: 2.5rem;
+			min-height: 100vh;
+		}
+
+		.mechanic-hero {
+			background: linear-gradient(rgba(0,0,0,0.75), rgba(0,0,0,0.85)), url('/assets/images/mechanic/hero_banner.png');
+			background-size: cover;
+			background-position: center;
+			border-radius: 30px;
+			padding: 4rem;
+			margin-bottom: 3rem;
+			border: 1px solid #333;
+			position: relative;
+			overflow: hidden;
+			box-shadow: 0 20px 50px rgba(0,0,0,0.6);
+		}
+
+		.mechanic-hero::after {
+			content: '';
+			position: absolute;
+			top: -50%;
+			right: -10%;
+			width: 500px;
+			height: 500px;
+			background: radial-gradient(circle, rgba(247, 183, 29, 0.05) 0%, transparent 70%);
+			z-index: 1;
+		}
+
+		.hero-content {
+			position: relative;
+			z-index: 2;
+		}
+
+		.hero-tag {
+			background: rgba(247, 183, 29, 0.1);
+			color: var(--accent-yellow);
+			padding: 0.5rem 1.25rem;
+			border-radius: 50px;
+			font-size: 0.75rem;
+			font-weight: 800;
+			text-transform: uppercase;
+			letter-spacing: 2px;
+			display: inline-block;
+			margin-bottom: 1.5rem;
+			border: 1px solid rgba(247, 183, 29, 0.2);
+		}
+
+		.hero-title {
+			font-weight: 800;
+			font-size: 3.5rem;
+			margin-bottom: 1.5rem;
+			letter-spacing: -1px;
+			color: #fff;
+			text-shadow: 0 4px 15px rgba(0,0,0,0.3);
+		}
+
+		.hero-title span {
+			color: var(--accent-yellow);
+		}
+
+		.hero-subtitle {
+			font-size: 1.1rem;
+			color: rgba(255,255,255,0.7);
+			max-width: 600px;
+			line-height: 1.7;
+			margin-bottom: 2rem;
+		}
+
+		.live-clock-box {
+			background: rgba(0, 0, 0, 0.4);
+			backdrop-filter: blur(10px);
+			border: 1px solid rgba(255,255,255,0.1);
+			padding: 2rem;
+			border-radius: 25px;
+			text-align: right;
+			box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+		}
+
+		.clock-time {
+			font-size: 3rem;
+			font-weight: 800;
+			color: var(--accent-yellow);
+			line-height: 1;
+			margin-bottom: 0.25rem;
+		}
+
+		.clock-date {
+			font-size: 0.85rem;
+			color: #666;
+			text-transform: uppercase;
+			font-weight: 700;
+			letter-spacing: 1px;
+		}
+
+		.metrics-grid {
+			display: grid;
+			grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+			gap: 1.5rem;
+			margin-bottom: 4rem;
+		}
+
+		.metric-card-premium {
+			background: var(--card-bg);
+			border-radius: 25px;
+			padding: 2rem;
+			display: flex;
+			flex-direction: column;
+			gap: 1rem;
+			transition: var(--transition);
+			border: 1px solid #eee;
+			color: var(--text-dark);
+		}
+
+		.metric-card-premium:hover {
+			transform: translateY(-10px);
+			box-shadow: 0 15px 40px rgba(0,0,0,0.1);
+		}
+
+		.metric-icon-box {
+			width: 60px;
+			height: 60px;
+			border-radius: 18px;
+			background: #f8f9fa;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			font-size: 1.5rem;
+			color: #111;
+			margin-bottom: 0.5rem;
+		}
+
+		.metric-value {
+			font-size: 2.5rem;
+			font-weight: 800;
+			line-height: 1;
+		}
+
+		.metric-label {
+			font-size: 0.85rem;
+			font-weight: 700;
+			color: #888;
+			text-transform: uppercase;
+			letter-spacing: 1px;
+		}
+
+		.quick-action-tile {
+			background: var(--card-bg);
+			border-radius: 25px;
+			padding: 2.5rem 2rem;
+			text-align: center;
+			transition: var(--transition);
+			text-decoration: none;
+			color: var(--text-dark);
+			border: 1px solid #eee;
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			gap: 1.25rem;
+		}
+
+		.quick-action-tile:hover {
+			background: var(--accent-yellow);
+			color: #000;
+			border-color: var(--accent-yellow);
+			transform: scale(1.05);
+		}
+
+		.action-icon-circle {
+			width: 80px;
+			height: 80px;
+			border-radius: 50%;
+			background: #f8f9fa;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			font-size: 2rem;
+			transition: var(--transition);
+		}
+
+		.quick-action-tile:hover .action-icon-circle {
+			background: rgba(0,0,0,0.1);
+			color: #000;
+		}
+
+		.guideline-container {
+			background: var(--card-bg);
+			border-radius: 30px;
+			padding: 4rem;
+			border: 1px solid #eee;
+			margin-bottom: 4rem;
+			color: var(--text-dark);
+		}
+
+		.guideline-step {
+			display: flex;
+			gap: 2rem;
+			margin-bottom: 2.5rem;
+		}
+
+		.step-num {
+			width: 50px;
+			height: 50px;
+			background: #111;
+			color: var(--accent-yellow);
+			border-radius: 15px;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			font-weight: 800;
+			flex-shrink: 0;
+		}
+
+		.step-info h5 {
+			font-weight: 800;
+			margin-bottom: 0.5rem;
+		}
+
+		.step-info p {
+			color: #666;
+			line-height: 1.6;
+			margin: 0;
+		}
+
+		@media (max-width: 991px) {
+			#main-wrapper {
+				margin-left: 0;
+				padding: 1.5rem;
+			}
+			.hero-title {
+				font-size: 2.5rem;
+			}
+			.live-clock-box {
+				text-align: left;
+				margin-top: 2rem;
+			}
+		}
+	</style>
 </head>
 
-<body>
+<body class="dashboard-body">
 	<%- include('../partials/header') %>
-	<%- include('../partials/alerts') %>
-
-<style>
-	/* Header Styling */
-	header {
-		background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%)!important;
-		box-shadow: 0 4px 15px rgba(0,0,0,0.2)!important;
-	}
-	header .navbar, .bg-dark, .navbar-dark, .navbar-light {
-		background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%)!important;
-		background-image: none !important;
-		box-shadow: none !important;
-	}
-	.logo-container img {
-		height: 0.9em;
-		width: auto;
-	}
-
-	/* Global Animations */
-	@keyframes slideInDown {
-		from {
-			opacity: 0;
-			transform: translateY(-30px);
-		}
-		to {
-			opacity: 1;
-			transform: translateY(0);
-		}
-	}
-
-	@keyframes slideInUp {
-		from {
-			opacity: 0;
-			transform: translateY(30px);
-		}
-		to {
-			opacity: 1;
-			transform: translateY(0);
-		}
-	}
-
-	@keyframes fadeInScale {
-		from {
-			opacity: 0;
-			transform: scale(0.9);
-		}
-		to {
-			opacity: 1;
-			transform: scale(1);
-		}
-	}
-
-	@keyframes pulse {
-		0%, 100% { transform: scale(1); }
-		50% { transform: scale(1.05); }
-	}
-
-	@keyframes shimmer {
-		0% { background-position: -1000px 0; }
-		100% { background-position: 1000px 0; }
-	}
-
-	@keyframes float {
-		0%, 100% { transform: translateY(0px); }
-		50% { transform: translateY(-10px); }
-	}
-
-	@keyframes countUp {
-		from { opacity: 0; transform: translateY(10px); }
-		to { opacity: 1; transform: translateY(0); }
-	}
-
-	/* Dashboard Header */
-	.dashboard-header {
-		background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
-		padding: 25px 30px;
-		border-radius: 15px;
-		margin: 20px;
-		box-shadow: 0 8px 25px rgba(30, 60, 114, 0.3);
-		display: flex;
-		align-items: center;
-		gap: 15px;
-		animation: slideInDown 0.6s ease-out;
-	}
-
-	.dashboard-header h5 {
-		color: white;
-		margin: 0;
-		font-size: 26px;
-		font-weight: 700;
-	}
-
-	.dashboard-header i {
-		font-size: 24px;
-		color: white;
-	}
-
-	/* Welcome Banner */
-	.welcome-banner {
-		background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-		border-radius: 20px;
-		padding: 30px 35px;
-		margin: 20px;
-		box-shadow: 0 10px 30px rgba(102, 126, 234, 0.3);
-		animation: slideInDown 0.6s ease-out;
-		position: relative;
-		overflow: hidden;
-	}
-
-	.welcome-banner::before {
-		content: '';
-		position: absolute;
-		top: -50%;
-		right: -20%;
-		width: 300px;
-		height: 300px;
-		background: rgba(255,255,255,0.1);
-		border-radius: 50%;
-	}
-
-	.welcome-banner h3 {
-		color: white;
-		font-weight: 700;
-		margin-bottom: 8px;
-	}
-
-	.welcome-banner p {
-		color: rgba(255,255,255,0.9);
-		margin: 0;
-		font-size: 16px;
-	}
-
-	.welcome-banner .time-display {
-		color: white;
-		text-align: right;
-	}
-
-	.welcome-banner .time-display .time {
-		font-size: 32px;
-		font-weight: 700;
-	}
-
-	.welcome-banner .time-display .date {
-		font-size: 14px;
-		opacity: 0.9;
-	}
-
-	/* Stats Cards */
-	.stats-section {
-		padding: 0 20px;
-		margin-bottom: 20px;
-	}
-
-	.stat-card {
-		background: white;
-		border-radius: 15px;
-		padding: 25px;
-		box-shadow: 0 8px 25px rgba(0,0,0,0.08);
-		transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-		border: 1px solid #e9ecef;
-		height: 100%;
-		animation: fadeInScale 0.6s ease-out;
-		position: relative;
-		overflow: hidden;
-	}
-
-	.stat-card:nth-child(1) { animation-delay: 0.1s; }
-	.stat-card:nth-child(2) { animation-delay: 0.2s; }
-	.stat-card:nth-child(3) { animation-delay: 0.3s; }
-	.stat-card:nth-child(4) { animation-delay: 0.4s; }
-
-	.stat-card:hover {
-		transform: translateY(-10px);
-		box-shadow: 0 15px 40px rgba(0,0,0,0.15);
-	}
-
-	.stat-card .icon-wrapper {
-		width: 60px;
-		height: 60px;
-		border-radius: 15px;
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		margin-bottom: 15px;
-	}
-
-	.stat-card .icon-wrapper i {
-		font-size: 28px;
-		color: white;
-	}
-
-	.stat-card .stat-value {
-		font-size: 36px;
-		font-weight: 800;
-		color: #2c3e50;
-		line-height: 1;
-		margin-bottom: 5px;
-		animation: countUp 0.8s ease-out;
-	}
-
-	.stat-card .stat-label {
-		color: #7f8c8d;
-		font-size: 14px;
-		text-transform: uppercase;
-		letter-spacing: 0.5px;
-		font-weight: 600;
-	}
-
-	.stat-card .stat-change {
-		position: absolute;
-		top: 15px;
-		right: 15px;
-		padding: 5px 10px;
-		border-radius: 20px;
-		font-size: 12px;
-		font-weight: 600;
-	}
-
-	.stat-card .stat-change.positive {
-		background: #d4edda;
-		color: #155724;
-	}
-
-	.stat-card .stat-change.neutral {
-		background: #e2e8f0;
-		color: #4a5568;
-	}
-
-	/* Quick Actions */
-	.quick-actions {
-		padding: 0 20px;
-		margin-bottom: 30px;
-	}
-
-	.section-title {
-		color: #2c3e50;
-		font-weight: 700;
-		margin-bottom: 20px;
-		position: relative;
-		padding-bottom: 12px;
-	}
-
-	.section-title::after {
-		content: '';
-		position: absolute;
-		bottom: 0;
-		left: 0;
-		width: 50px;
-		height: 4px;
-		background: linear-gradient(90deg, #1e3c72, #2a5298);
-		border-radius: 2px;
-	}
-
-	.action-btn {
-		background: white;
-		border: 2px solid #e9ecef;
-		border-radius: 15px;
-		padding: 20px 25px;
-		display: flex;
-		align-items: center;
-		gap: 15px;
-		transition: all 0.3s ease;
-		text-decoration: none;
-		color: #2c3e50;
-		height: 100%;
-		animation: slideInUp 0.6s ease-out;
-	}
-
-	.action-btn:hover {
-		border-color: #1e3c72;
-		background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
-		color: white;
-		transform: translateY(-5px);
-		box-shadow: 0 10px 25px rgba(30, 60, 114, 0.25);
-	}
-
-	.action-btn:hover .action-icon {
-		background: rgba(255,255,255,0.2);
-	}
-
-	.action-btn:hover .action-icon i {
-		color: white;
-	}
-
-	.action-icon {
-		width: 50px;
-		height: 50px;
-		border-radius: 12px;
-		background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		transition: all 0.3s ease;
-	}
-
-	.action-icon i {
-		font-size: 20px;
-		color: white;
-	}
-
-	.action-text h6 {
-		margin: 0;
-		font-weight: 700;
-		font-size: 16px;
-	}
-
-	.action-text p {
-		margin: 0;
-		font-size: 13px;
-		opacity: 0.7;
-	}
-
-	/* Guidelines Box */
-	.guidelines-box {
-		background: linear-gradient(135deg, #f8f9ff 0%, #e8ecf5 100%);
-		border-radius: 15px;
-		padding: 30px;
-		margin: 0 20px 30px;
-		box-shadow: 0 10px 30px rgba(0,0,0,0.08);
-		animation: slideInUp 0.6s ease-out;
-		border-left: 5px solid #1e3c72;
-		transition: all 0.3s ease;
-	}
-
-	.guidelines-box:hover {
-		box-shadow: 0 15px 40px rgba(0,0,0,0.12);
-		transform: translateY(-5px);
-	}
-
-	.guidelines-box h5 {
-		color: #1e3c72;
-		font-size: 22px;
-		margin-bottom: 20px!important;
-		font-weight: 700;
-	}
-
-	.guidelines-box ol {
-		padding-left: 20px;
-		margin: 0;
-	}
-
-	.guidelines-box li {
-		margin-bottom: 15px;
-		color: #34495e;
-		line-height: 1.7;
-		transition: all 0.3s ease;
-		font-size: 15px;
-	}
-
-	.guidelines-box li:hover {
-		color: #1e3c72;
-		padding-left: 10px;
-	}
-
-	.guidelines-box strong {
-		color: #e74c3c;
-		font-weight: 700;
-	}
-
-	/* Service Cards */
-	.services-section {
-		padding: 0 20px;
-		margin-bottom: 30px;
-	}
-
-	.service-card {
-		background: white;
-		border-radius: 15px;
-		padding: 25px;
-		box-shadow: 0 8px 25px rgba(0,0,0,0.08);
-		transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-		border: 1px solid #e9ecef;
-		height: 100%;
-		animation: fadeInScale 0.6s ease-out;
-		text-align: center;
-	}
-
-	.service-card:hover {
-		transform: translateY(-10px);
-		box-shadow: 0 15px 40px rgba(0,0,0,0.15);
-		border-color: #1e3c72;
-	}
-
-	.service-card .service-icon {
-		width: 70px;
-		height: 70px;
-		border-radius: 50%;
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		margin: 0 auto 15px;
-		transition: all 0.3s ease;
-	}
-
-	.service-card:hover .service-icon {
-		transform: scale(1.1);
-	}
-
-	.service-card .service-icon i {
-		font-size: 30px;
-		color: white;
-	}
-
-	.service-card h6 {
-		color: #2c3e50;
-		font-weight: 700;
-		margin-bottom: 10px;
-	}
-
-	.service-card p {
-		color: #7f8c8d;
-		font-size: 14px;
-		margin: 0;
-		line-height: 1.6;
-	}
-
-	/* Tips Section */
-	.tips-section {
-		padding: 0 20px;
-		margin-bottom: 30px;
-	}
-
-	.tips-card {
-		background: linear-gradient(135deg, #fff5e6 0%, #ffe6cc 100%);
-		border-radius: 15px;
-		padding: 25px 30px;
-		border-left: 5px solid #f39c12;
-		animation: slideInUp 0.6s ease-out;
-	}
-
-	.tips-card h5 {
-		color: #d68910;
-		font-weight: 700;
-		margin-bottom: 15px;
-	}
-
-	.tips-card ul {
-		margin: 0;
-		padding-left: 20px;
-	}
-
-	.tips-card li {
-		color: #7f5a00;
-		margin-bottom: 10px;
-		line-height: 1.6;
-	}
-
-	/* Quote Section */
-	.quote-section {
-		padding: 0 20px;
-		margin-bottom: 30px;
-	}
-
-	.quote-card {
-		background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
-		border-radius: 15px;
-		padding: 30px;
-		box-shadow: 0 10px 30px rgba(44, 62, 80, 0.3);
-		animation: slideInUp 0.6s ease-out;
-		position: relative;
-		overflow: hidden;
-	}
-
-	.quote-card::before {
-		content: '"';
-		position: absolute;
-		top: 10px;
-		left: 20px;
-		font-size: 100px;
-		color: rgba(255,255,255,0.1);
-		font-family: Georgia, serif;
-		line-height: 1;
-	}
-
-	.quote-card blockquote {
-		margin: 0;
-		position: relative;
-		z-index: 1;
-	}
-
-	.quote-card blockquote p {
-		color: white;
-		font-size: 18px;
-		font-style: italic;
-		line-height: 1.7;
-		margin-bottom: 15px;
-	}
-
-	.quote-card blockquote footer {
-		color: rgba(255,255,255,0.7);
-		font-size: 14px;
-	}
-
-	/* Responsive */
-	@media (max-width: 768px) {
-		.welcome-banner {
-			margin: 15px 10px;
-			padding: 20px;
-		}
-
-		.dashboard-header {
-			flex-direction: column;
-			text-align: center;
-			margin: 15px 10px;
-		}
-
-		.stat-card .stat-value {
-			font-size: 28px;
-		}
-
-		.guidelines-box {
-			margin: 15px 10px;
-			padding: 20px;
-		}
-	}
-</style>
-
-<main>
 	<%- include('../partials/mechanicSidebar') %>
-	
+
 	<div id="main-wrapper">
-		<!-- Dashboard Header -->
-		<div class="dashboard-header">
-			<i class="fas fa-tools"></i>
-			<h5>Mechanic Dashboard</h5>
-		</div>
+		<%- include('../partials/alerts') %>
 
-		<!-- Welcome Banner with Time -->
-		<div class="welcome-banner">
-			<div class="row align-items-center">
-				<div class="col-md-8">
-					<h3><i class="fas fa-hand-sparkles me-2"></i>Welcome back, <%= mechanic.firstName %>!</h3>
-					<p>Ready to help customers on the road? Your expertise makes a real difference in someone's day.</p>
+		<!-- Hero Section -->
+		<div class="mechanic-hero">
+			<div class="row align-items-center hero-content">
+				<div class="col-lg-8">
+					<div class="hero-tag">Operational Status: Online</div>
+					<h1 class="hero-title">Welcome Back, <span><%= mechanic.firstName %>!</span></h1>
+					<p class="hero-subtitle">You are the backbone of RoadAid. Your technical expertise keeps wheels turning and customers safe. Ready for the next mission?</p>
+					<div class="mt-4">
+						<a href="/mechanic/viewRequests" class="btn-yellow">Search Available Jobs <i class="fas fa-search-location ms-2"></i></a>
+					</div>
 				</div>
-				<div class="col-md-4">
-					<div class="time-display">
-						<div class="time" id="clock">--:--</div>
-						<div class="date" id="currentDate">Loading...</div>
+				<div class="col-lg-4">
+					<div class="live-clock-box">
+						<div class="clock-time" id="clock">--:--</div>
+						<div class="clock-date" id="currentDate">Loading...</div>
 					</div>
 				</div>
 			</div>
 		</div>
 
-		<!-- Stats Section -->
-		<div class="stats-section">
-			<div class="row g-4">
-				<div class="col-lg-3 col-md-6">
-					<div class="stat-card">
-						<div class="icon-wrapper" style="background: linear-gradient(135deg, #27ae60 0%, #2ecc71 100%);">
-							<i class="fas fa-check-circle"></i>
+		<!-- Performance Metrics -->
+		<h2 class="section-title mb-4"><i class="fas fa-chart-line me-2"></i> Performance <span>Metrics</span></h2>
+		<div class="metrics-grid">
+			<div class="metric-card-premium">
+				<div class="metric-icon-box" style="background: rgba(39, 174, 96, 0.1); color: #27ae60;">
+					<i class="fas fa-check-double"></i>
+				</div>
+				<div>
+					<div class="metric-value"><%= typeof completedJobs !== 'undefined' ? completedJobs : 0 %></div>
+					<div class="metric-label">Jobs Completed</div>
+				</div>
+			</div>
+			<div class="metric-card-premium">
+				<div class="metric-icon-box" style="background: rgba(52, 152, 219, 0.1); color: #3498db;">
+					<i class="fas fa-tools"></i>
+				</div>
+				<div>
+					<div class="metric-value"><%= typeof acceptedJobs !== 'undefined' ? acceptedJobs : 0 %></div>
+					<div class="metric-label">Active Missions</div>
+				</div>
+			</div>
+			<div class="metric-card-premium">
+				<div class="metric-icon-box" style="background: rgba(243, 156, 18, 0.1); color: #f39c12;">
+					<i class="fas fa-star"></i>
+				</div>
+				<div>
+					<div class="metric-value"><%= typeof rating !== 'undefined' ? rating.toFixed(1) : '5.0' %></div>
+					<div class="metric-label">Merchant Rating</div>
+				</div>
+			</div>
+			<div class="metric-card-premium">
+				<div class="metric-icon-box" style="background: rgba(155, 89, 182, 0.1); color: #9b59b6;">
+					<i class="fas fa-hourglass-start"></i>
+				</div>
+				<div>
+					<div class="metric-value"><%= typeof pendingJobs !== 'undefined' ? pendingJobs : 0 %></div>
+					<div class="metric-label">Nearby Leads</div>
+				</div>
+			</div>
+		</div>
+
+		<!-- Quick Operations -->
+		<h2 class="section-title mb-4"><i class="fas fa-bolt me-2"></i> Quick <span>Operations</span></h2>
+		<div class="row g-4 mb-5">
+			<div class="col-md-3">
+				<a href="/mechanic/viewRequests" class="quick-action-tile">
+					<div class="action-icon-circle"><i class="fas fa-satellite-dish"></i></div>
+					<h5 class="fw-bold mb-0">Find Jobs</h5>
+				</a>
+			</div>
+			<div class="col-md-3">
+				<a href="/mechanic/accepted" class="quick-action-tile">
+					<div class="action-icon-circle"><i class="fas fa-map-marked-alt"></i></div>
+					<h5 class="fw-bold mb-0">Live Tasks</h5>
+				</a>
+			</div>
+			<div class="col-md-3">
+				<a href="/mechanic/earnings" class="quick-action-tile">
+					<div class="action-icon-circle"><i class="fas fa-wallet"></i></div>
+					<h5 class="fw-bold mb-0">Payouts</h5>
+				</a>
+			</div>
+			<div class="col-md-3">
+				<a href="/mechanic/profile" class="quick-action-tile">
+					<div class="action-icon-circle"><i class="fas fa-id-card"></i></div>
+					<h5 class="fw-bold mb-0">Identity</h5>
+				</a>
+			</div>
+		</div>
+
+		<!-- Operational Guidelines -->
+		<div class="guideline-container">
+			<h2 class="section-title mb-5"><i class="fas fa-clipboard-list me-2"></i> Operational <span>Guidelines</span></h2>
+			<div class="row">
+				<div class="col-md-6">
+					<div class="guideline-step">
+						<div class="step-num">01</div>
+						<div class="step-info">
+							<h5>Scan for Requests</h5>
+							<p>Browse available service requests within your 100km radius. Filter by complexity and distance.</p>
 						</div>
-						<div class="stat-value"><%= typeof completedJobs !== 'undefined' ? completedJobs : 0 %></div>
-						<div class="stat-label">Jobs Completed</div>
-						<span class="stat-change positive"><i class="fas fa-arrow-up me-1"></i>Active</span>
+					</div>
+					<div class="guideline-step">
+						<div class="step-num">02</div>
+						<div class="step-info">
+							<h5>Accept & Dispatch</h5>
+							<p>Commit to a task. Once accepted, your live location is shared with the customer for better trust.</p>
+						</div>
 					</div>
 				</div>
-				<div class="col-lg-3 col-md-6">
-					<div class="stat-card">
-						<div class="icon-wrapper" style="background: linear-gradient(135deg, #f39c12 0%, #f1c40f 100%);">
-							<i class="fas fa-hourglass-half"></i>
+				<div class="col-md-6">
+					<div class="guideline-step">
+						<div class="step-num">03</div>
+						<div class="step-info">
+							<h5>Execution & Reporting</h5>
+							<p>Perform the specialized repair. Ensure quality standards are met before finishing the job.</p>
 						</div>
-						<div class="stat-value"><%= typeof pendingJobs !== 'undefined' ? pendingJobs : 0 %></div>
-						<div class="stat-label">Pending Requests</div>
-						<span class="stat-change neutral"><i class="fas fa-clock me-1"></i>Waiting</span>
 					</div>
-				</div>
-				<div class="col-lg-3 col-md-6">
-					<div class="stat-card">
-						<div class="icon-wrapper" style="background: linear-gradient(135deg, #3498db 0%, #2980b9 100%);">
-							<i class="fas fa-tasks"></i>
+					<div class="guideline-step">
+						<div class="step-num">04</div>
+						<div class="step-info">
+							<h5>Completion & Billing</h5>
+							<p>Mark as complete to trigger the billing process. Earnings are calculated instantly per standard rates.</p>
 						</div>
-						<div class="stat-value"><%= typeof acceptedJobs !== 'undefined' ? acceptedJobs : 0 %></div>
-						<div class="stat-label">Active Jobs</div>
-						<span class="stat-change positive"><i class="fas fa-bolt me-1"></i>In Progress</span>
-					</div>
-				</div>
-				<div class="col-lg-3 col-md-6">
-					<div class="stat-card">
-						<div class="icon-wrapper" style="background: linear-gradient(135deg, #9b59b6 0%, #8e44ad 100%);">
-							<i class="fas fa-star"></i>
-						</div>
-						<div class="stat-value"><%= typeof rating !== 'undefined' ? rating.toFixed(1) : '5.0' %></div>
-						<div class="stat-label">Your Rating</div>
-						<span class="stat-change positive"><i class="fas fa-thumbs-up me-1"></i>Excellent</span>
 					</div>
 				</div>
 			</div>
 		</div>
 
-		<!-- Quick Actions -->
-		<div class="quick-actions">
-			<h5 class="section-title"><i class="fas fa-bolt me-2" style="color: #f39c12;"></i>Quick Actions</h5>
-			<div class="row g-3">
-				<div class="col-lg-3 col-md-6">
-					<a href="/mechanic/viewRequests" class="action-btn">
-						<div class="action-icon">
-							<i class="fas fa-list-alt"></i>
-						</div>
-						<div class="action-text">
-							<h6>View Requests</h6>
-							<p>Browse nearby service requests</p>
-						</div>
-					</a>
-				</div>
-				<div class="col-lg-3 col-md-6">
-					<a href="/mechanic/accepted" class="action-btn">
-						<div class="action-icon">
-							<i class="fas fa-clipboard-check"></i>
-						</div>
-						<div class="action-text">
-							<h6>Accepted Jobs</h6>
-							<p>Manage your current jobs</p>
-						</div>
-					</a>
-				</div>
-				<div class="col-lg-3 col-md-6">
-					<a href="/mechanic/completed" class="action-btn">
-						<div class="action-icon">
-							<i class="fas fa-history"></i>
-						</div>
-						<div class="action-text">
-							<h6>Job History</h6>
-							<p>View completed services</p>
-						</div>
-					</a>
-				</div>
-				<div class="col-lg-3 col-md-6">
-					<a href="/mechanic/profile" class="action-btn">
-						<div class="action-icon">
-							<i class="fas fa-user-cog"></i>
-						</div>
-						<div class="action-text">
-							<h6>My Profile</h6>
-							<p>Update your information</p>
-						</div>
-					</a>
-				</div>
-			</div>
+		<!-- Wisdom Quote -->
+		<div class="modern-card text-center p-5 mb-4" style="background: #111; color: #fff; border: 1px solid #333;">
+			<i class="fas fa-quote-left mb-4" style="font-size: 2rem; color: var(--accent-yellow);"></i>
+			<p class="fs-4 italic fw-light" style="letter-spacing: 0.5px;">"Quality is never an accident. It is always the result of intelligent effort and skillful execution."</p>
+			<div class="fw-bold text-uppercase mt-4" style="color: var(--accent-yellow); font-size: 0.8rem; letter-spacing: 2px;">— John Ruskin</div>
 		</div>
-
-		<!-- Guidelines Section -->
-		<div class="guidelines-box">
-			<h5><i class="fas fa-lightbulb" style="color: #f39c12; margin-right: 12px;"></i>How It Works</h5>
-			<ol style="font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">
-				<li><strong>View Requests:</strong> Browse available service requests from customers within your 100km service radius. Each request shows location, service type, and estimated distance.</li>
-				<li><strong>Accept Jobs:</strong> Choose jobs that match your expertise and availability. Once accepted, the customer will be notified and can track your live location.</li>
-				<li><strong>Navigate & Serve:</strong> Use the live tracking feature to navigate to the customer's location. Complete the service with your professional expertise.</li>
-				<li><strong>Complete & Earn:</strong> Mark the job as complete once done. The customer will make payment and you'll receive your earnings directly to your account.</li>
-			</ol>
-		</div>
-
-		<!-- Services You Can Provide -->
-		<div class="services-section">
-			<h5 class="section-title"><i class="fas fa-wrench me-2" style="color: #e74c3c;"></i>Services You Can Provide</h5>
-			<div class="row g-4">
-				<div class="col-lg-2 col-md-4 col-6">
-					<div class="service-card">
-						<div class="service-icon" style="background: linear-gradient(135deg, #f39c12 0%, #e67e22 100%);">
-							<i class="fas fa-car-battery"></i>
-						</div>
-						<h6>Battery Jump</h6>
-						<p>Quick start for dead batteries</p>
-					</div>
-				</div>
-				<div class="col-lg-2 col-md-4 col-6">
-					<div class="service-card">
-						<div class="service-icon" style="background: linear-gradient(135deg, #3498db 0%, #2980b9 100%);">
-							<i class="fas fa-wrench"></i>
-						</div>
-						<h6>Tyre Repair</h6>
-						<p>Fix or replace flat tyres</p>
-					</div>
-				</div>
-				<div class="col-lg-2 col-md-4 col-6">
-					<div class="service-card">
-						<div class="service-icon" style="background: linear-gradient(135deg, #9b59b6 0%, #8e44ad 100%);">
-							<i class="fas fa-key"></i>
-						</div>
-						<h6>Lockout Help</h6>
-						<p>Unlock vehicles safely</p>
-					</div>
-				</div>
-				<div class="col-lg-2 col-md-4 col-6">
-					<div class="service-card">
-						<div class="service-icon" style="background: linear-gradient(135deg, #27ae60 0%, #2ecc71 100%);">
-							<i class="fas fa-tools"></i>
-						</div>
-						<h6>Minor Repairs</h6>
-						<p>On-site quick fixes</p>
-					</div>
-				</div>
-				<div class="col-lg-2 col-md-4 col-6">
-					<div class="service-card">
-						<div class="service-icon" style="background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);">
-							<i class="fas fa-truck-pickup"></i>
-						</div>
-						<h6>Towing</h6>
-						<p>Vehicle transport service</p>
-					</div>
-				</div>
-				<div class="col-lg-2 col-md-4 col-6">
-					<div class="service-card">
-						<div class="service-icon" style="background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);">
-							<i class="fas fa-warehouse"></i>
-						</div>
-						<h6>Custody</h6>
-						<p>Secure vehicle storage</p>
-					</div>
-				</div>
-			</div>
-		</div>
-
-		<!-- Tips for Success -->
-		<div class="tips-section">
-			<div class="tips-card">
-				<h5><i class="fas fa-medal me-2"></i>Tips for Better Service & Higher Ratings</h5>
-				<ul>
-					<li><strong>Respond quickly:</strong> Fast response times lead to better customer satisfaction and more job opportunities.</li>
-					<li><strong>Keep your tools ready:</strong> Always have your toolkit well-maintained and fully stocked for any emergency.</li>
-					<li><strong>Communicate clearly:</strong> Update customers on your ETA and explain the repair process as you work.</li>
-					<li><strong>Be professional:</strong> Dress appropriately, maintain a friendly attitude, and ensure the work area is clean after service.</li>
-					<li><strong>Safety first:</strong> Always prioritize safety for yourself and the customer during roadside assistance.</li>
-				</ul>
-			</div>
-		</div>
-
-		<!-- Motivational Quote -->
-		<div class="quote-section">
-			<div class="quote-card">
-				<blockquote>
-					<p>"Quality is never an accident. It is always the result of intelligent effort and skillful execution. Your hands turn problems into solutions."</p>
-					<footer>— John Ruskin</footer>
-				</blockquote>
-			</div>
-		</div>
-
 	</div>
-</main>
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+	<script src="/assets/js/script.js"></script>
+	<script src="/socket.io/socket.io.js"></script>
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
-<script src="/assets/js/script.js"></script>
-<script src="/socket.io/socket.io.js"></script>
+	<script>
+		// Real-time Tactical Clock
+		function updateClock() {
+			const now = new Date();
+			const time = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+			const date = now.toLocaleDateString(undefined, { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
+			const clockEl = document.getElementById('clock');
+			const dateEl = document.getElementById('currentDate');
+			if(clockEl) clockEl.textContent = time;
+			if(dateEl) dateEl.textContent = date;
+		}
+		updateClock();
+		setInterval(updateClock, 1000);
 
-<script>
-	// Clock and Date Update
-	function updateClock() {
-		const now = new Date();
-		const time = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-		const date = now.toLocaleDateString(undefined, { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
-		document.getElementById('clock').textContent = time;
-		document.getElementById('currentDate').textContent = date;
-	}
+		// Socket Intelligence System
+		const socket = io();
+		const mechanicId = "<%= mechanic._id %>";
+		let simulatedLat = 28.628151;
+		let simulatedLng = 77.367783;
 
-	updateClock();
-	setInterval(updateClock, 1000);
-</script>
-
-<script>
-	// Socket.io for location tracking
-	const socket = io();
-	const mechanicId = "<%= mechanic._id %>";
-
-	let simulatedLat = 28.628151;
-	let simulatedLng = 77.367783;
-
-	function simulateLocation() {
-		simulatedLat += 0.0001;
-		simulatedLng += 0.0001;
-		console.log(`Simulated location: (${simulatedLat}, ${simulatedLng})`);
-		socket.emit('mechanicLocationUpdate', {
-			mechanicId,
-			lat: simulatedLat,
-			lng: simulatedLng
-		});
-	}
-
-	setInterval(simulateLocation, 5000);
-</script>
-
-<script>
-	// Add animation delay to stat cards
-	document.addEventListener('DOMContentLoaded', function() {
-		const statCards = document.querySelectorAll('.stat-card');
-		statCards.forEach((card, index) => {
-			card.style.animationDelay = `${index * 0.1}s`;
-		});
-
-		const serviceCards = document.querySelectorAll('.service-card');
-		serviceCards.forEach((card, index) => {
-			card.style.animationDelay = `${index * 0.1}s`;
-		});
-	});
-</script>
-
+		function simulateLocation() {
+			simulatedLat += 0.0001;
+			simulatedLng += 0.0001;
+			socket.emit('mechanicLocationUpdate', {
+				mechanicId,
+				lat: simulatedLat,
+				lng: simulatedLng
+			});
+		}
+		setInterval(simulateLocation, 5000);
+	</script>
 </body>
 </html>

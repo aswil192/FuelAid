@@ -206,8 +206,15 @@ router.put("/customer/profile", middleware.ensurecustomerLoggedIn, upload.single
 	try
 	{
 		const id = req.user._id;
-		const updateObj = req.body.customer;	// updateObj: {firstName, lastName, gender, address, phone}
+		const updateObj = req.body.customer || req.body || {};
 		
+		// Remove empty strings to avoid unique constraint violations or cast errors
+		Object.keys(updateObj).forEach(key => {
+			if (updateObj[key] === "") {
+				delete updateObj[key];
+			}
+		});
+
 		// If a profile picture was uploaded, add it to the update object
 		if (req.file) {
 			updateObj.profilePic = '/uploads/' + req.file.filename;

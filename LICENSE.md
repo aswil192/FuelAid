@@ -1,6 +1,6 @@
 MIT License
 
-Copyright (c) 2025 Nikita_Bansal
+Copyright (c) 2026 Muhammad Aswil
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal

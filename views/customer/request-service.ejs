@@ -1,1238 +1,576 @@
-<script src="https://cdnjs.cloudflare.com/ajax/libs/exif-js/2.3.0/exif.min.js"></script>
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-	<meta charset="UTF-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<meta name="theme-color" content="#3f51b5">
-	<link href="https://fonts.googleapis.com/css?family=Dosis:200,300,400,500,700" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css?family=Overpass:300,400,400i,600,700" rel="stylesheet">
-	<script id="googleMapsScript" async defer></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Request Service | FuelAid</title>
 
-    <link rel="stylesheet" href="/assets/css/open-iconic-bootstrap.min.css">
-    <link rel="stylesheet" href="/assets/css/animate.css">
-    
-    <link rel="stylesheet" href="/assets/css/owl.carousel.min.css">
-    <link rel="stylesheet" href="/assets/css/owl.theme.default.min.css">
-    <link rel="stylesheet" href="/assets/css/magnific-popup.css">
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800&display=swap" rel="stylesheet">
 
-    <link rel="stylesheet" href="/assets/css/aos.css">
-
-    <link rel="stylesheet" href="/assets/css/ionicons.min.css">
-
-    <link rel="stylesheet" href="/assets/css/bootstrap-datepicker.css">
-    <link rel="stylesheet" href="/assets/css/jquery.timepicker.css">
-
-    <link rel="stylesheet" href="/assets/css/font-awesome.min.css">
-    
-    <link rel="stylesheet" href="/assets/css/flaticon.css">
-    <link rel="stylesheet" href="/assets/css/icomoon.css">
-	<link rel="stylesheet" href="/assets/css/style.css">
-    
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" integrity="sha512-1ycn6IcaQQ40/MKBW2W4Rhis/DbILU74C1vSrLJxCq57o941Ym01SwNsOMqvEBFlcgUa6xLiPY/NS5R+E6ztJQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
-	<link rel="stylesheet" href="/assets/css/sidebar.css">
+  <!-- CSS -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="/assets/css/dashboard-redesign.css">
   <link rel="icon" type="image/png" href="/assets/images/FUEL AID_logo.png">
+
   <style>
-    :root {
-      --primary-color: #5b5fc7;
-      --secondary-color: #3a86ff;
-      --accent-color: #ff006e;
-      --success-color: #06d6a0;
-      --warning-color: #fca311;
-      --light-bg: #f5f7fa;
-      --card-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-      --card-radius: 12px;
-    }
-
     body {
-      font-family: 'Overpass', sans-serif;
-      background: linear-gradient(135deg, #f5f7fa 0%, #e8ecf5 100%);
+      background-color: var(--primary-bg);
+      color: var(--text-light);
+      font-family: var(--font-main);
     }
 
-    header {
-      background-color: #403d3d !important;
-    }
-    
-    header .navbar, .bg-dark, .navbar-dark, .navbar-light {
-      background-color: #403d3d !important;
-      background-image: none !important;
-      box-shadow: none !important;
+    #main-wrapper {
+      margin-left: 280px;
+      padding: 2rem;
+      min-height: 100vh;
     }
 
-    .modern-card {
-      background: white;
-      border-radius: var(--card-radius);
-      box-shadow: var(--card-shadow);
-      border: none;
-      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-      animation: slideUp 0.6s ease-out;
+    .request-container {
+      max-width: 900px;
+      margin: 0 auto;
     }
 
-    @keyframes slideUp {
-      from {
-        opacity: 0;
-        transform: translateY(30px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-
-    .modern-card:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 8px 25px rgba(91, 95, 199, 0.15);
+    .form-card {
+      background: var(--card-bg);
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+      color: var(--text-dark);
     }
 
     .form-header {
-      background: linear-gradient(135deg, #5b5fc7 0%, #3a86ff 100%);
-      color: white;
-      border-radius: var(--card-radius) var(--card-radius) 0 0;
-      padding: 2rem;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .form-header::before {
-      content: '';
-      position: absolute;
-      top: -50%;
-      right: -50%;
-      width: 200%;
-      height: 200%;
-      background: radial-gradient(circle, rgba(255,255,255,0.1) 1px, transparent 1px);
-      background-size: 20px 20px;
-      opacity: 0.05;
+      background: var(--accent-yellow);
+      padding: 2.5rem;
+      color: var(--text-dark);
+      text-align: center;
     }
 
     .form-header h2 {
-      position: relative;
-      z-index: 1;
+      font-weight: 800;
       margin-bottom: 0.5rem;
-      font-weight: 700;
-      animation: fadeInDown 0.8s ease-out;
+      text-transform: uppercase;
+      letter-spacing: 1px;
     }
 
     .form-header p {
-      position: relative;
-      z-index: 1;
-      opacity: 0.95;
-      animation: fadeInDown 0.8s ease-out 0.1s both;
+      opacity: 0.8;
+      font-weight: 500;
     }
 
-    @keyframes fadeInDown {
-      from {
-        opacity: 0;
-        transform: translateY(-20px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
+    .form-body {
+      padding: 3rem;
     }
 
-    .form-section {
-      padding: 2.5rem;
+    .service-selection-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+      margin-bottom: 2.5rem;
     }
 
-    .form-label {
-      font-weight: 600;
-      color: #1a1a2e;
-      margin-bottom: 0.75rem;
-      font-size: 0.9rem;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
+    .service-opt {
+      border: 2px solid #eee;
+      border-radius: 15px;
+      padding: 1.5rem;
+      text-align: center;
+      cursor: pointer;
+      transition: var(--transition);
+    }
+
+    .service-opt i {
+      font-size: 2.5rem;
+      margin-bottom: 1rem;
+      color: #888;
+      transition: var(--transition);
+    }
+
+    .service-opt span {
+      display: block;
+      font-weight: 700;
+      color: #444;
+    }
+
+    .service-opt:hover {
+      border-color: var(--accent-yellow);
+      background: #fffdf5;
+    }
+
+    .service-opt.selected {
+      border-color: var(--accent-yellow);
+      background: #fffdf5;
+      box-shadow: 0 10px 20px rgba(247, 183, 29, 0.1);
+    }
+
+    .service-opt.selected i {
+      color: var(--accent-yellow);
+      transform: scale(1.1);
+    }
+
+    .sub-service-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+      margin-top: 1rem;
+    }
+
+    .sub-opt {
+      padding: 1rem;
+      border: 1px solid #eee;
+      border-radius: 10px;
+      cursor: pointer;
       display: flex;
       align-items: center;
-      gap: 0.5rem;
+      gap: 1rem;
+      transition: var(--transition);
     }
 
-    .form-label i {
-      color: var(--primary-color);
-      font-size: 1.1rem;
+    .sub-opt:hover {
+      background: #f8f9fa;
     }
 
-    .form-control, .form-select {
-      padding: 0.9rem 1.2rem;
-      border: 2px solid #e2e8f0;
-      border-radius: 8px;
-      font-size: 1rem;
-      transition: all 0.3s ease;
-      background: #fafbfc;
-      color: #333;
-    }
-
-    .form-control:focus, .form-select:focus {
-      border-color: var(--primary-color);
-      box-shadow: 0 0 0 4px rgba(91, 95, 199, 0.1);
-      background: white;
-      outline: none;
-    }
-
-    .form-control::placeholder {
-      color: #999;
-    }
-
-    .mb-4 {
-      animation: fadeInUp 0.6s ease-out both;
-    }
-
-    .mb-4:nth-child(1) { animation-delay: 0.1s; }
-    .mb-4:nth-child(2) { animation-delay: 0.2s; }
-    .mb-4:nth-child(3) { animation-delay: 0.3s; }
-    .mb-4:nth-child(4) { animation-delay: 0.4s; }
-    .mb-4:nth-child(5) { animation-delay: 0.5s; }
-
-    @keyframes fadeInUp {
-      from {
-        opacity: 0;
-        transform: translateY(20px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-
-    .service-option {
-      padding: 1rem;
-      border: 2px solid #e2e8f0;
-      border-radius: 8px;
-      cursor: pointer;
-      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-      background: white;
-    }
-
-    .service-option:hover {
-      border-color: var(--primary-color);
-      background: rgba(91, 95, 199, 0.05);
-      transform: translateY(-2px);
-      box-shadow: 0 4px 12px rgba(91, 95, 199, 0.15);
-    }
-
-    .service-option.selected {
-      border-color: var(--primary-color);
-      background: linear-gradient(135deg, rgba(91, 95, 199, 0.1), rgba(58, 134, 255, 0.1));
-      box-shadow: 0 4px 12px rgba(91, 95, 199, 0.2);
+    .sub-opt.selected {
+      border-color: var(--accent-yellow);
+      background: #fffdf5;
       font-weight: 600;
     }
 
-    .service-tag {
-      display: inline-flex;
-      align-items: center;
-      background: linear-gradient(135deg, #5b5fc7, #3a86ff);
-      color: white;
-      padding: 0.6rem 1.2rem;
-      border-radius: 20px;
-      margin: 0.3rem;
-      font-size: 0.9rem;
-      font-weight: 500;
-      box-shadow: 0 4px 8px rgba(91, 95, 199, 0.25);
-      transition: all 0.3s ease;
-      animation: scaleIn 0.4s ease-out;
+    .sub-opt .badge {
+      margin-left: auto;
     }
 
-    @keyframes scaleIn {
-      from {
-        opacity: 0;
-        transform: scale(0.8);
-      }
-      to {
-        opacity: 1;
-        transform: scale(1);
-      }
-    }
-
-    .service-tag:hover {
-      transform: scale(1.05);
-      box-shadow: 0 6px 14px rgba(91, 95, 199, 0.35);
-    }
-
-    .service-tag i {
-      margin-left: 0.5rem;
-      cursor: pointer;
-      opacity: 0.8;
-      transition: all 0.3s ease;
-    }
-
-    .service-tag i:hover {
-      opacity: 1;
-      transform: rotate(90deg);
-    }
-
-    .price-card {
-      background: linear-gradient(135deg, #06d6a0, #06a370);
-      color: white;
+    .price-summary-box {
+      background: #fcfcfc;
+      border: 1px solid #eee;
+      border-radius: 15px;
       padding: 1.5rem;
-      border-radius: 12px;
-      text-align: center;
-      margin: 1.5rem 0;
-      box-shadow: 0 6px 20px rgba(6, 214, 160, 0.25);
-      animation: slideUp 0.6s ease-out;
+      margin: 2rem 0;
     }
 
-    .price-amount {
-      font-size: 2.8rem;
-      font-weight: 700;
-      margin: 0.5rem 0;
-      text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    }
-
-    .btn-submit {
-      background: linear-gradient(135deg, #5b5fc7, #3a86ff);
-      color: white;
-      border: none;
-      padding: 1.1rem 2rem;
-      border-radius: 8px;
-      font-weight: 600;
-      font-size: 1rem;
-      width: 100%;
-      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-      cursor: pointer;
-      box-shadow: 0 4px 15px rgba(91, 95, 199, 0.3);
-    }
-
-    .btn-submit:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 8px 25px rgba(91, 95, 199, 0.4);
-      color: white;
-    }
-
-    .btn-submit:active {
-      transform: translateY(-1px);
-    }
-
-    .file-upload-area {
-      border: 2px dashed #cbd5e1;
-      border-radius: 8px;
-      padding: 2.5rem;
-      text-align: center;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      background: #fafbfc;
-    }
-
-    .file-upload-area:hover {
-      border-color: var(--primary-color);
-      background: rgba(91, 95, 199, 0.05);
-    }
-
-    .file-upload-area i {
-      font-size: 3rem;
-      color: var(--primary-color);
-      margin-bottom: 1rem;
-      animation: bounce 2s infinite;
-    }
-
-    @keyframes bounce {
-      0%, 100% { transform: translateY(0); }
-      50% { transform: translateY(-10px); }
-    }
-
-    .file-upload-area p {
-      color: #333;
-      font-weight: 500;
-      margin: 0.5rem 0;
-    }
-
-    .file-upload-area small {
-      color: #999;
-    }
-
-    .row {
-      animation: fadeInUp 0.6s ease-out;
-    }
-
-    .col-md-6 {
-      animation: fadeInUp 0.6s ease-out;
-    }
-
-    .col-md-6:nth-child(1) { animation-delay: 0.2s; }
-    .col-md-6:nth-child(2) { animation-delay: 0.3s; }
-
-    @media (max-width: 768px) {
-      .form-section {
-        padding: 1.5rem;
-      }
-      
-      .form-header {
-        padding: 1.5rem;
-      }
-
-      .price-amount {
-        font-size: 2rem;
-      }
-    }
-
-    #selectedTags .badge {
-      margin-right: 0.5rem;
-      margin-bottom: 0.5rem;
-      background-color: var(--primary-color) !important;
-      font-weight: 500;
-      font-size: 0.875rem;
-    }
-    
-    #selectedTags .fa-times {
-      font-size: 0.75rem;
-    }
-    
-    .logo-container img {
-      height: 0.9em;
-      width: auto;
-    }
-
-    /* Payment Section Styles */
-    .payment-container {
-      background: linear-gradient(135deg, #f8f9ff 0%, #fff 100%);
-      border: 2px solid #e2e8f0;
-      border-radius: 12px;
-      padding: 1.5rem;
-      animation: slideUp 0.5s ease-out;
-    }
-
-    .payment-header-section {
-      margin-bottom: 1.5rem;
-      padding-bottom: 1rem;
-      border-bottom: 2px dashed #e2e8f0;
-    }
-
-    .payment-header-section h5 {
-      color: var(--primary-color);
-      font-weight: 700;
-    }
-
-    .payment-summary {
-      background: white;
-      border-radius: 10px;
-      padding: 1rem;
-      margin-bottom: 1.5rem;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-    }
-
-    .summary-row {
+    .price-row {
       display: flex;
       justify-content: space-between;
-      padding: 0.6rem 0;
-      border-bottom: 1px dashed #e9ecef;
-    }
-
-    .summary-row:last-child {
-      border-bottom: none;
-    }
-
-    .summary-row .label {
+      margin-bottom: 0.5rem;
       color: #666;
-      font-weight: 500;
     }
 
-    .summary-row .value {
-      color: #333;
-      font-weight: 600;
+    .price-row.total {
+      border-top: 2px solid #eee;
+      margin-top: 1rem;
+      padding-top: 1rem;
+      color: var(--text-dark);
+      font-weight: 800;
+      font-size: 1.25rem;
     }
 
-    .summary-row.total {
-      background: linear-gradient(135deg, #06d6a0 0%, #05b793 100%);
-      margin: 0.5rem -1rem -1rem;
-      padding: 1rem;
-      border-radius: 0 0 10px 10px;
+    /* Autocomplete Styling */
+    .autocomplete-container {
+      position: relative;
     }
 
-    .summary-row.total .label,
-    .summary-row.total .value {
-      color: white;
-      font-weight: 700;
-      font-size: 1.1rem;
-    }
-
-    .payment-methods-section {
-      margin-bottom: 1.5rem;
-    }
-
-    .method-options-grid {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 12px;
-      margin-top: 0.75rem;
-    }
-
-    .payment-method-option {
-      border: 2px solid #e2e8f0;
-      border-radius: 10px;
-      padding: 1rem;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      background: white;
-    }
-
-    .payment-method-option:hover {
-      border-color: var(--primary-color);
-      background: rgba(91, 95, 199, 0.05);
-    }
-
-    .payment-method-option.selected {
-      border-color: var(--primary-color);
-      background: linear-gradient(135deg, rgba(91, 95, 199, 0.1), rgba(58, 134, 255, 0.1));
-    }
-
-    .payment-method-option input {
+    .autocomplete-dropdown {
+      position: absolute;
+      top: 100%;
+      left: 0;
+      right: 0;
+      background: #fff;
+      border-radius: 0 0 15px 15px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+      z-index: 1000;
+      max-height: 300px;
+      overflow-y: auto;
+      border: 1px solid #eee;
       display: none;
     }
 
-    .method-content {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 0.5rem;
-    }
-
-    .method-content i {
-      font-size: 1.8rem;
-      color: var(--primary-color);
-    }
-
-    .method-content span {
-      font-weight: 600;
-      font-size: 0.9rem;
-      color: #333;
-    }
-
-    .payment-extra-details {
-      margin-top: 1rem;
+    .autocomplete-item {
       padding: 1rem;
+      cursor: pointer;
+      border-bottom: 1px solid #f1f1f1;
+      transition: var(--transition);
+    }
+
+    .autocomplete-item:hover {
       background: #f8f9fa;
-      border-radius: 8px;
-      animation: fadeInUp 0.3s ease-out;
+      padding-left: 1.5rem;
     }
 
-    .payment-terms {
-      margin-top: 1rem;
+    .autocomplete-item:last-child {
+      border-bottom: none;
     }
 
-    .terms-checkbox {
-      display: flex;
-      align-items: flex-start;
-      gap: 0.75rem;
-      cursor: pointer;
+    .form-label {
+      font-weight: 700;
+      margin-bottom: 0.75rem;
+      color: #333;
       font-size: 0.9rem;
-      color: #555;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
     }
 
-    .terms-checkbox input {
-      margin-top: 0.2rem;
-      width: 18px;
-      height: 18px;
-      cursor: pointer;
+    .form-control {
+      padding: 0.8rem 1.2rem;
+      border-radius: 10px;
+      border: 2px solid #eee;
+      font-family: inherit;
     }
 
-    .btn-submit:disabled {
-      background: #ccc;
-      cursor: not-allowed;
-      transform: none;
+    .form-control:focus {
+      border-color: var(--accent-yellow);
       box-shadow: none;
     }
 
-    @media (max-width: 576px) {
-      .method-options-grid {
-        grid-template-columns: 1fr;
+    .file-upload-zone {
+      border: 2px dashed #eee;
+      border-radius: 15px;
+      padding: 2rem;
+      text-align: center;
+      cursor: pointer;
+      transition: var(--transition);
+    }
+
+    .file-upload-zone:hover {
+      border-color: var(--accent-yellow);
+      background: #fffdf5;
+    }
+
+    @media (max-width: 991px) {
+      #main-wrapper {
+        margin-left: 0;
+        padding: 1rem;
       }
     }
   </style>
 </head>
-<body>
 
+<body class="dashboard-body">
   <%- include('../partials/header') %>
-  <%- include('../partials/alerts') %>
-  <main>
-  <%- include('../partials/customerSidebar') %>
+    <%- include('../partials/customerSidebar', { title: 'Request Service' }) %>
 
-  <div id="main-wrapper" style="position:relative;">
-    <div class="modern-card">
-      <div class="form-header">
-        <h2 class="mb-0"><i class="fas fa-tools me-2"></i>Request Service</h2>
-        <p class="mb-0 opacity-75">Get professional assistance for your vehicle</p>
+      <div id="main-wrapper">
+        <div class="request-container">
+          <div class="form-card">
+            <div class="form-header">
+              <h2><i class="fas fa-tools me-2"></i>Request Service</h2>
+              <p>Tell us what you need, and we'll dispatch help immediately.</p>
+            </div>
+
+            <form action="/customer/request-service" method="POST" enctype="multipart/form-data" class="form-body">
+              <%- include('../partials/alerts') %>
+
+                <!-- Step 1: Category -->
+                <div class="mb-5">
+                  <label class="form-label">Select Service Type</label>
+                  <div class="service-selection-grid">
+                    <div class="service-opt" data-category="roadside">
+                      <i class="fas fa-car-side"></i>
+                      <span>Roadside Assistance</span>
+                    </div>
+                    <div class="service-opt" data-category="fuel">
+                      <i class="fas fa-gas-pump"></i>
+                      <span>Fuel Services</span>
+                    </div>
+                  </div>
+                  <input type="hidden" name="request[serviceCategory]" id="serviceCategory" required>
+                </div>
+
+                <!-- Step 2: Sub-services -->
+                <div id="subServiceSection" class="mb-5" style="display: none;">
+                  <label class="form-label">Specific Assistance Needed</label>
+                  <div class="sub-service-grid" id="subServiceGrid"></div>
+                </div>
+
+                <!-- Fuel Quantity (Conditional) -->
+                <div id="fuelQuantitySection" class="mb-5" style="display: none;">
+                  <label class="form-label">Fuel Quantity (Liters)</label>
+                  <input type="number" name="request[quantity]" class="form-control" placeholder="e.g. 5" min="1">
+                </div>
+
+                <!-- Step 3: Location -->
+                <div class="mb-5 autocomplete-container">
+                  <label class="form-label">Service Location</label>
+                  <div class="input-group">
+                    <span class="input-group-text bg-white border-end-0"><i
+                        class="fas fa-map-marker-alt text-danger"></i></span>
+                    <input type="text" name="request[address]" id="addressInput" class="form-control border-start-0"
+                      placeholder="Start typing your location..." required autocomplete="off">
+                  </div>
+                  <div id="autocompleteDropdown" class="autocomplete-dropdown"></div>
+                </div>
+
+                <!-- Distance & Charges Info -->
+                <div id="distanceInfo" class="price-summary-box" style="display: none;">
+                  <div class="price-row">
+                    <span>Base Service Charges</span>
+                    <span>₹<span id="baseChargeSummary">0</span></span>
+                  </div>
+                  <div class="price-row">
+                    <span>Travel Charges (₹12/km)</span>
+                    <span>₹<span id="travelChargeSummary">0</span></span>
+                  </div>
+                  <div class="price-row">
+                    <span>Estimated Distance</span>
+                    <span><span id="distanceValue">0</span> km</span>
+                  </div>
+                  <div class="price-row total">
+                    <span>Total Estimated Amount</span>
+                    <span>₹<span id="totalAmountSummary">0</span></span>
+                  </div>
+                  <small class="text-muted mt-2 d-block">* Final amount may vary based on actual on-site work.</small>
+                </div>
+
+                <div class="row">
+                  <div class="col-md-6 mb-4">
+                    <label class="form-label">Contact Number</label>
+                    <div class="input-group">
+                      <span class="input-group-text bg-white">+91</span>
+                      <input type="text" name="request[phone]" id="phoneInput" class="form-control"
+                        placeholder="10-digit number" maxlength="10" required>
+                    </div>
+                  </div>
+                  <div class="col-md-6 mb-4">
+                    <label class="form-label">Vehicle Photo (Optional)</label>
+                    <div class="file-upload-zone" id="dropZone">
+                      <i class="fas fa-camera text-muted mb-2"></i>
+                      <p class="small mb-0" id="fileName">Tap to upload / take photo</p>
+                      <input type="file" name="vehiclePhotoPath" id="fileInput" class="d-none" accept="image/*">
+                    </div>
+                  </div>
+                </div>
+
+                <div class="mb-5">
+                  <label class="form-label">Special Instructions</label>
+                  <textarea name="request[customerToMechanicMsg]" class="form-control" rows="3"
+                    placeholder="Describe the problem or give helpful landmarks..."></textarea>
+                </div>
+
+                <!-- Step 4: Payment -->
+                <div id="paymentSection" style="display: none;">
+                  <label class="form-label">Payment Mode</label>
+                  <div class="row g-3 mb-5">
+                    <div class="col-6">
+                      <input type="radio" name="request[paymentMethod]" value="cash" id="payCash" class="btn-check"
+                        checked>
+                      <label class="btn btn-outline-secondary w-100 py-3 rounded-3" for="payCash">
+                        <i class="fas fa-money-bill-wave d-block mb-2"></i> Cash
+                      </label>
+                    </div>
+                    <div class="col-6">
+                      <input type="radio" name="request[paymentMethod]" value="online" id="payOnline" class="btn-check">
+                      <label class="btn btn-outline-secondary w-100 py-3 rounded-3" for="payOnline">
+                        <i class="fas fa-globe d-block mb-2"></i> Online
+                      </label>
+                    </div>
+                  </div>
+
+                  <div class="form-check mb-5">
+                    <input class="form-check-input" type="checkbox" id="termsCheck" required>
+                    <label class="form-check-label small text-muted" for="termsCheck">
+                      I confirm the details provided are accurate and agree to pay the calculated charges upon service
+                      completion.
+                    </label>
+                  </div>
+
+                  <input type="hidden" name="request[subServices]" id="subServiceInput">
+                  <input type="hidden" name="request[travelCharges]" id="travelChargesInput" value="0">
+                  <input type="hidden" name="request[totalAmount]" id="totalAmountInput" value="0">
+
+                  <button type="submit" class="btn-yellow w-100 py-3" id="submitBtn">
+                    Submit Request & Disptach Help <i class="fas fa-paper-plane ms-2"></i>
+                  </button>
+                </div>
+            </form>
+          </div>
+        </div>
       </div>
 
-      <form action="/customer/request-service" method="POST" enctype="multipart/form-data" class="form-section">
-  <!-- <h2 class="mb-3">Request a Service</h2> -->
+      <!-- Scripts -->
+      <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+      <script>
+        const serviceOptions = {
+          roadside: [
+            { name: "Battery Jump Start", icon: "fa-battery-full", price: 1000 },
+            { name: "Flat Tyre Repair", icon: "fa-tire", price: 2700 },
+            { name: "Lockout Assistance", icon: "fa-key", price: 1250 },
+            { name: "Minor Repairs", icon: "fa-tools", price: 800 },
+            { name: "Towing Services", icon: "fa-truck", price: 4200 },
+            { name: "Vehicle Custody", icon: "fa-shield-alt", price: 1700 }
+          ],
+          fuel: [
+            { name: "Fuel Delivery - 500ml", icon: "fa-gas-pump", price: 75 },
+            { name: "Fuel Delivery - 1L", icon: "fa-gas-pump", price: 120 },
+            { name: "Fuel Tank Cleaning", icon: "fa-filter", price: 600 },
+            { name: "Fuel Quality Testing", icon: "fa-flask", price: 350 },
+            { name: "Premium Quality - 2.5L", icon: "fa-bolt", price: 270 },
+            { name: "Eco-Friendly Fuel - 1L", icon: "fa-leaf", price: 130 }
+          ]
+        };
 
-        <!-- Step 1: Select Category -->
-        <div class="mb-4">
-          <label class="form-label">Choose Service Category</label>
-          <div class="row" id="categoryGrid">
-            <div class="col-md-6 mb-2">
-              <div class="service-option" data-category="roadside">
-                <i class="fas fa-road me-2"></i>
-                <span>Roadside Assistance</span>
-              </div>
-            </div>
-            <div class="col-md-6 mb-2">
-              <div class="service-option" data-category="fuel">
-                <i class="fas fa-gas-pump me-2"></i>
-                <span>Fuel Services</span>
-              </div>
-            </div>
-          </div>
-          <input type="hidden" name="request[serviceCategory]" id="serviceCategory" required>
-        </div>
+        const KMMC_LOCATION = { lat: 10.0168, lng: 76.2832 };
+        const TRAVEL_CHARGE_PER_KM = 12;
+        let selectedCategory = '';
+        const selectedServices = new Set();
+        let selectedLocation = null;
 
-        <!-- Step 2: Sub-services -->
-        <div class="mb-4" id="subServiceContainer" style="display:none;">
-          <label class="form-label">Select Required Services</label>
-          <div class="row" id="subServiceGrid"></div>
-        </div>
+        // Category Selection
+        document.querySelectorAll('.service-opt').forEach(opt => {
+          opt.addEventListener('click', function () {
+            document.querySelectorAll('.service-opt').forEach(o => o.classList.remove('selected'));
+            this.classList.add('selected');
+            selectedCategory = this.dataset.category;
+            document.getElementById('serviceCategory').value = selectedCategory;
 
-        <!-- Selected Services Tags -->
-        <div id="selectedTags" class="mb-4 d-flex flex-wrap gap-2"></div>
+            renderSubServices(selectedCategory);
+          });
+        });
 
-        <!-- Estimated Charges -->
-        <div id="estimatedCharges" class="price-card" style="display:none;">
-          <h6 class="mb-2">Estimated Base Charges</h6>
-          <div class="price-amount">₹<span id="baseChargeAmount">0</span></div>
-          <small class="opacity-90">* Travel charges (₹12/km) calculated after service completion</small>
-        </div>
+        function renderSubServices(category) {
+          const grid = document.getElementById('subServiceGrid');
+          const section = document.getElementById('subServiceSection');
+          grid.innerHTML = '';
+          selectedServices.clear();
 
-        <!-- Fuel Quantity Input -->
-        <div class="mb-4" id="fuelQuantitySection" style="display:none;">
-          <label for="quantity" class="form-label"><i class="fas fa-oil-can me-2"></i>Fuel Quantity (Liters)</label>
-          <input type="number" class="form-control" name="request[quantity]" min="1" max="50" placeholder="Enter quantity in liters">
-        </div>
-
-        <!-- Hidden input for form submission -->
-        <input type="hidden" name="request[subServices]" id="subServiceInput">
-        <input type="hidden" name="request[travelCharges]" id="travelChargesInput" value="0">
-        <input type="hidden" name="request[totalAmount]" id="totalAmountInput" value="0">
-
-        <!-- Step 3: Additional Details -->
-        <div class="mb-4" style="position: relative; z-index: 100;">
-          <label for="location" class="form-label"><i class="fas fa-map-marker-alt me-2"></i>Your Location</label>
-          <input type="text" name="request[address]" id="addressInput" class="form-control" placeholder="Start typing your location..." required style="position: relative; z-index: 101;">
-          <small class="text-muted mt-2">Autocomplete suggestions will appear below</small>
-          <div id="autocompleteDropdown" class="autocomplete-dropdown" style="display:none; position:absolute; background:white; border:2px solid #5b5fc7; border-radius:8px; width:100%; max-height:400px; overflow-y:auto; z-index:1000; margin-top:-8px; box-shadow:0 8px 24px rgba(91, 95, 199, 0.25); top:100%;"></div>
-          <div id="distanceDisplay" style="margin-top:1rem; padding:1rem; border-radius:8px; display:none; background:#e8f5e9; border-left:4px solid #06d6a0;">
-            <p class="mb-0"><strong>Distance to Service Center:</strong> <span id="distanceValue">0</span> km</p>
-            <p class="mb-0"><strong>Travel Charges:</strong> ₹<span id="travelCharges">0</span></p>
-          </div>
-        </div>
-
-        <div class="row">
-          <div class="col-md-6 mb-4">
-            <label for="phone" class="form-label"><i class="fas fa-phone me-2"></i>Contact Number</label>
-            <div class="input-group">
-              <span class="input-group-text" style="background: #e2e8f0; border: 2px solid #e2e8f0; font-weight: 600; color: #333;">+91</span>
-              <input type="text" name="request[phone]" id="phone" class="form-control" placeholder="00000 00000" maxlength="10" required style="border: 2px solid #e2e8f0;">
-            </div>
-            <small class="text-muted mt-2" style="display: block;">Enter 10 digits (numbers only)</small>
-          </div>
-          
-          <div class="col-md-6 mb-4">
-            <label class="form-label"><i class="fas fa-camera me-2"></i>Vehicle Image (Optional)</label>
-            <div class="file-upload-area" onclick="document.getElementById('vehiclePhoto').click()">
-              <i class="fas fa-cloud-upload-alt"></i>
-              <p class="mb-2">Click to upload vehicle photo</p>
-              <small class="text-muted">JPG, PNG up to 5MB</small>
-              <input type="file" name="vehiclePhotoPath" id="vehiclePhoto" class="d-none" accept="image/*">
-            </div>
-          </div>
-        </div>
-
-        <div class="mb-4">
-          <label for="message" class="form-label"><i class="fas fa-comment-alt me-2"></i>Additional Instructions</label>
-          <textarea name="request[customerToMechanicMsg]" class="form-control" placeholder="Any special instructions for the service provider..." rows="3"></textarea>
-        </div>
-
-        <!-- Payment Section -->
-        <div id="paymentSection" class="mb-4" style="display:none;">
-          <div class="payment-container">
-            <div class="payment-header-section">
-              <h5 class="mb-0"><i class="fas fa-credit-card me-2"></i>Payment Details</h5>
-              <p class="mb-0 text-muted">Complete payment to confirm your service request</p>
-            </div>
-
-            <div class="payment-summary">
-              <div class="summary-row">
-                <span class="label">Service Charges</span>
-                <span class="value">₹<span id="serviceChargesSummary">0</span></span>
-              </div>
-              <div class="summary-row">
-                <span class="label">Travel Charges</span>
-                <span class="value">₹<span id="travelChargesSummary">0</span></span>
-              </div>
-              <div class="summary-row total">
-                <span class="label">Total Amount</span>
-                <span class="value">₹<span id="totalAmountSummary">0</span></span>
-              </div>
-            </div>
-
-            <div class="payment-methods-section">
-              <label class="form-label"><i class="fas fa-wallet me-2"></i>Select Payment Method</label>
-              <div class="method-options-grid">
-                <label class="payment-method-option selected">
-                  <input type="radio" name="request[paymentMethod]" value="cash" checked>
-                  <div class="method-content">
-                    <i class="fas fa-money-bill-wave"></i>
-                    <span>Cash on Service</span>
-                  </div>
-                </label>
-                
-                <label class="payment-method-option">
-                  <input type="radio" name="request[paymentMethod]" value="upi">
-                  <div class="method-content">
-                    <i class="fas fa-mobile-alt"></i>
-                    <span>UPI</span>
-                  </div>
-                </label>
-                
-                <label class="payment-method-option">
-                  <input type="radio" name="request[paymentMethod]" value="card">
-                  <div class="method-content">
-                    <i class="fas fa-credit-card"></i>
-                    <span>Card</span>
-                  </div>
-                </label>
-                
-                <label class="payment-method-option">
-                  <input type="radio" name="request[paymentMethod]" value="online">
-                  <div class="method-content">
-                    <i class="fas fa-globe"></i>
-                    <span>Online</span>
-                  </div>
-                </label>
-              </div>
-
-              <!-- UPI Details -->
-              <div id="upiPaymentDetails" class="payment-extra-details" style="display: none;">
-                <label class="form-label">Enter UPI ID</label>
-                <input type="text" name="request[upiId]" class="form-control" placeholder="yourname@upi">
-                <small class="text-muted">Payment will be collected after service confirmation</small>
-              </div>
-
-              <!-- Card Details -->
-              <div id="cardPaymentDetails" class="payment-extra-details" style="display: none;">
-                <label class="form-label">Card Payment</label>
-                <p class="text-muted mb-0"><i class="fas fa-info-circle me-1"></i>Card payment will be processed after service completion</p>
-              </div>
-
-              <!-- Online Details -->
-              <div id="onlinePaymentDetails" class="payment-extra-details" style="display: none;">
-                <label class="form-label">Online Payment</label>
-                <p class="text-muted mb-0"><i class="fas fa-info-circle me-1"></i>You will receive a payment link after service confirmation</p>
-              </div>
-            </div>
-
-            <div class="payment-terms">
-              <label class="terms-checkbox">
-                <input type="checkbox" name="request[acceptTerms]" id="acceptTerms" required>
-                <span>I agree to the payment terms and understand that the final amount may vary based on actual service provided</span>
-              </label>
-            </div>
-          </div>
-        </div>
-
-        <button type="submit" class="btn-submit" id="submitBtn" disabled>
-          <i class="fas fa-paper-plane me-2"></i>Submit Service Request
-        </button>
-      </form>
-    </div>
-  </div>
-</main>
-
-<script>
-  // Load Google Maps API dynamically
-  async function loadGoogleMapsAPI() {
-    try {
-      const response = await fetch('/api/google-maps-key');
-      const data = await response.json();
-      const script = document.createElement('script');
-      script.src = `https://maps.googleapis.com/maps/api/js?key=${data.key}&libraries=places`;
-      script.async = true;
-      script.defer = true;
-      document.head.appendChild(script);
-      script.onload = () => {
-        initializeGoogleMapsServices();
-      };
-    } catch (error) {
-      console.error('Failed to load Google Maps API:', error);
-    }
-  }
-
-  // Load API immediately when page starts
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', loadGoogleMapsAPI);
-  } else {
-    loadGoogleMapsAPI();
-  }
-
-  // Google Maps Autocomplete
-  const KMMC_LOCATION = { lat: 10.0168, lng: 76.2832 }; // KMM College coordinates
-  let autocompleteService;
-  let placesService;
-  let selectedPlaceLocation = null;
-  const TRAVEL_CHARGE_PER_KM = 12;
-
-  function initializeGoogleMapsServices() {
-    try {
-      autocompleteService = new google.maps.places.AutocompleteService();
-      placesService = new google.maps.places.PlacesService(document.createElement('div'));
-      console.log('Google Maps services initialized successfully');
-    } catch (error) {
-      console.error('Error initializing Google Maps services:', error);
-    }
-  }
-
-  function haversineDistance(lat1, lon1, lat2, lon2) {
-    const R = 6371; // Radius of the Earth in km
-    const toRad = (angle) => (angle * Math.PI) / 180;
-
-    const dLat = toRad(lat2 - lat1);
-    const dLon = toRad(lon2 - lon1);
-    const a =
-      Math.sin(dLat / 2) ** 2 +
-      Math.cos(toRad(lat1)) * Math.cos(toRad(lat2)) * Math.sin(dLon / 2) ** 2;
-
-    const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-    return R * c; // in km
-  }
-
-  const addressInput = document.getElementById('addressInput');
-  const autocompleteDropdown = document.getElementById('autocompleteDropdown');
-  const distanceDisplay = document.getElementById('distanceDisplay');
-  let autocompleteTimeout;
-
-  // Fallback: Use custom autocomplete with OpenCage API if Google Places is not available
-  if (addressInput) {
-    addressInput.addEventListener('input', function (e) {
-      const inputValue = e.target.value.trim();
-
-      clearTimeout(autocompleteTimeout);
-      autocompleteDropdown.innerHTML = '';
-
-      if (inputValue.length < 3) {
-        autocompleteDropdown.style.display = 'none';
-        return;
-      }
-
-      autocompleteTimeout = setTimeout(() => {
-        // Use OpenCage API for autocomplete
-        fetch(`/api/autocomplete-locations?q=${encodeURIComponent(inputValue)}`)
-          .then(res => res.json())
-          .then(data => {
-            if (data.results && data.results.length > 0) {
-              autocompleteDropdown.innerHTML = '';
-              data.results.forEach((result, index) => {
-                const div = document.createElement('div');
-                div.style.cssText = `
-                  padding: 1rem;
-                  cursor: pointer;
-                  border-bottom: 1px solid #e2e8f0;
-                  transition: all 0.2s ease;
-                  background-color: white;
-                  font-size: 14px;
-                  position: relative;
-                  z-index: 1001;
+          serviceOptions[category].forEach(service => {
+            const item = document.createElement('div');
+            item.className = 'sub-opt';
+            item.dataset.name = service.name;
+            item.dataset.price = service.price;
+            item.innerHTML = `
+                    <i class="fas ${service.icon}"></i>
+                    <span>${service.name}</span>
+                    <span class="badge bg-light text-dark">₹${service.price}</span>
                 `;
-                if (index === 0) {
-                  div.style.borderRadius = '8px 8px 0 0';
-                }
-                div.innerHTML = `
-                  <div style="font-weight: 600; color: #1a1a2e; margin-bottom: 4px;">${result.name}</div>
-                  <div style="font-size: 13px; color: #666;">${result.formatted}</div>
-                `;
-                div.addEventListener('mouseenter', () => {
-                  div.style.backgroundColor = '#f0f4ff';
-                  div.style.paddingLeft = '1.5rem';
-                });
-                div.addEventListener('mouseleave', () => {
-                  div.style.backgroundColor = 'white';
-                  div.style.paddingLeft = '1rem';
-                });
-                div.addEventListener('click', () => {
-                  selectLocation(result);
-                });
-                autocompleteDropdown.appendChild(div);
-              });
-              autocompleteDropdown.style.display = 'block';
-            } else {
-              autocompleteDropdown.style.display = 'none';
+
+            item.addEventListener('click', () => toggleService(item));
+            grid.appendChild(item);
+          });
+
+          section.style.display = 'block';
+          updateUI();
+        }
+
+        function toggleService(element) {
+          const name = element.dataset.name;
+          if (selectedServices.has(name)) {
+            selectedServices.delete(name);
+            element.classList.remove('selected');
+          } else {
+            selectedServices.add(name);
+            element.classList.add('selected');
+          }
+          updateUI();
+        }
+
+        function updateUI() {
+          const hasServices = selectedServices.size > 0;
+          const subServiceInput = document.getElementById('subServiceInput');
+          const fuelSection = document.getElementById('fuelQuantitySection');
+          const paymentSection = document.getElementById('paymentSection');
+
+          subServiceInput.value = Array.from(selectedServices).join(',');
+
+          // Show fuel quantity if any delivery is selected
+          let isDelivery = false;
+          selectedServices.forEach(s => { if (s.includes('Delivery')) isDelivery = true; });
+          fuelSection.style.display = isDelivery ? 'block' : 'none';
+
+          paymentSection.style.display = hasServices ? 'block' : 'none';
+
+          calculateTotals();
+        }
+
+        function calculateTotals() {
+          let baseTotal = 0;
+          selectedServices.forEach(name => {
+            const all = [...serviceOptions.roadside, ...serviceOptions.fuel];
+            const found = all.find(s => s.name === name);
+            if (found) baseTotal += found.price;
+          });
+
+          const distanceInfo = document.getElementById('distanceInfo');
+          if (baseTotal > 0) {
+            distanceInfo.style.display = 'block';
+            document.getElementById('baseChargeSummary').textContent = baseTotal;
+
+            let travelCharge = 0;
+            if (selectedLocation) {
+              const dist = haversineDistance(selectedLocation.lat, selectedLocation.lng, KMMC_LOCATION.lat, KMMC_LOCATION.lng);
+              travelCharge = Math.round(dist * TRAVEL_CHARGE_PER_KM);
+              document.getElementById('distanceValue').textContent = dist.toFixed(2);
+              document.getElementById('travelChargeSummary').textContent = travelCharge;
             }
-          })
-          .catch(error => {
-            console.error('Autocomplete error:', error);
-            autocompleteDropdown.style.display = 'none';
-          });
-      }, 300);
-    });
 
-    document.addEventListener('click', function (e) {
-      if (e.target !== addressInput && e.target !== autocompleteDropdown) {
-        autocompleteDropdown.style.display = 'none';
-      }
-    });
-  }
-
-  function selectLocation(result) {
-    addressInput.value = result.formatted;
-    autocompleteDropdown.style.display = 'none';
-
-    selectedPlaceLocation = {
-      lat: result.lat,
-      lng: result.lng,
-    };
-    calculateDistanceAndCharges();
-  }
-
-  function calculateDistanceAndCharges() {
-    if (!selectedPlaceLocation) return;
-
-    const distance = haversineDistance(
-      selectedPlaceLocation.lat,
-      selectedPlaceLocation.lng,
-      KMMC_LOCATION.lat,
-      KMMC_LOCATION.lng
-    );
-
-    const travelCharges = Math.round(distance * TRAVEL_CHARGE_PER_KM);
-
-    document.getElementById('distanceValue').textContent = distance.toFixed(2);
-    document.getElementById('travelCharges').textContent = travelCharges;
-    distanceDisplay.style.display = 'block';
-
-    // Update estimated charges with travel charges
-    updateEstimatedChargesWithTravel(travelCharges);
-  }
-
-  function updateEstimatedChargesWithTravel(travelCharges) {
-    const chargesDiv = document.getElementById('estimatedCharges');
-    const amountSpan = document.getElementById('baseChargeAmount');
-
-    let baseTotal = 0;
-    selectedServices.forEach((serviceName) => {
-      const service = Object.values(serviceOptions[selectedCategory] || {})
-        .find((s) => s?.name === serviceName);
-      if (service) baseTotal += service.price;
-    });
-
-    const totalCharges = baseTotal + travelCharges;
-
-    if (totalCharges > 0) {
-      chargesDiv.style.display = 'block';
-      amountSpan.textContent = totalCharges;
-    } else {
-      chargesDiv.style.display = 'none';
-    }
-  }
-
-  // Initialize Google Maps services when page loads
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', initializeGoogleMapsServices);
-  } else {
-    initializeGoogleMapsServices();
-  }
-
-  // Service data with icons and prices
-  const serviceOptions = {
-    roadside: [
-      { name: "Battery Jump Start", icon: "fa-battery-full", price: 1000 },
-      { name: "Flat Tyre Repair", icon: "fa-tire", price: 2700 },
-      { name: "Lockout Assistance", icon: "fa-key", price: 1250 },
-      { name: "Minor Repairs", icon: "fa-tools", price: 800 },
-      { name: "Towing Services", icon: "fa-truck", price: 4200 },
-      { name: "Vehicle Custody", icon: "fa-shield-alt", price: 1700 }
-    ],
-    fuel: [
-      { name: "Fuel Delivery - 500ml", icon: "fa-gas-pump", price: 75 },
-      { name: "Fuel Delivery - 1L", icon: "fa-gas-pump", price: 120 },
-      { name: "Fuel Tank Cleaning", icon: "fa-filter", price: 600 },
-      { name: "Fuel Quality Testing", icon: "fa-flask", price: 350 },
-      { name: "Premium Quality - 2.5L", icon: "fa-bolt", price: 270 },
-      { name: "Eco-Friendly Fuel - 1L", icon: "fa-leaf", price: 130 }
-    ]
-  };
-
-  let selectedCategory = '';
-  const selectedServices = new Set();
-
-  // Initialize category selection
-  document.querySelectorAll('.service-option[data-category]').forEach(option => {
-    option.addEventListener('click', function() {
-      document.querySelectorAll('.service-option[data-category]').forEach(opt => {
-        opt.classList.remove('selected');
-      });
-      
-      this.classList.add('selected');
-      selectedCategory = this.dataset.category;
-      document.getElementById('serviceCategory').value = selectedCategory;
-      showSubServices(selectedCategory);
-    });
-  });
-
-  function showSubServices(category) {
-    const container = document.getElementById('subServiceContainer');
-    const grid = document.getElementById('subServiceGrid');
-    
-    if (!serviceOptions[category]) {
-      container.style.display = 'none';
-      return;
-    }
-    
-    grid.innerHTML = '';
-    selectedServices.clear();
-    updateSelectedTags();
-    updateEstimatedCharges();
-    
-    serviceOptions[category].forEach(service => {
-      const col = document.createElement('div');
-      col.className = 'col-md-6 mb-2';
-      
-      col.innerHTML = `
-        <div class="service-option sub-service" data-service="${service.name}">
-          <i class="fas ${service.icon} me-2"></i>
-          <span class="flex-grow-1">${service.name}</span>
-          <span class="badge bg-success">₹${service.price}</span>
-        </div>
-      `;
-      
-      grid.appendChild(col);
-    });
-    
-    document.querySelectorAll('.sub-service').forEach(option => {
-      option.addEventListener('click', function() {
-        const serviceName = this.dataset.service;
-        
-        if (selectedServices.has(serviceName)) {
-          selectedServices.delete(serviceName);
-          this.classList.remove('selected');
-        } else {
-          selectedServices.add(serviceName);
-          this.classList.add('selected');
+            const total = baseTotal + travelCharge;
+            document.getElementById('totalAmountSummary').textContent = total;
+            document.getElementById('travelChargesInput').value = travelCharge;
+            document.getElementById('totalAmountInput').value = total;
+          } else {
+            distanceInfo.style.display = 'none';
+          }
         }
-        
-        updateSelectedTags();
-        updateEstimatedCharges();
-        
-        const fuelSection = document.getElementById('fuelQuantitySection');
-        if (serviceName.includes('Delivery')) {
-          fuelSection.style.display = 'block';
-        } else {
-          let hasFuelDelivery = false;
-          selectedServices.forEach(s => {
-            if (s.includes('Delivery')) hasFuelDelivery = true;
-          });
-          fuelSection.style.display = hasFuelDelivery ? 'block' : 'none';
+
+        // Location Autocomplete
+        const addressInput = document.getElementById('addressInput');
+        const dropdown = document.getElementById('autocompleteDropdown');
+        let timeout;
+
+        addressInput.addEventListener('input', function () {
+          const q = this.value.trim();
+          clearTimeout(timeout);
+          if (q.length < 3) { dropdown.style.display = 'none'; return; }
+
+          timeout = setTimeout(() => {
+            fetch(`/api/autocomplete-locations?q=${encodeURIComponent(q)}`)
+              .then(r => r.json())
+              .then(data => {
+                dropdown.innerHTML = '';
+                if (data.results?.length) {
+                  data.results.forEach(res => {
+                    const div = document.createElement('div');
+                    div.className = 'autocomplete-item';
+                    div.innerHTML = `<strong>${res.name}</strong><br><small class="text-muted">${res.formatted}</small>`;
+                    div.addEventListener('click', () => {
+                      addressInput.value = res.formatted;
+                      selectedLocation = { lat: res.lat, lng: res.lng };
+                      dropdown.style.display = 'none';
+                      calculateTotals();
+                    });
+                    dropdown.appendChild(div);
+                  });
+                  dropdown.style.display = 'block';
+                }
+              });
+          }, 300);
+        });
+
+        function haversineDistance(lat1, lon1, lat2, lon2) {
+          const R = 6371;
+          const dLat = (lat2 - lat1) * Math.PI / 180;
+          const dLon = (lon2 - lon1) * Math.PI / 180;
+          const a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+            Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) *
+            Math.sin(dLon / 2) * Math.sin(dLon / 2);
+          return R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
         }
-      });
-    });
-    
-    container.style.display = 'block';
-  }
 
-  function updateSelectedTags() {
-    const container = document.getElementById('selectedTags');
-    const hiddenInput = document.getElementById('subServiceInput');
-    
-    container.innerHTML = '';
-    
-    selectedServices.forEach(serviceName => {
-      const service = Object.values(serviceOptions[selectedCategory] || {})
-        .find(s => s?.name === serviceName);
-      
-      const tag = document.createElement('div');
-      tag.className = 'service-tag';
-      tag.innerHTML = `
-        <i class="fas ${service.icon} me-2"></i>
-        ${serviceName}
-        <i class="fas fa-times ms-2" onclick="removeService('${serviceName}')"></i>
-      `;
-      container.appendChild(tag);
-    });
-    
-    hiddenInput.value = Array.from(selectedServices).join(',');
-  }
+        // File Input
+        const dropZone = document.getElementById('dropZone');
+        const fileInput = document.getElementById('fileInput');
+        dropZone.addEventListener('click', () => fileInput.click());
+        fileInput.addEventListener('change', () => {
+          if (fileInput.files.length) {
+            document.getElementById('fileName').textContent = fileInput.files[0].name;
+            dropZone.classList.add('bg-light');
+          }
+        });
 
-  function removeService(serviceName) {
-    selectedServices.delete(serviceName);
-    document.querySelectorAll(`.sub-service[data-service="${serviceName}"]`)
-      .forEach(el => el.classList.remove('selected'));
-    updateSelectedTags();
-    updateEstimatedCharges();
-  }
-
-  function updateEstimatedCharges() {
-    const chargesDiv = document.getElementById('estimatedCharges');
-    const amountSpan = document.getElementById('baseChargeAmount');
-    
-    let baseTotal = 0;
-    selectedServices.forEach(serviceName => {
-      const service = Object.values(serviceOptions[selectedCategory] || {})
-        .find(s => s?.name === serviceName);
-      if (service) baseTotal += service.price;
-    });
-    
-    // Get travel charges from display if available
-    const travelChargesSpan = document.getElementById('travelCharges');
-    const travelCharges = travelChargesSpan ? parseInt(travelChargesSpan.textContent) || 0 : 0;
-    const totalCharges = baseTotal + travelCharges;
-    
-    if (totalCharges > 0) {
-      chargesDiv.style.display = 'block';
-      amountSpan.textContent = totalCharges;
-    } else {
-      chargesDiv.style.display = 'none';
-    }
-  }
-
-  // File upload preview
-  document.getElementById('vehiclePhoto')?.addEventListener('change', function(e) {
-    const file = e.target.files[0];
-    if (file) {
-      const uploadArea = document.querySelector('.file-upload-area');
-      uploadArea.innerHTML = `
-        <i class="fas fa-check-circle text-success"></i>
-        <p class="mb-2">${file.name}</p>
-        <small class="text-muted">Ready to upload</small>
-      `;
-    }
-  });
-
-  // Phone number validation - numbers only, 10 digits max
-  const phoneInput = document.getElementById('phone');
-  if (phoneInput) {
-    phoneInput.addEventListener('input', function(e) {
-      // Remove any non-digit characters
-      this.value = this.value.replace(/[^0-9]/g, '');
-      
-      // Enforce maximum 10 digits
-      if (this.value.length > 10) {
-        this.value = this.value.slice(0, 10);
-      }
-    });
-
-    // Prevent non-numeric input
-    phoneInput.addEventListener('keypress', function(e) {
-      const char = String.fromCharCode(e.which);
-      if (!/[0-9]/.test(char)) {
-        e.preventDefault();
-      }
-    });
-
-    // Validate on form submission
-    const form = phoneInput.closest('form');
-    if (form) {
-      form.addEventListener('submit', function(e) {
-        if (phoneInput.value.length !== 10) {
-          e.preventDefault();
-          alert('Phone number must be exactly 10 digits');
-          phoneInput.focus();
-          phoneInput.style.borderColor = '#e74c3c';
-        } else {
-          phoneInput.style.borderColor = '#e2e8f0';
-        }
-      });
-    }
-
-    // Add visual feedback for invalid input
-    phoneInput.addEventListener('blur', function() {
-      if (this.value.length > 0 && this.value.length !== 10) {
-        this.style.borderColor = '#e74c3c';
-      } else {
-        this.style.borderColor = '#e2e8f0';
-      }
-    });
-  }
-
-  // Payment Section Handling
-  const paymentSection = document.getElementById('paymentSection');
-  const submitBtn = document.getElementById('submitBtn');
-  const acceptTermsCheckbox = document.getElementById('acceptTerms');
-
-  // Payment method selection
-  const paymentMethodOptions = document.querySelectorAll('.payment-method-option');
-  const upiPaymentDetails = document.getElementById('upiPaymentDetails');
-  const cardPaymentDetails = document.getElementById('cardPaymentDetails');
-  const onlinePaymentDetails = document.getElementById('onlinePaymentDetails');
-
-  paymentMethodOptions.forEach(option => {
-    option.addEventListener('click', function() {
-      paymentMethodOptions.forEach(opt => opt.classList.remove('selected'));
-      this.classList.add('selected');
-
-      const method = this.querySelector('input').value;
-
-      // Hide all extra fields
-      upiPaymentDetails.style.display = 'none';
-      cardPaymentDetails.style.display = 'none';
-      onlinePaymentDetails.style.display = 'none';
-
-      // Show relevant field
-      if (method === 'upi') {
-        upiPaymentDetails.style.display = 'block';
-      } else if (method === 'card') {
-        cardPaymentDetails.style.display = 'block';
-      } else if (method === 'online') {
-        onlinePaymentDetails.style.display = 'block';
-      }
-    });
-  });
-
-  // Enable/disable submit button based on terms checkbox
-  if (acceptTermsCheckbox) {
-    acceptTermsCheckbox.addEventListener('change', function() {
-      submitBtn.disabled = !this.checked;
-    });
-  }
-
-  // Show payment section when services are selected and update summary
-  function updatePaymentSection() {
-    const chargesDiv = document.getElementById('estimatedCharges');
-    const baseAmount = document.getElementById('baseChargeAmount');
-    const travelChargesSpan = document.getElementById('travelCharges');
-
-    if (selectedServices.size > 0) {
-      paymentSection.style.display = 'block';
-
-      // Calculate service charges
-      let serviceCharges = 0;
-      selectedServices.forEach(serviceName => {
-        const service = Object.values(serviceOptions[selectedCategory] || {})
-          .find(s => s?.name === serviceName);
-        if (service) serviceCharges += service.price;
-      });
-
-      // Get travel charges
-      const travelCharges = travelChargesSpan ? parseInt(travelChargesSpan.textContent) || 0 : 0;
-      const totalAmount = serviceCharges + travelCharges;
-
-      // Update payment summary
-      document.getElementById('serviceChargesSummary').textContent = serviceCharges;
-      document.getElementById('travelChargesSummary').textContent = travelCharges;
-      document.getElementById('totalAmountSummary').textContent = totalAmount;
-      
-      // Update hidden inputs for form submission
-      document.getElementById('travelChargesInput').value = travelCharges;
-      document.getElementById('totalAmountInput').value = totalAmount;
-    } else {
-      paymentSection.style.display = 'none';
-      submitBtn.disabled = true;
-    }
-  }
-
-  // Override the original updateEstimatedCharges to also update payment section
-  const originalUpdateEstimatedCharges = updateEstimatedCharges;
-  updateEstimatedCharges = function() {
-    originalUpdateEstimatedCharges();
-    updatePaymentSection();
-  };
-
-  // Override updateEstimatedChargesWithTravel to also update payment section
-  const originalUpdateEstimatedChargesWithTravel = updateEstimatedChargesWithTravel;
-  updateEstimatedChargesWithTravel = function(travelCharges) {
-    originalUpdateEstimatedChargesWithTravel(travelCharges);
-    updatePaymentSection();
-  };
-</script>
-
+        // Phone Validation
+        document.getElementById('phoneInput').addEventListener('input', function () {
+          this.value = this.value.replace(/[^0-9]/g, '').slice(0, 10);
+        });
+      </script>
 </body>
+
 </html>

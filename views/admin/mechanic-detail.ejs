@@ -1,380 +1,343 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
 	<meta charset="UTF-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<meta name="theme-color" content="#8e44ad">
-	<link href="https://fonts.googleapis.com/css?family=Dosis:200,300,400,500,700" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css?family=Overpass:300,400,400i,600,700" rel="stylesheet">
+	<title>Mechanic Profile | RoadAid Admin</title>
 
-    <link rel="stylesheet" href="/assets/css/open-iconic-bootstrap.min.css">
-    <link rel="stylesheet" href="/assets/css/animate.css">
-    
-    <link rel="stylesheet" href="/assets/css/owl.carousel.min.css">
-    <link rel="stylesheet" href="/assets/css/owl.theme.default.min.css">
-    <link rel="stylesheet" href="/assets/css/magnific-popup.css">
+	<!-- Fonts -->
+	<link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800&display=swap" rel="stylesheet">
 
-    <link rel="stylesheet" href="/assets/css/aos.css">
-
-    <link rel="stylesheet" href="/assets/css/ionicons.min.css">
-
-    <link rel="stylesheet" href="/assets/css/bootstrap-datepicker.css">
-    <link rel="stylesheet" href="/assets/css/jquery.timepicker.css">
-
-    <link rel="stylesheet" href="/assets/css/font-awesome.min.css">
-    
-    <link rel="stylesheet" href="/assets/css/flaticon.css">
-    <link rel="stylesheet" href="/assets/css/icomoon.css">
-	<link rel="stylesheet" href="/assets/css/style.css">
-    
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" integrity="sha512-1ycn6IcaQQ40/MKBW2W4Rhis/DbILU74C1vSrLJxCq57o941Ym01SwNsOMqvEBFlcgUa6xLiPY/NS5R+E6ztJQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
-	<link rel="stylesheet" href="/assets/css/sidebar.css">
+	<!-- CSS -->
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css">
+	<link rel="stylesheet" href="/assets/css/dashboard-redesign.css">
 	<link rel="icon" type="image/png" href="/assets/images/FUEL AID_logo.png">
-	<title> <%= typeof title != 'undefined' ? title : "FuelAid Admin" %> </title>
+
+	<style>
+		body {
+			background-color: var(--primary-bg);
+			color: var(--text-light);
+			font-family: var(--font-main);
+		}
+
+		#main-wrapper {
+			margin-left: 280px;
+			padding: 2.5rem;
+			min-height: 100vh;
+		}
+
+		.page-header {
+			margin-bottom: 3rem;
+			border-left: 5px solid var(--accent-yellow);
+			padding-left: 1.5rem;
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+		}
+
+		.page-header h2 {
+			font-weight: 800;
+			margin: 0;
+			text-transform: uppercase;
+			letter-spacing: 1px;
+		}
+
+		.profile-hero-card {
+			background: var(--card-bg);
+			border-radius: 40px;
+			overflow: hidden;
+			border: 1px solid #333;
+			color: var(--text-dark);
+			margin-bottom: 3rem;
+		}
+
+		.hero-banner {
+			height: 200px;
+			background: linear-gradient(135deg, #111 0%, #222 100%);
+			position: relative;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+		}
+
+		.hero-banner::after {
+			content: "\f7d9";
+			/* tools icon */
+			font-family: "Font Awesome 6 Free";
+			font-weight: 900;
+			font-size: 15rem;
+			position: absolute;
+			bottom: -50px;
+			right: -20px;
+			opacity: 0.03;
+			color: var(--accent-yellow);
+		}
+
+		.profile-overlap-avatar {
+			width: 150px;
+			height: 150px;
+			background: #fff;
+			border: 8px solid var(--card-bg);
+			border-radius: 40px;
+			position: absolute;
+			bottom: -75px;
+			left: 3rem;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+			font-size: 4rem;
+			color: #111;
+		}
+
+		.hero-details {
+			padding: 5rem 3rem 3rem;
+			display: flex;
+			justify-content: space-between;
+			align-items: flex-end;
+		}
+
+		.hero-meta h3 {
+			font-weight: 800;
+			margin: 0;
+			font-size: 2rem;
+			color: #111;
+		}
+
+		.role-pill-v {
+			background: #f0f0f0;
+			padding: 0.4rem 1.25rem;
+			border-radius: 50px;
+			font-size: 0.75rem;
+			font-weight: 800;
+			text-transform: uppercase;
+			color: #666;
+			letter-spacing: 1px;
+		}
+
+		.info-matrix {
+			display: grid;
+			grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+			gap: 2rem;
+			padding: 0 3rem 3rem;
+		}
+
+		.matrix-item {
+			display: flex;
+			gap: 1.5rem;
+			padding: 1.5rem;
+			background: #fcfcfc;
+			border-radius: 20px;
+			border: 1px solid #f0f0f0;
+		}
+
+		.matrix-icon {
+			width: 45px;
+			height: 45px;
+			background: #111;
+			border-radius: 12px;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			color: var(--accent-yellow);
+			font-size: 1rem;
+		}
+
+		.matrix-content label {
+			display: block;
+			font-size: 0.6rem;
+			text-transform: uppercase;
+			font-weight: 700;
+			color: #999;
+			margin-bottom: 0.25rem;
+		}
+
+		.matrix-content span {
+			font-weight: 700;
+			color: #333;
+			font-size: 0.95rem;
+		}
+
+		.action-tray-v {
+			padding: 2.5rem 3rem;
+			background: #111;
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+		}
+
+		.btn-return-v {
+			text-decoration: none;
+			color: #888;
+			font-weight: 700;
+			font-size: 0.8rem;
+			text-transform: uppercase;
+			display: flex;
+			align-items: center;
+			gap: 0.75rem;
+			transition: var(--transition);
+		}
+
+		.btn-return-v:hover {
+			color: var(--accent-yellow);
+		}
+
+		.btn-action-primary-v {
+			background: var(--accent-yellow);
+			color: #000;
+			padding: 0.8rem 2.5rem;
+			border-radius: 12px;
+			text-decoration: none;
+			font-weight: 800;
+			text-transform: uppercase;
+			font-size: 0.8rem;
+			transition: var(--transition);
+		}
+
+		.btn-action-primary-v:hover {
+			transform: scale(1.05);
+			box-shadow: 0 10px 20px rgba(247, 183, 29, 0.3);
+		}
+
+		@media (max-width: 991px) {
+			#main-wrapper {
+				margin-left: 0;
+				padding: 1.5rem;
+			}
+
+			.hero-details {
+				flex-direction: column;
+				align-items: flex-start;
+				gap: 1.5rem;
+			}
+
+			.profile-overlap-avatar {
+				left: 1.5rem;
+			}
+
+			.hero-details {
+				padding: 6rem 1.5rem 2rem;
+			}
+
+			.info-matrix {
+				padding: 0 1.5rem 2rem;
+			}
+		}
+	</style>
 </head>
 
-<body>
+<body class="dashboard-body">
 	<%- include('../partials/header') %>
-	<%- include('../partials/alerts') %>
+		<%- include('../partials/adminSidebar', { title: 'Mechanic Profile' }) %>
 
-<style>
-	/* Header Styling */
-	header {
-		background: linear-gradient(135deg, #8e44ad 0%, #9b59b6 100%)!important;
-		box-shadow: 0 4px 15px rgba(0,0,0,0.2)!important;
-	}
-	header .navbar, .bg-dark, .navbar-dark, .navbar-light {
-		background: linear-gradient(135deg, #8e44ad 0%, #9b59b6 100%)!important;
-		background-image: none !important;
-		box-shadow: none !important;
-	}
-	.logo-container img {
-		height: 0.9em;
-		width: auto;
-	}
-
-	/* Global Animations */
-	@keyframes slideInDown {
-		from { opacity: 0; transform: translateY(-30px); }
-		to { opacity: 1; transform: translateY(0); }
-	}
-
-	@keyframes fadeInScale {
-		from { opacity: 0; transform: scale(0.9); }
-		to { opacity: 1; transform: scale(1); }
-	}
-
-	/* Main Wrapper */
-	#main-wrapper {
-		overflow-y: scroll;
-		background: linear-gradient(135deg, #f5f7fa 0%, #e8e8e8 100%);
-		min-height: 100vh;
-	}
-
-	#main-wrapper::-webkit-scrollbar {
-		display: none;
-	}
-
-	/* Page Header */
-	.page-header {
-		background: linear-gradient(135deg, #8e44ad 0%, #9b59b6 100%);
-		padding: 25px 30px;
-		border-radius: 15px;
-		margin: 20px;
-		box-shadow: 0 8px 25px rgba(142, 68, 173, 0.3);
-		display: flex;
-		align-items: center;
-		gap: 15px;
-		animation: slideInDown 0.6s ease-out;
-	}
-
-	.page-header h5 {
-		color: white;
-		margin: 0;
-		font-size: 26px;
-		font-weight: 700;
-	}
-
-	.page-header i {
-		font-size: 24px;
-		color: white;
-	}
-
-	/* Profile Container */
-	.profile-container {
-		padding: 0 20px 30px;
-	}
-
-	.profile-card {
-		background: white;
-		border-radius: 20px;
-		box-shadow: 0 10px 40px rgba(0,0,0,0.1);
-		overflow: hidden;
-		animation: fadeInScale 0.6s ease-out;
-	}
-
-	.profile-header {
-		background: linear-gradient(135deg, #e67e22 0%, #d35400 100%);
-		padding: 40px 30px;
-		text-align: center;
-		position: relative;
-	}
-
-	.profile-header::before {
-		content: '';
-		position: absolute;
-		top: -50%;
-		right: -20%;
-		width: 300px;
-		height: 300px;
-		background: rgba(255,255,255,0.1);
-		border-radius: 50%;
-	}
-
-	.profile-avatar {
-		width: 100px;
-		height: 100px;
-		border-radius: 20px;
-		background: rgba(255,255,255,0.2);
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		margin: 0 auto 20px;
-		border: 4px solid rgba(255,255,255,0.3);
-	}
-
-	.profile-avatar i {
-		font-size: 48px;
-		color: white;
-	}
-
-	.profile-header h4 {
-		color: white;
-		font-weight: 700;
-		margin: 0 0 8px;
-		font-size: 24px;
-	}
-
-	.profile-header .role-badge {
-		display: inline-block;
-		padding: 6px 20px;
-		border-radius: 25px;
-		background: rgba(255,255,255,0.2);
-		color: white;
-		font-weight: 600;
-		font-size: 14px;
-	}
-
-	.profile-body {
-		padding: 30px;
-	}
-
-	.info-grid {
-		display: grid;
-		grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-		gap: 20px;
-	}
-
-	.info-item {
-		display: flex;
-		align-items: flex-start;
-		gap: 15px;
-		padding: 20px;
-		background: #f8f9fa;
-		border-radius: 15px;
-		transition: all 0.3s ease;
-	}
-
-	.info-item:hover {
-		background: #f0f1f3;
-		transform: translateX(5px);
-	}
-
-	.info-icon {
-		width: 45px;
-		height: 45px;
-		border-radius: 12px;
-		background: linear-gradient(135deg, #e67e22 0%, #d35400 100%);
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		flex-shrink: 0;
-	}
-
-	.info-icon i {
-		color: white;
-		font-size: 18px;
-	}
-
-	.info-content {
-		flex: 1;
-	}
-
-	.info-label {
-		font-size: 12px;
-		color: #7f8c8d;
-		text-transform: uppercase;
-		letter-spacing: 0.5px;
-		margin-bottom: 5px;
-	}
-
-	.info-value {
-		font-size: 16px;
-		color: #2c3e50;
-		font-weight: 600;
-	}
-
-	.back-btn {
-		display: inline-flex;
-		align-items: center;
-		gap: 8px;
-		background: linear-gradient(135deg, #8e44ad 0%, #9b59b6 100%);
-		color: white;
-		padding: 12px 25px;
-		border-radius: 10px;
-		text-decoration: none;
-		font-weight: 600;
-		transition: all 0.3s ease;
-		margin-top: 20px;
-	}
-
-	.back-btn:hover {
-		transform: translateY(-2px);
-		box-shadow: 0 8px 20px rgba(142, 68, 173, 0.3);
-		color: white;
-	}
-
-	/* Responsive */
-	@media (max-width: 768px) {
-		.page-header {
-			margin: 10px;
-			padding: 20px;
-		}
-		.profile-container {
-			padding: 0 10px 20px;
-		}
-		.info-grid {
-			grid-template-columns: 1fr;
-		}
-	}
-</style>
-
-<main>
-	<%- include('../partials/adminSidebar') %>
-	
-	<div id="main-wrapper">
-		<!-- Page Header -->
-		<div class="page-header">
-			<i class="fas fa-user-tie"></i>
-			<h5>Mechanic Details</h5>
-		</div>
-
-		<div class="profile-container">
-			<div class="profile-card">
-				<div class="profile-header">
-					<div class="profile-avatar">
-						<i class="fas fa-tools"></i>
-					</div>
-					<h4><%= mechanic.firstName + " " + mechanic.lastName %></h4>
-					<span class="role-badge"><i class="fas fa-wrench me-2"></i>Mechanic</span>
+			<div id="main-wrapper">
+				<div class="page-header">
+					<h2>Partner <span>Profile</span></h2>
+					<a href="/admin/mechanics" class="btn-return-v"><i class="fas fa-angles-left"></i> Registry</a>
 				</div>
 
-				<div class="profile-body">
-					<div class="info-grid">
-						<div class="info-item">
-							<div class="info-icon">
-								<i class="fas fa-envelope"></i>
-							</div>
-							<div class="info-content">
-								<div class="info-label">Email Address</div>
-								<div class="info-value"><%= mechanic.email %></div>
+				<%- include('../partials/alerts') %>
+
+					<div class="profile-hero-card">
+						<div class="hero-banner">
+							<div class="profile-overlap-avatar">
+								<i class="fas fa-user-gear"></i>
 							</div>
 						</div>
 
-						<div class="info-item">
-							<div class="info-icon">
-								<i class="fas fa-phone"></i>
+						<div class="hero-details">
+							<div class="hero-meta">
+								<span class="role-pill-v">Certified Service Mechanic</span>
+								<h3 class="mt-2 text-uppercase">
+									<%= mechanic.firstName %>
+										<%= mechanic.lastName %>
+								</h3>
 							</div>
-							<div class="info-content">
-								<div class="info-label">Phone Number</div>
-								<div class="info-value"><%= mechanic.phone || 'N/A' %></div>
-							</div>
-						</div>
-
-						<div class="info-item">
-							<div class="info-icon">
-								<i class="fas fa-map-marker-alt"></i>
-							</div>
-							<div class="info-content">
-								<div class="info-label">Address</div>
-								<div class="info-value"><%= mechanic.address || 'N/A' %></div>
+							<div>
+								<span class="fw-bold" style="color: #666;"><i class="fas fa-star text-warning me-2"></i>
+									<%= mechanic.rating || '5.0' %> Reliability Score
+								</span>
 							</div>
 						</div>
 
-						<div class="info-item">
-							<div class="info-icon">
-								<i class="fas fa-calendar-alt"></i>
+						<div class="info-matrix">
+							<div class="matrix-item">
+								<div class="matrix-icon"><i class="fas fa-envelope"></i></div>
+								<div class="matrix-content">
+									<label>Professional Email</label>
+									<span>
+										<%= mechanic.email %>
+									</span>
+								</div>
 							</div>
-							<div class="info-content">
-								<div class="info-label">Joined Date</div>
-								<div class="info-value"><%= mechanic.joinedTime ? mechanic.joinedTime.toLocaleString("en-IN", { dateStyle: "medium", timeStyle: "short"}) : 'N/A' %></div>
+							<div class="matrix-item">
+								<div class="matrix-icon"><i class="fas fa-phone-volume"></i></div>
+								<div class="matrix-content">
+									<label>Auth Contact</label>
+									<span>+91 <%= mechanic.phone || 'N/A' %></span>
+								</div>
+							</div>
+							<div class="matrix-item" style="grid-column: span 2;">
+								<div class="matrix-icon"><i class="fas fa-location-crosshairs"></i></div>
+								<div class="matrix-content">
+									<label>Registered Operations Base</label>
+									<span>
+										<%= mechanic.address || 'Operations address not specified' %>
+									</span>
+								</div>
+							</div>
+							<div class="matrix-item">
+								<div class="matrix-icon"><i class="fas fa-calendar-check"></i></div>
+								<div class="matrix-content">
+									<label>Joined Network</label>
+									<span>
+										<%= mechanic.joinedTime ? mechanic.joinedTime.toLocaleString("en-IN", {
+											dateStyle: "long" }) : 'N/A' %>
+									</span>
+								</div>
+							</div>
+							<div class="matrix-item">
+								<div class="matrix-icon"><i class="fas fa-briefcase"></i></div>
+								<div class="matrix-content">
+									<label>Industry Tenure</label>
+									<span>
+										<%= mechanic.experience || '3+' %> Years Experience
+									</span>
+								</div>
+							</div>
+							<div class="matrix-item">
+								<div class="matrix-icon"><i class="fas fa-toggle-on"></i></div>
+								<div class="matrix-content">
+									<label>Availability status</label>
+									<span class="text-success">
+										<%= mechanic.availability || 'Available for Dispatch' %>
+									</span>
+								</div>
+							</div>
+							<div class="matrix-item">
+								<div class="matrix-icon"><i class="fas fa-shield-check"></i></div>
+								<div class="matrix-content">
+									<label>Trust Level</label>
+									<span class="text-primary"><i class="fas fa-certificate me-2"></i>Verified
+										Professional</span>
+								</div>
 							</div>
 						</div>
 
-						<div class="info-item">
-							<div class="info-icon">
-								<i class="fas fa-briefcase"></i>
-							</div>
-							<div class="info-content">
-								<div class="info-label">Experience</div>
-								<div class="info-value"><%= mechanic.experience || 'N/A' %> years</div>
-							</div>
-						</div>
-
-						<div class="info-item">
-							<div class="info-icon">
-								<i class="fas fa-clock"></i>
-							</div>
-							<div class="info-content">
-								<div class="info-label">Availability</div>
-								<div class="info-value"><%= mechanic.availability || 'N/A' %></div>
-							</div>
-						</div>
-
-						<div class="info-item">
-							<div class="info-icon">
-								<i class="fas fa-star"></i>
-							</div>
-							<div class="info-content">
-								<div class="info-label">Rating</div>
-								<div class="info-value"><%= mechanic.rating || '5.0' %> / 5.0</div>
-							</div>
-						</div>
-
-						<div class="info-item">
-							<div class="info-icon">
-								<i class="fas fa-check-circle"></i>
-							</div>
-							<div class="info-content">
-								<div class="info-label">Verification Status</div>
-								<div class="info-value"><%= mechanic.verification_status || 'Verified' %></div>
-							</div>
+						<div class="action-tray-v">
+							<a href="/admin/mechanics" class="btn-return-v">
+								<i class="fas fa-arrow-left"></i> Back to Fleet Overview
+							</a>
+							<a href="mailto:<%= mechanic.email %>" class="btn-action-primary-v">
+								Direct Correspondence
+							</a>
 						</div>
 					</div>
-
-					<a href="/admin/mechanics" class="back-btn">
-						<i class="fas fa-arrow-left"></i> Back to List
-					</a>
-				</div>
 			</div>
-		</div>
-	</div>
-</main>
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
-<script src="/assets/js/script.js"></script>
-
+			<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
+
 </html>

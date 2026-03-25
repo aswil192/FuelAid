@@ -94,23 +94,31 @@ router.get("/mechanic/profile", middleware.ensuremechanicLoggedIn, (req, res) =>
 router.put("/mechanic/profile", upload.single('profilePic'), middleware.ensuremechanicLoggedIn, async (req, res) => {
 	try {
 		const id = req.user._id;
-		const updateObj = req.body.mechanic;  // updateObj: {firstName, lastName, gender, address, phone}
+		// Handle both nested and flat body structures
+		const updateObj = req.body.mechanic || req.body || {};
+		
+		// Remove empty strings to avoid unique constraint violations or cast errors
+		Object.keys(updateObj).forEach(key => {
+			if (updateObj[key] === "") {
+				delete updateObj[key];
+			}
+		});
+
 		if (req.file) {
 			updateObj.profilePic = `/uploads/${req.file.filename}`;
 		}
 
-
-		// Geocode the updated address
-		const geo = await geocodeAddress(updateObj.address);
-
-		if (geo) {
-			// If geocoding is successful, add latitude and longitude to the update object
-			updateObj.latitude = geo.latitude;
-			updateObj.longitude = geo.longitude;
-		} else {
-			// If geocoding fails, set latitude and longitude to null (optional, based on your requirements)
-			updateObj.latitude = null;
-			updateObj.longitude = null;
+		// Geocode the updated address only if it exists and was provided
+		if (updateObj.address) {
+			const geo = await geocodeAddress(updateObj.address);
+			if (geo) {
+				updateObj.latitude = geo.latitude;
+				updateObj.longitude = geo.longitude;
+			} else {
+				// Optional: handle geocoding failure (setting to null or keeping old values)
+				updateObj.latitude = null;
+				updateObj.longitude = null;
+			}
 		}
 
 		// Update the mechanic's profile

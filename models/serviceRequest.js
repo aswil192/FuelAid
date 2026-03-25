@@ -46,7 +46,7 @@ const serviceRequestSchema = new mongoose.Schema({
     type: Number,
     required: true
   },
- 
+
   // Media (optional)
   vehiclePhotoPath: {
     type: String
@@ -79,58 +79,58 @@ const serviceRequestSchema = new mongoose.Schema({
 
   // Feedback
   feedback: { type: String },
-rating: { type: Number, min: 1, max: 5 },
-isPaid: { type: Boolean, default: false },
-completedAt: { type: Date, default: null },
-mechanicNote: {
-  type: String,
-  default: ''
-},
-fuelNote: {
-  type: String,
-  default: ''
-},
-isFuelRequest: {
-  type: Boolean,
-  default: false
-},
-baseAmount: {
-  type: Number,
-  required: false, // Optional if you want flexibility
-  default: 100 // You can set a fallback base price if none provided
-},
+  rating: { type: Number, min: 1, max: 5 },
+  isPaid: { type: Boolean, default: false },
+  completedAt: { type: Date, default: null },
+  mechanicNote: {
+    type: String,
+    default: ''
+  },
+  fuelNote: {
+    type: String,
+    default: ''
+  },
+  isFuelRequest: {
+    type: Boolean,
+    default: false
+  },
+  baseAmount: {
+    type: Number,
+    required: false, // Optional if you want flexibility
+    default: 100 // You can set a fallback base price if none provided
+  },
 
-serviceFee: {
-  type: Number,
-  default: 0
-},
-deliveryCharge: {
-  type: Number,
-  default: 0
-},
-totalCharges: {
-  type: Number,
-  default: 0
-},
-distance: {
-  type: Number,
-  default: 0 // Save distance in km at assignment time
-},
+  serviceFee: {
+    type: Number,
+    default: 0
+  },
+  deliveryCharge: {
+    type: Number,
+    default: 0
+  },
+  totalCharges: {
+    type: Number,
+    default: 0
+  },
+  distance: {
+    type: Number,
+    default: 0 // Save distance in km at assignment time
+  },
 
-// Payment fields
-paymentMethod: {
-  type: String,
-  enum: ["cash", "upi", "card", "online"],
-  default: "cash"
-},
-upiId: {
-  type: String,
-  default: null
-}
+  // Payment fields
+  paymentMethod: {
+    type: String,
+    enum: ["cash", "upi", "card", "online"],
+    default: "cash"
+  },
+  upiId: {
+    type: String,
+    default: null
+  }
 
 
-// 
-    // timestamps: true // ✅ lowercase `true`
+  // 
+  // timestamps: true // ✅ lowercase `true`
 });
 
 const ServiceRequest = mongoose.model("servicerequests", serviceRequestSchema);

@@ -1,266 +1,248 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-	<meta charset="UTF-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<meta name="theme-color" content="#3f51b5">
-	<link href="https://fonts.googleapis.com/css?family=Dosis:200,300,400,500,700" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css?family=Overpass:300,400,400i,600,700" rel="stylesheet">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pending Requests | FuelAid</title>
 
-    <link rel="stylesheet" href="/assets/css/open-iconic-bootstrap.min.css">
-    <link rel="stylesheet" href="/assets/css/animate.css">
-    
-    <link rel="stylesheet" href="/assets/css/owl.carousel.min.css">
-    <link rel="stylesheet" href="/assets/css/owl.theme.default.min.css">
-    <link rel="stylesheet" href="/assets/css/magnific-popup.css">
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800&display=swap" rel="stylesheet">
 
-    <link rel="stylesheet" href="/assets/css/aos.css">
+  <!-- CSS -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="/assets/css/dashboard-redesign.css">
+  <link rel="icon" type="image/png" href="/assets/images/FUEL AID_logo.png">
 
-    <link rel="stylesheet" href="/assets/css/ionicons.min.css">
+  <style>
+    body {
+      background-color: var(--primary-bg);
+      color: var(--text-light);
+      font-family: var(--font-main);
+    }
 
-    <link rel="stylesheet" href="/assets/css/bootstrap-datepicker.css">
-    <link rel="stylesheet" href="/assets/css/jquery.timepicker.css">
+    #main-wrapper {
+      margin-left: 280px;
+      padding: 2.5rem;
+      min-height: 100vh;
+    }
 
-    <link rel="stylesheet" href="/assets/css/font-awesome.min.css">
-    
-    <link rel="stylesheet" href="/assets/css/flaticon.css">
-    <link rel="stylesheet" href="/assets/css/icomoon.css">
-	<link rel="stylesheet" href="/assets/css/style.css">
-    
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" integrity="sha512-1ycn6IcaQQ40/MKBW2W4Rhis/DbILU74C1vSrLJxCq57o941Ym01SwNsOMqvEBFlcgUa6xLiPY/NS5R+E6ztJQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
-	<link rel="stylesheet" href="/assets/css/sidebar.css">
-	<link rel="icon" type="image/png" href="/assets/images/FUEL AID_logo.png">
-	<!-- <link rel="stylesheet" href="/assets/css/sidebar.css"> -->
-	<title> <%= typeof title != 'undefined' ? title : "FuelAid" %> </title>
+    .page-header {
+      margin-bottom: 3rem;
+      border-left: 5px solid var(--accent-yellow);
+      padding-left: 1.5rem;
+    }
+
+    .page-header h2 {
+      font-weight: 800;
+      margin: 0;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .request-item-card {
+      background: var(--card-bg);
+      border-radius: var(--border-radius);
+      padding: 2rem;
+      margin-bottom: 2rem;
+      color: var(--text-dark);
+      position: relative;
+      border: 1px solid #333;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+      transition: var(--transition);
+    }
+
+    .request-item-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
+    }
+
+    .status-badge-sticky {
+      position: absolute;
+      top: 2rem;
+      right: 2rem;
+      background: rgba(247, 183, 29, 0.1);
+      color: var(--accent-yellow);
+      padding: 0.5rem 1.2rem;
+      border-radius: 50px;
+      font-weight: 700;
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      border: 1px solid var(--accent-yellow);
+    }
+
+    .request-meta {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1.5rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .meta-group label {
+      display: block;
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      font-weight: 700;
+      color: #888;
+      margin-bottom: 0.25rem;
+    }
+
+    .meta-group span {
+      font-weight: 600;
+      color: #333;
+    }
+
+    .sub-services-list {
+      background: #f8f9fa;
+      padding: 1rem 1.5rem;
+      border-radius: 10px;
+      margin: 1rem 0;
+    }
+
+    .sub-services-list ul {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+
+    .sub-services-list li {
+      background: #fff;
+      padding: 0.4rem 1rem;
+      border-radius: 50px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      border: 1px solid #eee;
+      color: #555;
+    }
+
+    .vehicle-preview {
+      width: 120px;
+      height: 120px;
+      object-fit: cover;
+      border-radius: 12px;
+      border: 3px solid #eee;
+    }
+
+    .empty-state {
+      text-align: center;
+      padding: 5rem 2rem;
+      background: rgba(255, 255, 255, 0.02);
+      border-radius: 20px;
+      border: 2px dashed #333;
+    }
+
+    .empty-state i {
+      font-size: 4rem;
+      color: #444;
+      margin-bottom: 1.5rem;
+    }
+
+    @media (max-width: 991px) {
+      #main-wrapper {
+        margin-left: 0;
+        padding: 1.5rem;
+      }
+    }
+  </style>
 </head>
 
-<body>
-	<%- include('../partials/header') %>
-	<%- include('../partials/alerts') %>
+<body class="dashboard-body">
+  <%- include('../partials/header') %>
+    <%- include('../partials/customerSidebar', { title: 'Pending Requests' }) %>
 
-<style>
-  :root {
-    --primary-color: #5b5fc7;
-    --secondary-color: #3a86ff;
-    --warning-color: #fca311;
-    --card-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-    --card-radius: 12px;
-  }
+      <div id="main-wrapper">
+        <div class="page-header">
+          <h2>Pending <span>Requests</span></h2>
+          <p class="text-muted mb-0">Track your active service requests currently awaiting confirmation.</p>
+        </div>
 
-  body {
-    background: linear-gradient(135deg, #f5f7fa 0%, #e8ecf5 100%);
-  }
+        <% if (requestedServices.length===0) { %>
+          <div class="empty-state">
+            <i class="fas fa-clipboard-list"></i>
+            <h3>No Pending Requests</h3>
+            <p class="text-muted">You don't have any active service requests at the moment.</p>
+            <a href="/customer/request-service" class="btn-yellow mt-3">Request A Service</a>
+          </div>
+          <% } else { %>
+            <div class="requests-list">
+              <% requestedServices.forEach(service=> { %>
+                <div class="request-item-card">
+                  <div class="status-badge-sticky">
+                    <i class="fas fa-clock me-1"></i> Requested
+                  </div>
 
-  header{
-    background-color: #403d3d!important;
-  }
-  
-  header .navbar, .bg-dark, .navbar-dark, .navbar-light {
-    background-color: #403d3d!important;
-    background-image: none !important;
-    box-shadow: none !important;
-  }
+                  <div class="row">
+                    <div class="col-md-9">
+                      <div class="request-meta">
+                        <div class="meta-group">
+                          <label>Category</label>
+                          <span><i
+                              class="fas <%= service.serviceCategory === 'fuel' ? 'fa-gas-pump' : 'fa-tools' %> me-2 text-warning"></i>
+                            <%= service.serviceCategory %>
+                          </span>
+                        </div>
+                        <div class="meta-group">
+                          <label>Requested On</label>
+                          <span>
+                            <%= service.createdAt.toLocaleString("en-IN", { dateStyle: "medium" , timeStyle: "short" })
+                              %>
+                          </span>
+                        </div>
+                        <% if (service.quantity) { %>
+                          <div class="meta-group">
+                            <label>Quantity</label>
+                            <span>
+                              <%= service.quantity %> Liters
+                            </span>
+                          </div>
+                          <% } %>
+                      </div>
 
-  .bg-white.shadow-sm.p-3 {
-    background: white !important;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08) !important;
-    border-radius: var(--card-radius);
-    margin: 1rem;
-    animation: slideDown 0.6s ease-out;
-  }
+                      <div class="meta-group mb-3">
+                        <label>Pick-up Address</label>
+                        <span><i class="fas fa-map-marker-alt me-2 text-danger"></i>
+                          <%= service.address %>
+                        </span>
+                      </div>
 
-  @keyframes slideDown {
-    from {
-      opacity: 0;
-      transform: translateY(-20px);
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
-  }
+                      <div class="sub-services-list">
+                        <label class="small text-muted fw-bold mb-2 d-block">Sub-services Required:</label>
+                        <ul>
+                          <% service.subServices.forEach(sub=> { %>
+                            <li><i class="fas fa-check me-2 text-success"></i>
+                              <%= sub %>
+                            </li>
+                            <% }) %>
+                        </ul>
+                      </div>
 
-  #main-wrapper .m-4 {
-    padding: 0 1rem;
-  }
+                      <% if (service.customerToMechanicMsg) { %>
+                        <div class="meta-group">
+                          <label>Your Message</label>
+                          <p class="small text-muted mb-0">"<%= service.customerToMechanicMsg %>"</p>
+                        </div>
+                        <% } %>
+                    </div>
 
-  .bg-white.mb-4.p-4.shadow-sm {
-    background: white !important;
-    border-radius: var(--card-radius) !important;
-    box-shadow: var(--card-shadow) !important;
-    border: none !important;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
-    animation: slideUp 0.6s ease-out;
-  }
+                    <% if (service.vehiclePhotoPath) { %>
+                      <div class="col-md-3 text-md-end mt-4 mt-md-0">
+                        <label class="small text-muted fw-bold mb-2 d-block">Vehicle Image</label>
+                        <img src="/<%= service.vehiclePhotoPath %>" alt="Vehicle" class="vehicle-preview shadow-sm"
+                          onclick="window.open(this.src)">
+                      </div>
+                      <% } %>
+                  </div>
+                </div>
+                <% }) %>
+            </div>
+            <% } %>
+      </div>
 
-  @keyframes slideUp {
-    from {
-      opacity: 0;
-      transform: translateY(30px);
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
-  }
-
-  .bg-white.mb-4.p-4.shadow-sm:hover {
-    transform: translateY(-4px) !important;
-    box-shadow: 0 8px 25px rgba(91, 95, 199, 0.15) !important;
-  }
-
-  .bg-white.mb-4.p-4.shadow-sm strong {
-    color: #1a1a2e !important;
-    font-weight: 700 !important;
-  }
-
-  .bg-white.mb-4.p-4.shadow-sm div {
-    animation: fadeInUp 0.6s ease-out both;
-  }
-
-  .bg-white.mb-4.p-4.shadow-sm div:nth-child(1) { animation-delay: 0.1s; }
-  .bg-white.mb-4.p-4.shadow-sm div:nth-child(2) { animation-delay: 0.2s; }
-  .bg-white.mb-4.p-4.shadow-sm div:nth-child(3) { animation-delay: 0.3s; }
-  .bg-white.mb-4.p-4.shadow-sm div:nth-child(4) { animation-delay: 0.4s; }
-  .bg-white.mb-4.p-4.shadow-sm div:nth-child(5) { animation-delay: 0.5s; }
-  .bg-white.mb-4.p-4.shadow-sm div:nth-child(6) { animation-delay: 0.6s; }
-  .bg-white.mb-4.p-4.shadow-sm div:nth-child(7) { animation-delay: 0.7s; }
-
-  @keyframes fadeInUp {
-    from {
-      opacity: 0;
-      transform: translateY(15px);
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
-  }
-
-  .text-orange {
-    color: var(--warning-color) !important;
-    font-weight: 700 !important;
-  }
-
-  .color-theme {
-    color: var(--primary-color) !important;
-    font-weight: 700 !important;
-  }
-
-  .text-center.text-muted {
-    color: #999 !important;
-    font-size: 1.1rem !important;
-    padding: 2rem !important;
-    animation: fadeInUp 0.6s ease-out;
-  }
-
-  ul {
-    padding-left: 1.5rem;
-  }
-
-  ul li {
-    color: #333;
-    margin-bottom: 0.5rem;
-  }
-
-  img {
-    border-radius: 8px !important;
-    transition: all 0.3s ease !important;
-  }
-
-  img:hover {
-    transform: scale(1.02);
-    box-shadow: 0 4px 12px rgba(91, 95, 199, 0.2) !important;
-  }
-
-  .logo-container img {
-    height: 0.9em;
-    width: auto;
-  }
-</style>
-<main>
-	<%- include('../partials/customerSidebar') %>
-	<div id="main-wrapper">
-		
-		<div class="bg-white shadow-sm p-3">
-			<br>
-			<span class="me-3" id="sidebar-toggler-btn"><i class="fas fa-bars"></i></span>
-			<h5 class="m-0 color-theme d-inline-block">Pending Requests</h5>
-		</div>
-	<div class="m-4">
-		<% if (requestedServices.length === 0) { %>
-		  <p class="text-center text-muted">No requested services yet.</p>
-		<% } else { %>
-		  <% requestedServices.forEach(service => { %>
-			<div class="bg-white mb-4 p-4 shadow-sm">
-			  
-			  <div class="mb-2">
-				<strong>Service Category:</strong>
-				<span><%= service.serviceCategory %></span>
-			  </div>
-	  
-			  <div class="mb-2">
-				<strong>Sub-services:</strong>
-				<ul class="mb-0">
-				  <% service.subServices.forEach(sub => { %>
-					<li><%= sub %></li>
-				  <% }) %>
-				</ul>
-			  </div>
-	  
-			  <% if (service.quantity) { %>
-			  <div class="mb-2">
-				<strong>Quantity:</strong>
-				<span><%= service.quantity %></span>
-			  </div>
-			  <% } %>
-	  
-			  <div class="mb-2">
-				<strong>Address:</strong>
-				<span><%= service.address %></span>
-			  </div>
-	  
-			  <div class="mb-2">
-				<strong>Phone:</strong>
-				<span><%= service.phone %></span>
-			  </div>
-	  
-			  <% if (service.vehiclePhotoPath) { %>
-			  <div class="mb-2">
-				<strong>Vehicle Photo:</strong><br>
-				<img src="/<%= service.vehiclePhotoPath %>" alt="Vehicle" style="max-width: 200px; border: 1px solid #ddd; border-radius: 6px;">
-			  </div>
-			  <!-- <p><strong>Debug Path:</strong> <%= service.vehiclePhotoPath %></p> -->
-
-			  <% } %>
-	  
-			  <% if (service.customerToMechanicMsg) { %>
-			  <div class="mb-2">
-				<strong>Message to FuelAid:</strong>
-				<span><%= service.customerToMechanicMsg %></span>
-			  </div>
-			  <% } %>
-	  
-			  <div class="mb-2">
-				<strong>Status:</strong>
-				<span class="text-orange fw-bold">Requested</span>
-			  </div>
-	  
-			  <div class="mb-2">
-				<strong>Time of Request:</strong>
-				<span><%= service.createdAt.toLocaleString("en-IN", { dateStyle: "medium", timeStyle: "short" }) %></span>
-			  </div>
-	  
-			</div>
-		  <% }) %>
-		<% } %>
-	  </div>
-	</div>
-	  
-</main>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
-	<script src="/assets/js/script.js"></script>
+      <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
+
 </html>

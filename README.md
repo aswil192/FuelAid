@@ -156,11 +156,4 @@ For running the application:
 - [OpenCage API](https://opencagedata.com/)
 - [GitHub Docs](https://docs.github.com/en/get-started/quickstart/hello-world)
 
-## Contact
-
-📧 For queries or contributions: [nikitabansal006@gmail.com](mailto:nikitabansal006@gmail.com)  
-🔗 GitHub Repo: [https://github.com/Nikki-ta/fuel_aid](https://github.com/Nikki-ta/fuel_aid)
-
-## 📝 License
-
-This project is licensed under the MIT License - see the <a href="https://github.com/Nikki-ta/Sweet-Sage/blob/main/LICENSE.md" target="blank">LICENSE.MD</a> file for details.
+🔗 GitHub Repo: [https://github.com/aswil192/fuelaid](https://github.com/aswil192/fuelaid)

@@ -93,12 +93,7 @@ router.get("/fueldeliveryboy/profile", middleware.ensurefueldeliveryboyLoggedIn,
 router.put("/fueldeliveryboy/profile", upload.single('profilePic'), middleware.ensurefueldeliveryboyLoggedIn, async (req, res) => {
 	try {
 		const id = req.user._id;
-		const updateObj = req.body.fueldeliveryboy || {};  // Get fueldeliveryboy object or empty object
-
-		// If updateObj is still empty, get all body fields
-		if (Object.keys(updateObj).length === 0) {
-			Object.assign(updateObj, req.body);
-		}
+		const updateObj = req.body.fueldeliveryboy || req.body || {};
 
 		// Remove empty strings to avoid unique constraint violations (e.g., licensePlate: "")
 		Object.keys(updateObj).forEach(key => {
@@ -148,9 +143,15 @@ function convertTo24Hour(timeStr) {
 }
 
 function isTimeWithinRange(requestDate, rangeStr) {
-	const [start, end] = rangeStr.split('-').map(t => convertTo24Hour(t));
-	const reqTime = requestDate.toTimeString().slice(0, 5); // 'HH:MM'
-	return reqTime >= start && reqTime <= end;
+	if (!rangeStr || !rangeStr.includes('-')) return true; // Default to available if invalid/missing
+	try {
+		const [start, end] = rangeStr.split('-').map(t => convertTo24Hour(t.trim()));
+		const reqTime = requestDate.toTimeString().slice(0, 5); // 'HH:MM'
+		return reqTime >= start && reqTime <= end;
+	} catch (e) {
+		console.error("Error parsing availability:", rangeStr, e);
+		return true; // Fallback to available
+	}
 }
 function isWithinLastNMinutes(date, minutes) {
 	const now = new Date();
@@ -169,6 +170,7 @@ router.get("/fueldeliveryboy/viewRequests", middleware.ensurefueldeliveryboyLogg
 			// If location is missing, ask for it (you can also update this on the frontend)
 			res.render('fueldeliveryboy/viewRequests', {
 				title: "View Requests",
+				requestedServices: [],
 				error: "Please enable location services."
 			});
 			return; // Exit early to avoid reloading the same page
@@ -217,7 +219,7 @@ router.get("/fueldeliveryboy/viewRequests", middleware.ensurefueldeliveryboyLogg
 		// Render the view with filtered services
 		res.render("fueldeliveryboy/viewRequests", {
 			title: "View Requests",
-			requestedServices: requestedServices
+			requestedServices: filteredServices
 		});
 
 	} catch (err) {
@@ -249,52 +251,6 @@ router.post("/fueldeliveryboy/updateLocation", middleware.ensurefueldeliveryboyL
 		res.status(500).send("Failed to update location.");
 	}
 });
-// fueldeliveryboy accepts a service request
-// router.post("/fueldeliveryboy/service/accept/:id", middleware.ensurefueldeliveryboyLoggedIn, async (req, res) => {
-// 	try {
-// 		const request = await ServiceRequest.findById(req.params.id);
-// 		if (!request) {
-// 			req.flash("error", "Service request not found.");
-// 			return res.redirect("/fueldeliveryboy/viewRequests");
-// 		}
-
-// 		// Update status and assign fueldeliveryboy
-// 		request.status = "accepted";
-// 		request.fueldeliveryboy = req.user._id;
-// 		await request.save();
-
-// 		req.flash("success", "You have accepted the service request.");
-// 		res.redirect("/fueldeliveryboy/viewRequests");
-// 	} catch (err) {
-// 		console.error(err);
-// 		req.flash("error", "Error processing the acceptance.");
-// 		res.redirect("/fueldeliveryboy/viewRequests");
-// 	}
-// });
-
-// // fueldeliveryboy rejects a service request
-// router.post("/fueldeliveryboy/service/reject/:id", middleware.ensurefueldeliveryboyLoggedIn, async (req, res) => {
-// 	try {
-// 		const request = await ServiceRequest.findById(req.params.id);
-// 		if (!request) {
-// 			req.flash("error", "Service request not found.");
-// 			return res.redirect("/fueldeliveryboy/viewRequests");
-// 		}
-
-// 		// Reset status and remove fueldeliveryboy assignment
-// 		request.status = "requested";
-// 		request.fueldeliveryboy = null;
-// 		await request.save();
-
-// 		req.flash("success", "You have rejected the request. It's available for others now.");
-// 		res.redirect("/fueldeliveryboy/viewRequests");
-// 	} catch (err) {
-// 		console.error(err);
-// 		req.flash("error", "Error processing the rejection.");
-// 		res.redirect("/fueldeliveryboy/viewRequests");
-// 	}
-// });
-
 
 router.get("/fueldeliveryboy/accepted", middleware.ensurefueldeliveryboyLoggedIn, async (req, res) => {
 	try {

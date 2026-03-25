@@ -1,702 +1,557 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-	<meta charset="UTF-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<meta name="theme-color" content="#3f51b5">
-	<link href="https://fonts.googleapis.com/css?family=Dosis:200,300,400,500,700" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css?family=Overpass:300,400,400i,600,700" rel="stylesheet">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Live Tracking | FuelAid</title>
 
-    <link rel="stylesheet" href="/assets/css/open-iconic-bootstrap.min.css">
-    <link rel="stylesheet" href="/assets/css/animate.css">
-    
-    <link rel="stylesheet" href="/assets/css/owl.carousel.min.css">
-    <link rel="stylesheet" href="/assets/css/owl.theme.default.min.css">
-    <link rel="stylesheet" href="/assets/css/magnific-popup.css">
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800&display=swap" rel="stylesheet">
 
-    <link rel="stylesheet" href="/assets/css/aos.css">
-
-    <link rel="stylesheet" href="/assets/css/ionicons.min.css">
-
-    <link rel="stylesheet" href="/assets/css/bootstrap-datepicker.css">
-    <link rel="stylesheet" href="/assets/css/jquery.timepicker.css">
-
-    <link rel="stylesheet" href="/assets/css/font-awesome.min.css">
-    
-    <link rel="stylesheet" href="/assets/css/flaticon.css">
-    <link rel="stylesheet" href="/assets/css/icomoon.css">
-	<link rel="stylesheet" href="/assets/css/style.css">
-    
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" integrity="sha512-1ycn6IcaQQ40/MKBW2W4Rhis/DbILU74C1vSrLJxCq57o941Ym01SwNsOMqvEBFlcgUa6xLiPY/NS5R+E6ztJQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
-	<link rel="stylesheet" href="/assets/css/sidebar.css">
+  <!-- CSS -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+  <link rel="stylesheet" href="/assets/css/dashboard-redesign.css">
   <link rel="icon" type="image/png" href="/assets/images/FUEL AID_logo.png">
-	<!-- <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" /> -->
-	<!-- <link rel="stylesheet" href="/assets/css/sidebar.css"> -->
-	<title> <%= typeof title != 'undefined' ? title : "FuelAid" %> </title>
+
+  <style>
+    body {
+      background-color: var(--primary-bg);
+      color: var(--text-light);
+      font-family: var(--font-main);
+    }
+
+    #main-wrapper {
+      margin-left: 280px;
+      padding: 2.5rem;
+      min-height: 100vh;
+    }
+
+    .page-header {
+      margin-bottom: 3rem;
+      border-left: 5px solid var(--accent-yellow);
+      padding-left: 1.5rem;
+    }
+
+    .page-header h2 {
+      font-weight: 800;
+      margin: 0;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .tracking-card {
+      background: var(--card-bg);
+      border-radius: 25px;
+      overflow: hidden;
+      color: var(--text-dark);
+      margin-bottom: 3rem;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4);
+      border: 1px solid #333;
+    }
+
+    .tracking-header {
+      background: #111;
+      padding: 1.5rem 2.5rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid #333;
+    }
+
+    .tracking-header h4 {
+      color: var(--accent-yellow);
+      margin: 0;
+      font-weight: 800;
+      text-transform: uppercase;
+      font-size: 1rem;
+      letter-spacing: 1px;
+    }
+
+    .live-indicator {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      color: #ff4444;
+      font-weight: 700;
+      font-size: 0.8rem;
+      text-transform: uppercase;
+    }
+
+    .pulse-dot {
+      width: 10px;
+      height: 10px;
+      background: #ff4444;
+      border-radius: 50%;
+      animation: pulse 1.5s infinite;
+    }
+
+    @keyframes pulse {
+      0% {
+        opacity: 1;
+        transform: scale(1);
+      }
+
+      50% {
+        opacity: 0.5;
+        transform: scale(1.2);
+      }
+
+      100% {
+        opacity: 1;
+        transform: scale(1);
+      }
+    }
+
+    .tracking-body {
+      padding: 2.5rem;
+    }
+
+    .provider-profile {
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+      background: #f8f9fa;
+      padding: 1.5rem;
+      border-radius: 20px;
+      margin-bottom: 2rem;
+      border: 1px solid #eee;
+    }
+
+    .provider-avatar {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 3px solid var(--accent-yellow);
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    }
+
+    .provider-info h5 {
+      margin: 0;
+      font-weight: 800;
+      color: #111;
+    }
+
+    .provider-info p {
+      margin: 0;
+      font-weight: 600;
+      color: #777;
+      font-size: 0.9rem;
+    }
+
+    .info-row-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1.5rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .info-box {
+      background: #fff;
+      padding: 1.2rem;
+      border-radius: 15px;
+      border: 1px solid #eee;
+    }
+
+    .info-box label {
+      display: block;
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      font-weight: 700;
+      color: #999;
+      margin-bottom: 0.5rem;
+    }
+
+    .info-box span {
+      font-weight: 800;
+      color: #111;
+      font-size: 1rem;
+    }
+
+    .stat-value {
+      color: var(--accent-yellow) !important;
+    }
+
+    .map-container {
+      height: 450px;
+      border-radius: 20px;
+      overflow: hidden;
+      border: 4px solid #fff;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+      position: relative;
+    }
+
+    .map-overlay-stats {
+      position: absolute;
+      bottom: 20px;
+      left: 20px;
+      z-index: 1000;
+      background: rgba(0, 0, 0, 0.8);
+      backdrop-filter: blur(10px);
+      padding: 1rem 2rem;
+      border-radius: 50px;
+      display: flex;
+      gap: 2rem;
+      border: 1px solid #444;
+    }
+
+    .overlay-item {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      color: #fff;
+      font-weight: 700;
+      font-size: 0.9rem;
+    }
+
+    .overlay-item i {
+      color: var(--accent-yellow);
+    }
+
+    /* Success/Completion Styling */
+    .completed-banner {
+      background: #fffdf5;
+      border: 2px solid var(--accent-yellow);
+      border-radius: 20px;
+      padding: 3rem;
+      text-align: center;
+    }
+
+    .completed-banner i {
+      font-size: 4rem;
+      color: var(--accent-yellow);
+      margin-bottom: 1.5rem;
+    }
+
+    /* Modal Styling */
+    .modal-content {
+      border-radius: 25px;
+      border: none;
+      overflow: hidden;
+      background: var(--primary-bg);
+      color: var(--text-light);
+    }
+
+    .modal-header {
+      background: var(--accent-yellow);
+      color: #000;
+      border: none;
+      padding: 1.5rem 2rem;
+    }
+
+    .modal-header h5 {
+      font-weight: 800;
+      text-transform: uppercase;
+    }
+
+    .modal-body {
+      padding: 2rem;
+    }
+
+    .feedback-select {
+      background: #1a1a1a;
+      border: 2px solid #333;
+      color: #fff;
+      padding: 1rem;
+      border-radius: 12px;
+      width: 100%;
+      margin-bottom: 1.5rem;
+    }
+
+    .feedback-textarea {
+      background: #1a1a1a;
+      border: 2px solid #333;
+      color: #fff;
+      padding: 1rem;
+      border-radius: 12px;
+      width: 100%;
+    }
+
+    @media (max-width: 991px) {
+      #main-wrapper {
+        margin-left: 0;
+        padding: 1.5rem;
+      }
+    }
+  </style>
 </head>
 
-<body>
-	<%- include('../partials/header') %>
-	<%- include('../partials/alerts') %>
+<body class="dashboard-body">
+  <%- include('../partials/header') %>
+    <%- include('../partials/customerSidebar', { title: 'Live Tracking' }) %>
 
-<style>
-  :root {
-    --primary-color: #5b5fc7;
-    --secondary-color: #3a86ff;
-    --warning-color: #fca311;
-    --success-color: #06d6a0;
-    --card-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-    --card-radius: 12px;
-  }
+      <div id="main-wrapper">
+        <div class="page-header">
+          <h2>Live <span>Tracking</span></h2>
+          <p class="text-muted mb-0">Monitor your active service requests in real-time.</p>
+        </div>
 
-  body {
-    background: linear-gradient(135deg, #f5f7fa 0%, #e8ecf5 100%);
-  }
+        <%- include('../partials/alerts') %>
 
-  header{
-    background-color: #403d3d!important;
-  }
-  
-  header .navbar, .bg-dark, .navbar-dark, .navbar-light {
-    background-color: #403d3d!important;
-    background-image: none !important;
-    box-shadow: none !important;
-  }
-
-  #main-wrapper {
-    animation: fadeInUp 0.6s ease-out;
-  }
-
-  .bg-white.shadow-sm.p-3 {
-    background: white !important;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08) !important;
-    border-radius: var(--card-radius);
-    margin-bottom: 1.5rem;
-    animation: slideDown 0.6s ease-out;
-  }
-
-  @keyframes slideDown {
-    from {
-      opacity: 0;
-      transform: translateY(-20px);
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
-  }
-
-  .bg-white.shadow-sm.p-3 h3 {
-    color: var(--primary-color) !important;
-    font-weight: 700 !important;
-  }
-
-  .card {
-    border: none !important;
-    background: white !important;
-    border-radius: var(--card-radius) !important;
-    box-shadow: var(--card-shadow) !important;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
-    animation: slideUp 0.6s ease-out;
-    margin-bottom: 1.5rem !important;
-  }
-
-  @keyframes slideUp {
-    from {
-      opacity: 0;
-      transform: translateY(30px);
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
-  }
-
-  .card:hover {
-    transform: translateY(-4px) !important;
-    box-shadow: 0 8px 25px rgba(91, 95, 199, 0.15) !important;
-  }
-
-  .card-body {
-    animation: fadeInUp 0.6s ease-out 0.2s both;
-  }
-
-  @keyframes fadeInUp {
-    from {
-      opacity: 0;
-      transform: translateY(20px);
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
-  }
-
-  .card-title {
-    color: var(--primary-color) !important;
-    font-weight: 700 !important;
-    margin-bottom: 1rem !important;
-  }
-
-  .card p {
-    color: #333;
-    margin-bottom: 0.8rem !important;
-  }
-
-  .card p strong {
-    color: #1a1a2e !important;
-    font-weight: 700 !important;
-  }
-
-  .card img {
-    border: 3px solid var(--primary-color) !important;
-    box-shadow: 0 4px 12px rgba(91, 95, 199, 0.25) !important;
-    transition: all 0.3s ease !important;
-  }
-
-  .card img:hover {
-    transform: scale(1.05);
-    box-shadow: 0 6px 18px rgba(91, 95, 199, 0.35) !important;
-  }
-
-  #map {
-    box-shadow: var(--card-shadow) !important;
-    border-radius: 10px;
-    animation: scaleIn 0.6s ease-out 0.3s both;
-  }
-
-  @keyframes scaleIn {
-    from {
-      opacity: 0;
-      transform: scale(0.95);
-    }
-    to {
-      opacity: 1;
-      transform: scale(1);
-    }
-  }
-
-  .alert {
-    border-radius: var(--card-radius) !important;
-    border: none !important;
-    animation: slideUp 0.6s ease-out;
-  }
-
-  .alert-info {
-    background: linear-gradient(135deg, rgba(91, 95, 199, 0.1), rgba(58, 134, 255, 0.1)) !important;
-    color: var(--primary-color) !important;
-    font-weight: 500 !important;
-  }
-
-  .alert-warning {
-    background: linear-gradient(135deg, rgba(252, 163, 17, 0.1), rgba(252, 163, 17, 0.05)) !important;
-    color: #d97706 !important;
-    font-weight: 500 !important;
-    border: 2px solid rgba(252, 163, 17, 0.3) !important;
-  }
-
-  .alert-success {
-    background: linear-gradient(135deg, rgba(6, 214, 160, 0.1), rgba(6, 182, 160, 0.1)) !important;
-    border: 2px solid var(--success-color) !important;
-    color: var(--success-color) !important;
-  }
-
-  .alert-success h5 {
-    font-weight: 700 !important;
-    margin-bottom: 1rem !important;
-    color: var(--success-color) !important;
-  }
-
-  .alert-success p {
-    color: var(--success-color) !important;
-    margin-bottom: 1rem !important;
-  }
-
-  .btn-primary {
-    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color)) !important;
-    border: none !important;
-    border-radius: 8px !important;
-    padding: 0.8rem 1.5rem !important;
-    font-weight: 600 !important;
-    text-transform: uppercase !important;
-    letter-spacing: 0.5px !important;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
-    box-shadow: 0 4px 12px rgba(91, 95, 199, 0.25) !important;
-  }
-
-  .btn-primary:hover {
-    transform: translateY(-2px) !important;
-    box-shadow: 0 6px 20px rgba(91, 95, 199, 0.35) !important;
-    color: white !important;
-  }
-
-  .btn-outline-secondary {
-    border: 2px solid #cbd5e1 !important;
-    color: #333 !important;
-    border-radius: 8px !important;
-    padding: 0.8rem 1.5rem !important;
-    font-weight: 600 !important;
-    text-transform: uppercase !important;
-    letter-spacing: 0.5px !important;
-    transition: all 0.3s ease !important;
-  }
-
-  .btn-outline-secondary:hover {
-    background: var(--primary-color) !important;
-    border-color: var(--primary-color) !important;
-    color: white !important;
-    transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(91, 95, 199, 0.25) !important;
-  }
-
-  .btn-success {
-    background: linear-gradient(135deg, var(--success-color), #05b793) !important;
-    border: none !important;
-    border-radius: 8px !important;
-    padding: 0.8rem 1.5rem !important;
-    font-weight: 600 !important;
-    text-transform: uppercase !important;
-    letter-spacing: 0.5px !important;
-    transition: all 0.3s ease !important;
-    box-shadow: 0 4px 12px rgba(6, 214, 160, 0.25) !important;
-  }
-
-  .btn-success:hover {
-    transform: translateY(-2px) !important;
-    box-shadow: 0 6px 20px rgba(6, 214, 160, 0.35) !important;
-    color: white !important;
-  }
-
-  .modal-content {
-    border: none !important;
-    border-radius: var(--card-radius) !important;
-    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2) !important;
-  }
-
-  .modal-header {
-    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color)) !important;
-    border: none !important;
-    border-radius: var(--card-radius) var(--card-radius) 0 0 !important;
-    color: white !important;
-  }
-
-  .modal-header .btn-close {
-    filter: brightness(0) invert(1) !important;
-  }
-
-  .modal-title {
-    font-weight: 700 !important;
-  }
-
-  .form-label {
-    font-weight: 600 !important;
-    color: #1a1a2e !important;
-    margin-bottom: 0.75rem !important;
-  }
-
-  .form-select, .form-control {
-    border: 2px solid #e2e8f0 !important;
-    border-radius: 8px !important;
-    padding: 0.9rem 1.2rem !important;
-    font-size: 1rem !important;
-    transition: all 0.3s ease !important;
-  }
-
-  .form-select:focus, .form-control:focus {
-    border-color: var(--primary-color) !important;
-    box-shadow: 0 0 0 4px rgba(91, 95, 199, 0.1) !important;
-  }
-
-  .text-orange {
-    color: var(--warning-color) !important;
-    font-weight: 700 !important;
-  }
-
-  .text-success {
-    color: var(--success-color) !important;
-    font-weight: 600 !important;
-  }
-
-  .badge {
-    font-size: 1rem !important;
-    border-radius: 6px !important;
-    padding: 0.5rem 1rem !important;
-  }
-
-  .logo-container img {
-    height: 0.9em;
-    width: auto;
-  }
-</style>
-   
-<main>
-	<%- include('../partials/customerSidebar') %>
-  
-	<div id="main-wrapper" class="container mt-4">
-		<div class="bg-white shadow-sm p-3">
-		<span class="me-3" id="sidebar-toggler-btn"><i class="fas fa-bars"></i></span>
-	  <h3 class="mb-4 d-inline-block">Live Service Tracking</h2>
-	  </div>
-  
-	  <% if (requests.length === 0) { %>
-      <div class="alert alert-info">No service requests yet.</div>
-    <% } else { %>
-      <% requests.forEach((request, index) => { %>
-        <div class="card mb-4 shadow-sm">
-          <div class="card-body">
-            <h5 class="card-title"><%= request.serviceCategory.toUpperCase() %> - Request #<%= index + 1 %></h5>
-            <p><strong>Subservices:</strong> <%= request.subServices.join(', ') %></p>
-            <p><strong>Requested On:</strong> <%= request.createdAt.toLocaleString() %></p>
-  
-            <% if (request.mechanic) { %>
-              <p><strong>Mechanic:</strong> 
-                <img src="<%= request.mechanic.profilePic %>" alt="Mechanic Photo" style="width: 70px; height: 70px; border-radius: 50%; object-fit: cover; margin-right: 8px;">
-                <%= request.mechanic.firstName %> <%= request.mechanic.lastName %> | <%= request.mechanic.phone %>
-              </p>
-              <p><strong>Vehicle Number:</strong> <%= request.mechanic.licensePlate %></p>
-            
-            <% } else if (request.fueldeliveryboy) { %>
-              <p><strong>Fuel Delivery Boy:</strong> 
-                <img src="<%= request.fueldeliveryboy.profilePic %>" alt="Fuel Boy Photo" style="width: 70px; height: 70px; border-radius: 50%; object-fit: cover; margin-right: 8px;">
-                <%= request.fueldeliveryboy.firstName %> <%= request.fueldeliveryboy.lastName %> | <%= request.fueldeliveryboy.phone %>
-              </p>
-              <p><strong>Vehicle Number:</strong> <%= request.fueldeliveryboy.licensePlate %></p>
-            <% } %>
-  
-            <% if (request.status !== 'completed') { %>
-              <p><strong>Status:</strong> <span id="status-<%= index %>">Calculating...</span></p>
-              <p><strong>ETA:</strong> <span id="eta-<%= index %>">Calculating...</span></p>
-              <div id="map-<%= index %>" style="height: 300px; border-radius: 10px;" class="mb-2"></div>
+          <% if (requests.length===0) { %>
+            <div class="empty-state text-center py-5"
+              style="background: rgba(255,255,255,0.02); border-radius: 20px; border: 2px dashed #333;">
+              <i class="fas fa-satellite-dish mb-4" style="font-size: 4rem; color: #444;"></i>
+              <h3 class="text-muted">No Active Requests</h3>
+              <p class="text-muted">You don't have any requests being tracked right now.</p>
+              <a href="/customer/request-service" class="btn-yellow mt-3">Request Assistance</a>
+            </div>
             <% } else { %>
-              <div class="alert alert-success text-center p-4" style="border-radius: 10px;">
-                <h5>Service Completed</h5>
-                
+              <div class="tracking-list">
+                <% requests.forEach((request, index)=> { %>
+                  <div class="tracking-card">
+                    <div class="tracking-header">
+                      <h4>
+                        <%= request.serviceCategory %> Assistance - #<%= (request._id).toString().slice(-6) %>
+                      </h4>
+                      <% if (request.status !=='completed' ) { %>
+                        <div class="live-indicator">
+                          <div class="pulse-dot"></div>
+                          Live Tracking
+                        </div>
+                        <% } %>
+                    </div>
 
-                <% if (!request.isPaid) { %>
-                  <p>Please pay ₹<%= request.baseAmount || 100 %> and provide your feedback.</p>
-                  <a href="/customer/payment/<%= request._id %>" class="btn btn-primary me-2">Pay Now</a>
-                <% } %>
-  
-                <% if (!request.feedback) { %>
-                  <button class="btn btn-outline-secondary" onclick="openFeedbackModal('<%= request._id %>')">Leave Feedback</button>
-                <% } else { %>
-                  <p class="mt-2 text-success">Thank you for your feedback!</p>
-                <% } %>
+                    <div class="tracking-body">
+                      <% if (request.status !=='completed' ) { %>
+                        <!-- Provider Profile -->
+                        <% if (request.mechanic || request.fueldeliveryboy) { %>
+                          <% const provider=request.mechanic || request.fueldeliveryboy; %>
+                            <div class="provider-profile">
+                              <img src="<%= provider.profilePic || '/assets/images/default-avatar.png' %>"
+                                class="provider-avatar" alt="Provider">
+                              <div class="provider-info">
+                                <h5>
+                                  <%= provider.firstName %>
+                                    <%= provider.lastName %>
+                                </h5>
+                                <p><i class="fas fa-phone-alt me-2 text-warning"></i> +91 <%= provider.phone %>
+                                </p>
+                                <p><i class="fas fa-id-card me-2 text-warning"></i> Vehicle: <%= provider.licensePlate
+                                    %>
+                                </p>
+                              </div>
+                            </div>
+                            <% } else { %>
+                              <div class="alert alert-dark p-4 border-0 mb-4"
+                                style="background: #f8f9fa; color: #555; border-radius: 15px;">
+                                <i class="fas fa-spinner fa-spin me-3"></i> <strong>Searching for nearby
+                                  providers...</strong>
+                              </div>
+                              <% } %>
+
+                                <!-- Info Row -->
+                                <div class="info-row-grid">
+                                  <div class="info-box">
+                                    <label>Current Status</label>
+                                    <span id="status-<%= index %>">
+                                      <%= request.status==='accepted' ? 'Provider Assigned' : 'Awaiting Connection' %>
+                                    </span>
+                                  </div>
+                                  <div class="info-box">
+                                    <label>Estimated Arrival</label>
+                                    <span id="eta-<%= index %>" class="stat-value">Calculating...</span>
+                                  </div>
+                                  <div class="info-box">
+                                    <label>Service Price</label>
+                                    <span>₹<%= request.totalAmount || request.baseAmount %></span>
+                                  </div>
+                                </div>
+
+                                <!-- Map Container -->
+                                <div class="map-container">
+                                  <div id="map-<%= index %>" style="height: 100%;"></div>
+                                  <div class="map-overlay-stats">
+                                    <div class="overlay-item">
+                                      <i class="fas fa-map-marked-alt"></i>
+                                      <span id="distance-<%= index %>">0.0 km</span>
+                                    </div>
+                                    <div class="overlay-item">
+                                      <i class="fas fa-tachometer-alt"></i>
+                                      <span>40 km/h (Avg)</span>
+                                    </div>
+                                  </div>
+                                </div>
+
+                                <% } else { %>
+                                  <!-- Completed View -->
+                                  <div class="completed-banner">
+                                    <i class="fas fa-check-circle"></i>
+                                    <h3>Service Successfully Completed</h3>
+                                    <p class="text-muted mb-4">Your <%= request.serviceCategory %> assistance request
+                                        has been fulfilled. We hope you're back on the road safely!</p>
+
+                                    <div class="d-flex justify-content-center gap-3">
+                                      <% if (!request.isPaid) { %>
+                                        <a href="/customer/payment/<%= request._id %>" class="btn-yellow px-5 py-3">Pay
+                                          Bill: ₹<%= request.totalAmount || request.baseAmount %></a>
+                                        <% } %>
+
+                                          <% if (!request.feedback) { %>
+                                            <button class="btn btn-outline-dark rounded-pill px-5"
+                                              onclick="openFeedbackModal('<%= request._id %>')">
+                                              Rate Our Quality
+                                            </button>
+                                            <% } %>
+                                    </div>
+                                  </div>
+                                  <% } %>
+                    </div>
+                  </div>
+                  <% }) %>
               </div>
-            <% } %>
-  
-            <% if (!request.mechanic && !request.fueldeliveryboy) { %>
-              <div class="alert alert-warning">No provider has accepted this request yet.</div>
-            <% } %>
-          </div>
-        </div>
-      <% }) %>
-    <% } %>
-	</div>
-  </main>
-  
-  <div class="modal fade" id="feedbackModal" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-      <form id="feedbackForm" class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title">Leave Feedback</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-        </div>
-        <div class="modal-body">
-          <label class="form-label">Rate the service (1-5):</label>
-          <select class="form-select mb-3" name="rating" required>
-            <option value="" selected disabled>Select rating</option>
-            <option value="1">⭐ 1 - Very Poor</option>
-            <option value="2">⭐⭐ 2 - Poor</option>
-            <option value="3">⭐⭐⭐ 3 - Average</option>
-            <option value="4">⭐⭐⭐⭐ 4 - Good</option>
-            <option value="5">⭐⭐⭐⭐⭐ 5 - Excellent</option>
-          </select>
-  
-          <label class="form-label">Your Feedback (optional):</label>
-          <textarea class="form-control" name="feedback" rows="3" placeholder="Share your thoughts..."></textarea>
-  
-          <input type="hidden" name="requestId" id="requestId">
-        </div>
-        <div class="modal-footer">
-          <button type="submit" class="btn btn-success">Submit</button>
-        </div>
-      </form>
-    </div>
-  </div>
-  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
-  <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
-  <script src="/socket.io/socket.io.js"></script>
+              <% } %>
+      </div>
 
-  <div id="tracking-data" data-requests='<%- JSON.stringify(requests) %>'></div>
-
-  <script>
-
-const socket = io(); // Connect to Socket.io
-
-const requestData = document.getElementById('tracking-data').dataset.requests;
-const requests = JSON.parse(requestData);
-
-const mechanicMarkers = {}; // mechanicId => array of { map, marker, request, requestIndex }
-const fuelMarkers = {}; // fuelId => array of { map, marker, request, requestIndex }
-
-requests.forEach((req, idx) => {
-  if (!req.status || req.status === 'completed') return; // Don't track completed requests
-
-  const map = L.map(`map-${idx}`).setView([req.latitude, req.longitude], 13);
-
-  L.tileLayer('https://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png', {
-    attribution: '&copy; OpenStreetMap contributors'
-  }).addTo(map);
-
-  // Customer marker
-  L.marker([req.latitude, req.longitude], {
-    icon: L.icon({
-      iconUrl: 'https://cdn-icons-png.flaticon.com/512/1946/1946433.png',
-      iconSize: [30, 30],
-    })
-  }).addTo(map).bindPopup("Your Location").openPopup();
-
-  // Mechanic Tracking (only if mechanic exists)
-  if (req.mechanic) {
-    const mechanicLatLng = [req.mechanic.latitude, req.mechanic.longitude];
-    const mechanicMarker = L.marker(mechanicLatLng, {
-      icon: L.icon({
-        iconUrl: 'https://cdn-icons-png.flaticon.com/512/854/854878.png',
-        iconSize: [30, 30],
-      })
-    }).addTo(map);
-    mechanicMarker.bindPopup("Mechanic's Location").openPopup();
-
-    // Store mechanic marker data
-    if (!mechanicMarkers[req.mechanic._id]) {
-      mechanicMarkers[req.mechanic._id] = [];
-    }
-
-    mechanicMarkers[req.mechanic._id].push({
-      map,
-      marker: mechanicMarker,
-      request: req,
-      requestIndex: idx
-    });
-  }
-
-  // Fuel Delivery Boy Tracking (only if fuel delivery boy exists)
-  if (req.fueldeliveryboy) {
-    const fuelLatLng = [req.fueldeliveryboy.latitude, req.fueldeliveryboy.longitude];
-    const fuelMarker = L.marker(fuelLatLng, {
-      icon: L.icon({
-        iconUrl: 'https://cdn-icons-png.flaticon.com/512/854/854878.png',
-        iconSize: [30, 30],
-      })
-    }).addTo(map);
-    fuelMarker.bindPopup("Fuel Delivery Boy's Location").openPopup();
-
-    // Store fuel marker data
-    if (!fuelMarkers[req.fueldeliveryboy._id]) {
-      fuelMarkers[req.fueldeliveryboy._id] = [];
-    }
-
-    fuelMarkers[req.fueldeliveryboy._id].push({
-      map,
-      marker: fuelMarker,
-      request: req,
-      requestIndex: idx
-    });
-  }
-});
-
-// Function to estimate haversine distance
-function haversineDistance(lat1, lon1, lat2, lon2) {
-  const R = 6371; // Radius of the Earth in km
-  const toRad = angle => angle * (Math.PI / 180);
-
-  const dLat = toRad(lat2 - lat1);
-  const dLon = toRad(lon2 - lon1);
-  const a = Math.sin(dLat / 2) ** 2 +
-            Math.cos(toRad(lat1)) * Math.cos(toRad(lat2)) *
-            Math.sin(dLon / 2) ** 2;
-
-  const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-  return R * c; // in km
-}
-
-// Function to estimate ETA in minutes
-function estimateArrivalTime(distanceInKm) {
-  const avgSpeed = 40; // km/h
-  const timeInHours = distanceInKm / avgSpeed;
-  const totalMinutes = Math.round(timeInHours * 60);
-
-  const hours = Math.floor(totalMinutes / 60);
-  const minutes = totalMinutes % 60;
-
-  if (hours > 0) {
-    return `${hours} hr${hours > 1 ? 's' : ''} ${minutes} min${minutes !== 1 ? 's' : ''}`;
-  } else {
-    return `${minutes} min${minutes !== 1 ? 's' : ''}`;
-  }
-}
-
-// Socket listener to update mechanic location
-socket.on('updateMechanicLocation', ({ mechanicId, lat, lng, status, fee }) => {
-  const mechanicInstances = mechanicMarkers[mechanicId];
-  if (mechanicInstances) {
-    mechanicInstances.forEach(({ map, marker, request, requestIndex }) => {
-      const customerLatLng = [request.latitude, request.longitude];
-      const distance = haversineDistance(lat, lng, customerLatLng[0], customerLatLng[1]);
-
-      let statusText = "";
-      if (status === "completed") {
-        statusText = "Completed";
-
-        // Replace map with payment/feedback message
-        const mapContainer = document.getElementById(`map-${requestIndex}`);
-        if (mapContainer) {
-          mapContainer.outerHTML = `
-            <div class="alert alert-success text-center p-4" style="border-radius: 10px;">
-              <h5>Service Completed</h5>
-              <p>Please pay ₹${fee || request.baseAmount} and provide your feedback.</p>
-              <a href="/payment/${request._id}" class="btn btn-primary me-2">Pay Now</a>
-              <a href="/feedback/${request._id}" class="btn btn-outline-secondary">Leave Feedback</a>
+      <!-- Feedback Modal -->
+      <div class="modal fade" id="feedbackModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+          <form id="feedbackForm" class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title"><i class="fas fa-star me-2"></i>Rate Service</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
             </div>
-          `;
+            <div class="modal-body">
+              <label class="form-label text-light">How was your experience?</label>
+              <select class="feedback-select" name="rating" required>
+                <option value="" selected disabled>Select Rating</option>
+                <option value="5">⭐⭐⭐⭐⭐ 5 - Excellent</option>
+                <option value="4">⭐⭐⭐⭐ 4 - Very Good</option>
+                <option value="3">⭐⭐⭐ 3 - Average</option>
+                <option value="2">⭐⭐ 2 - Poor</option>
+                <option value="1">⭐ 1 - Terrible</option>
+              </select>
+
+              <label class="form-label text-light">Any specific comments?</label>
+              <textarea class="feedback-textarea" name="feedback" rows="4"
+                placeholder="What did we do well? What could we improve?"></textarea>
+
+              <input type="hidden" name="requestId" id="requestId">
+
+              <button type="submit" class="btn-yellow w-100 mt-4 py-3">Submit Review</button>
+            </div>
+          </form>
+        </div>
+      </div>
+
+      <!-- Tracking Assets -->
+      <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+      <script src="/socket.io/socket.io.js"></script>
+      <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+
+      <div id="tracking-data" data-requests='<%- JSON.stringify(requests) %>'></div>
+
+      <script>
+        const socket = io();
+        const requestData = document.getElementById('tracking-data').dataset.requests;
+        const requests = JSON.parse(requestData);
+
+        const markers = {
+          mechanic: {},
+          fuel: {}
+        };
+
+        requests.forEach((req, idx) => {
+          if (!req.status || req.status === 'completed') return;
+
+          const map = L.map(`map-${idx}`, { zoomControl: false }).setView([req.latitude, req.longitude], 15);
+
+          // Premium Dark Map Style (OpenStreetMap Alt)
+          L.tileLayer('https://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png', {
+            attribution: '&copy; RoadAid Tracking'
+          }).addTo(map);
+
+          // Customer Marker
+          L.marker([req.latitude, req.longitude], {
+            icon: L.icon({
+              iconUrl: 'https://cdn-icons-png.flaticon.com/512/1946/1946433.png',
+              iconSize: [35, 35],
+            })
+          }).addTo(map).bindPopup("<b>You are here</b>").openPopup();
+
+          // Provider Tracking Logic
+          const provider = req.mechanic || req.fueldeliveryboy;
+          const type = req.mechanic ? 'mechanic' : 'fuel';
+
+          if (provider) {
+            const providerMarker = L.marker([provider.latitude, provider.longitude], {
+              icon: L.icon({
+                iconUrl: 'https://cdn-icons-png.flaticon.com/512/854/854878.png',
+                iconSize: [35, 35],
+              })
+            }).addTo(map);
+
+            providerMarker.bindPopup(`<b>${provider.firstName} (On the way)</b>`);
+
+            if (!markers[type][provider._id]) markers[type][provider._id] = [];
+            markers[type][provider._id].push({ map, marker: providerMarker, request: req, requestIndex: idx });
+          }
+        });
+
+        // Shared Logic for Location Updates
+        function handleLocationUpdate(data, type) {
+          const list = markers[type][data.mechanicId || data.fuelId];
+          if (!list) return;
+
+          list.forEach(({ map, marker, request, requestIndex }) => {
+            const { lat, lng, status } = data;
+
+            if (status === 'completed') {
+              location.reload();
+              return;
+            }
+
+            marker.setLatLng([lat, lng]);
+            map.panTo([lat, lng]);
+
+            // Calculate Distance & ETA
+            const dist = haversineDistance(lat, lng, request.latitude, request.longitude);
+            document.getElementById(`distance-${requestIndex}`).textContent = `${dist.toFixed(1)} km`;
+
+            const etaMin = Math.round((dist / 40) * 60);
+            document.getElementById(`eta-${requestIndex}`).textContent = etaMin < 2 ? 'Arriving Now' : `${etaMin} mins`;
+
+            const statusEl = document.getElementById(`status-${requestIndex}`);
+            if (dist < 0.2) statusEl.textContent = 'At Your Location';
+            else statusEl.textContent = 'On the Way';
+          });
         }
 
-        document.getElementById(`status-${requestIndex}`).textContent = statusText;
-        document.getElementById(`eta-${requestIndex}`).textContent = "—";
-        return; // Exit early since no map updates are needed
-      }
+        socket.on('updateMechanicLocation', data => handleLocationUpdate(data, 'mechanic'));
+        socket.on('updateFuelLocation', data => handleLocationUpdate(data, 'fuel'));
 
-      const eta = estimateArrivalTime(distance);
-      document.getElementById(`eta-${requestIndex}`).textContent = eta;
-
-      if (distance < 0.1) {
-        statusText = "Mechanic at your location.";
-      } else if (distance < 1) {
-        statusText = "Mechanic is almost there.";
-      } else {
-        statusText = "Mechanic is on the way.";
-      }
-
-      document.getElementById(`status-${requestIndex}`).textContent = statusText;
-
-      marker.setLatLng([lat, lng]).bindPopup("Mechanic (Live)").openPopup();
-      map.panTo([lat, lng]);
-
-      // Update or create line
-      if (marker._line) {
-        marker._line.setLatLngs([customerLatLng, [lat, lng]]);
-      } else {
-        marker._line = L.polyline([customerLatLng, [lat, lng]], {
-          color: 'blue',
-          dashArray: '10,10',
-        }).addTo(map);
-      }
-    });
-  }
-});
-
-// Socket listener to update fuel delivery boy location
-socket.on('updateFuelLocation', ({ fuelId, lat, lng, status, fee }) => {
-  const fuelInstances = fuelMarkers[fuelId];
-  if (fuelInstances) {
-    fuelInstances.forEach(({ map, marker, request, requestIndex }) => {
-      const customerLatLng = [request.latitude, request.longitude];
-      const distance = haversineDistance(lat, lng, customerLatLng[0], customerLatLng[1]);
-
-      let statusText = "";
-      if (status === "completed") {
-        statusText = "Completed";
-
-        // Replace map with payment/feedback message
-        const mapContainer = document.getElementById(`map-${requestIndex}`);
-        if (mapContainer) {
-          mapContainer.outerHTML = `
-            <div class="alert alert-success text-center p-4" style="border-radius: 10px;">
-              <h5>Service Completed</h5>
-              <p>Please pay ₹${fee || request.baseAmount} and provide your feedback.</p>
-              <a href="/payment/${request._id}" class="btn btn-primary me-2">Pay Now</a>
-              <a href="/feedback/${request._id}" class="btn btn-outline-secondary">Leave Feedback</a>
-            </div>
-          `;
+        function haversineDistance(lat1, lon1, lat2, lon2) {
+          const R = 6371;
+          const dLat = (lat2 - lat1) * Math.PI / 180;
+          const dLon = (lon2 - lon1) * Math.PI / 180;
+          const a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+            Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) *
+            Math.sin(dLon / 2) * Math.sin(dLon / 2);
+          return R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
         }
 
-        document.getElementById(`status-${requestIndex}`).textContent = statusText;
-        document.getElementById(`eta-${requestIndex}`).textContent = "—";
-        return; // Exit early since no map updates are needed
-      }
+        function openFeedbackModal(requestId) {
+          document.getElementById('requestId').value = requestId;
+          new bootstrap.Modal(document.getElementById('feedbackModal')).show();
+        }
 
-      const eta = estimateArrivalTime(distance);
-      document.getElementById(`eta-${requestIndex}`).textContent = eta;
-
-      if (distance < 0.1) {
-        statusText = "Fuel Delivery Boy at your location.";
-      } else if (distance < 1) {
-        statusText = "Fuel Delivery Boy is almost there.";
-      } else {
-        statusText = "Fuel Delivery Boy is on the way.";
-      }
-
-      document.getElementById(`status-${requestIndex}`).textContent = statusText;
-
-      marker.setLatLng([lat, lng]).bindPopup("Fuel Delivery Boy (Live)").openPopup();
-      map.panTo([lat, lng]);
-
-      // Update or create line
-      if (marker._line) {
-        marker._line.setLatLngs([customerLatLng, [lat, lng]]);
-      } else {
-        marker._line = L.polyline([customerLatLng, [lat, lng]], {
-          color: 'blue',
-          dashArray: '10,10',
-        }).addTo(map);
-      }
-    });
-  }
-});
-
-  </script>
-  
-  
-  <script>
-    function openFeedbackModal(requestId) {
-      document.getElementById('requestId').value = requestId;
-      const feedbackModal = new bootstrap.Modal(document.getElementById('feedbackModal'));
-      feedbackModal.show();
-    }
-  
-    document.getElementById('feedbackForm').addEventListener('submit', async function (e) {
-      e.preventDefault();
-      const formData = new FormData(this);
-      const requestId = formData.get('requestId');
-      const feedback = formData.get('feedback');
-      const rating = formData.get('rating');
-  
-      if (!rating) {
-        alert('Please provide a rating.');
-        return;
-      }
-  
-      const res = await fetch(`/feedback/${requestId}`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ feedback, rating })
-      });
-  
-      if (res.ok) {
-        alert('Thanks for your feedback!');
-        location.reload();
-      } else {
-        alert('Something went wrong!');
-      }
-    });
-  </script>
-  
-  
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
-	<script src="/assets/js/script.js"></script>
-	<!-- <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script> -->
+        document.getElementById('feedbackForm').addEventListener('submit', async (e) => {
+          e.preventDefault();
+          const formData = new FormData(e.target);
+          const res = await fetch(`/feedback/${formData.get('requestId')}`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              rating: formData.get('rating'),
+              feedback: formData.get('feedback')
+            })
+          });
+          if (res.ok) location.reload();
+        });
+      </script>
 </body>
+
 </html>

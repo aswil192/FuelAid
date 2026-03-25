@@ -2,471 +2,179 @@
 <html lang="en">
 <head>
 	<meta charset="UTF-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<meta name="theme-color" content="#3f51b5">
-	<link href="https://fonts.googleapis.com/css?family=Dosis:200,300,400,500,700" rel="stylesheet">
-	<link href="https://fonts.googleapis.com/css?family=Overpass:300,400,400i,600,700" rel="stylesheet">
+	<title>Field History Log | RoadAid</title>
 
-	<link rel="stylesheet" href="/assets/css/open-iconic-bootstrap.min.css">
-	<link rel="stylesheet" href="/assets/css/animate.css">
-	<link rel="stylesheet" href="/assets/css/owl.carousel.min.css">
-	<link rel="stylesheet" href="/assets/css/owl.theme.default.min.css">
-	<link rel="stylesheet" href="/assets/css/magnific-popup.css">
-	<link rel="stylesheet" href="/assets/css/aos.css">
-	<link rel="stylesheet" href="/assets/css/ionicons.min.css">
-	<link rel="stylesheet" href="/assets/css/bootstrap-datepicker.css">
-	<link rel="stylesheet" href="/assets/css/jquery.timepicker.css">
-	<link rel="stylesheet" href="/assets/css/font-awesome.min.css">
-	<link rel="stylesheet" href="/assets/css/flaticon.css">
-	<link rel="stylesheet" href="/assets/css/icomoon.css">
-	<link rel="stylesheet" href="/assets/css/style.css">
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
+	<!-- Fonts -->
+	<link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800&display=swap" rel="stylesheet">
+
+	<!-- CSS -->
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css">
-	<link rel="stylesheet" href="/assets/css/sidebar.css">
-
-  <link rel="icon" type="image/png" href="/assets/images/FUEL AID_logo.png">
-	<title><%= typeof title != 'undefined' ? title : "FuelAid - Completed Requests" %></title>
-</head>
-
-<body>
-	<%- include('../partials/header') %>
-	<%- include('../partials/alerts') %>
+	<link rel="stylesheet" href="/assets/css/dashboard-redesign.css">
+	<link rel="icon" type="image/png" href="/assets/images/FUEL AID_logo.png">
 
 	<style>
-		/* Header Styling */
-		header {
-			background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%)!important;
-			box-shadow: 0 4px 15px rgba(0,0,0,0.2)!important;
-		}
-		header .navbar, .bg-dark, .navbar-dark, .navbar-light {
-			background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%)!important;
-			background-image: none !important;
-			box-shadow: none !important;
-		}
-		.logo-container img {
-			height: 0.9em;
-			width: auto;
+		body {
+			background-color: var(--primary-bg);
+			color: var(--text-light);
+			font-family: var(--font-main);
 		}
 
 		#main-wrapper {
-			overflow-y: scroll;
-			background: linear-gradient(135deg, #f5f7fa 0%, #e4e8ec 100%);
+			margin-left: 280px;
+			padding: 2.5rem;
 			min-height: 100vh;
 		}
 
-		#main-wrapper::-webkit-scrollbar {
-			display: none;
+		.history-card {
+			background: var(--card-bg);
+			border-radius: 25px;
+			padding: 2.5rem;
+			margin-bottom: 2rem;
+			border: 1px solid #eee;
+			color: var(--text-dark);
+			transition: var(--transition);
+			position: relative;
+			overflow: hidden;
 		}
 
-		/* Animations */
-		@keyframes slideInDown {
-			from {
-				opacity: 0;
-				transform: translateY(-30px);
-			}
-			to {
-				opacity: 1;
-				transform: translateY(0);
-			}
-		}
-
-		@keyframes slideInUp {
-			from {
-				opacity: 0;
-				transform: translateY(30px);
-			}
-			to {
-				opacity: 1;
-				transform: translateY(0);
-			}
-		}
-
-		@keyframes fadeInScale {
-			from {
-				opacity: 0;
-				transform: scale(0.95);
-			}
-			to {
-				opacity: 1;
-				transform: scale(1);
-			}
-		}
-
-		/* Page Header */
-		.page-header {
-			background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
-			padding: 25px 30px;
-			border-radius: 15px;
-			margin: 20px;
-			box-shadow: 0 8px 25px rgba(30, 60, 114, 0.3);
+		.completion-stamp {
+			position: absolute;
+			top: 2rem;
+			right: 2.5rem;
 			display: flex;
 			align-items: center;
-			gap: 15px;
-			animation: slideInDown 0.6s ease-out;
-		}
-
-		.page-header h5 {
-			color: white;
-			margin: 0;
-			font-size: 26px;
-			font-weight: 700;
-		}
-
-		.page-header i {
-			font-size: 24px;
-			color: white;
-		}
-
-		/* Content Container */
-		.content-container {
-			padding: 0 20px 30px;
-			animation: slideInUp 0.6s ease-out;
-		}
-
-		/* Empty State */
-		.empty-state {
-			text-align: center;
-			padding: 60px 40px;
-			color: #7f8c8d;
-			font-size: 18px;
-		}
-
-		.empty-state i {
-			font-size: 48px;
-			color: #bdc3c7;
-			margin-bottom: 20px;
-			display: block;
-		}
-
-		/* Request Card */
-		.request-card {
-			background: white;
-			border-radius: 15px;
-			padding: 25px;
-			margin-bottom: 20px;
-			box-shadow: 0 8px 25px rgba(0,0,0,0.08);
-			border-left: 5px solid #27ae60;
-			transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-			animation: fadeInScale 0.6s ease-out;
-		}
-
-		.request-card:nth-child(1) { animation-delay: 0.1s; }
-		.request-card:nth-child(2) { animation-delay: 0.2s; }
-		.request-card:nth-child(3) { animation-delay: 0.3s; }
-		.request-card:nth-child(n+4) { animation-delay: 0.4s; }
-
-		.request-card:hover {
-			transform: translateY(-8px);
-			box-shadow: 0 15px 40px rgba(0,0,0,0.15);
-			border-left-color: #2ecc71;
-		}
-
-		.request-header {
-			display: flex;
-			align-items: center;
-			justify-content: space-between;
-			margin-bottom: 20px;
-			padding-bottom: 15px;
-			border-bottom: 2px solid #e9ecef;
-		}
-
-		.request-title {
-			font-size: 18px;
-			font-weight: 700;
-			color: #2c3e50;
-			display: flex;
-			align-items: center;
-			gap: 10px;
-		}
-
-		.request-title i {
+			gap: 0.5rem;
 			color: #27ae60;
-		}
-
-		.request-badge {
-			display: inline-block;
-			padding: 5px 12px;
-			background: linear-gradient(135deg, #27ae60 0%, #2ecc71 100%);
-			color: white;
-			border-radius: 20px;
-			font-size: 12px;
-			font-weight: 600;
-		}
-
-		.request-info {
-			display: grid;
-			grid-template-columns: 1fr 1fr;
-			gap: 15px;
-			margin-bottom: 20px;
-		}
-
-		.info-item {
-			display: flex;
-			align-items: flex-start;
-			gap: 10px;
-		}
-
-		.info-icon {
-			width: 40px;
-			height: 40px;
-			border-radius: 10px;
-			display: flex;
-			align-items: center;
-			justify-content: center;
-			font-size: 16px;
-			color: white;
-			flex-shrink: 0;
-		}
-
-		.info-content {
-			flex: 1;
-		}
-
-		.info-label {
-			font-size: 12px;
-			color: #7f8c8d;
+			font-weight: 800;
+			font-size: 0.8rem;
 			text-transform: uppercase;
-			letter-spacing: 0.5px;
-			font-weight: 600;
-			margin-bottom: 4px;
+			letter-spacing: 1.5px;
 		}
 
-		.info-value {
-			font-size: 15px;
-			color: #2c3e50;
-			font-weight: 600;
-		}
-
-		/* Note Section */
-		.note-section {
-			background: #f8f9ff;
-			border-radius: 12px;
-			padding: 20px;
-			margin-top: 20px;
-			border: 2px dashed #e9ecef;
-			transition: all 0.3s ease;
-		}
-
-		.note-section:focus-within {
-			border-color: #3498db;
-			background: #f0f5ff;
-		}
-
-		.note-form {
-			width: 100%;
-		}
-
-		.note-label {
+		.history-label {
+			font-size: 0.7rem;
 			font-weight: 700;
-			color: #2c3e50;
-			margin-bottom: 10px;
-			display: flex;
-			align-items: center;
-			gap: 8px;
+			color: #888;
+			text-transform: uppercase;
+			letter-spacing: 1px;
+			margin-bottom: 0.2rem;
 		}
 
-		.note-label i {
-			color: #3498db;
+		.history-value {
+			font-weight: 700;
+			font-size: 0.9rem;
 		}
 
-		.form-control {
-			border: 2px solid #e9ecef;
-			border-radius: 10px;
-			padding: 12px 15px;
-			font-size: 14px;
-			transition: all 0.3s ease;
+		.note-vault {
+			background: #f8f9fa;
+			border-radius: 20px;
+			padding: 2rem;
+			margin-top: 2rem;
+			border: 2px dashed #eee;
 		}
 
-		.form-control:focus {
-			border-color: #3498db;
-			box-shadow: 0 0 0 4px rgba(52, 152, 219, 0.1);
+		.note-vault textarea {
+			background: transparent;
+			border: 1px solid #ddd;
+			border-radius: 12px;
+			padding: 1rem;
+			width: 100%;
+			font-size: 0.9rem;
+			margin-bottom: 1rem;
 		}
 
-		.btn-save-note {
-			background: linear-gradient(135deg, #3498db 0%, #2980b9 100%);
-			color: white;
-			border: none;
-			padding: 10px 25px;
-			border-radius: 8px;
-			font-weight: 600;
-			margin-top: 10px;
-			transition: all 0.3s ease;
-			cursor: pointer;
-		}
-
-		.btn-save-note:hover {
-			transform: translateY(-2px);
-			box-shadow: 0 8px 20px rgba(52, 152, 219, 0.3);
-		}
-
-		/* Responsive */
-		@media (max-width: 768px) {
-			.page-header {
-				margin: 15px 10px;
-				padding: 20px;
-			}
-
-			.content-container {
-				padding: 0 10px 20px;
-			}
-
-			.request-card {
-				padding: 20px;
-			}
-
-			.request-info {
-				grid-template-columns: 1fr;
-			}
+		@media (max-width: 991px) {
+			#main-wrapper { margin-left: 0; padding: 1.5rem; }
 		}
 	</style>
+</head>
 
-<main>
+<body class="dashboard-body">
+	<%- include('../partials/header') %>
 	<%- include('../partials/mechanicSidebar') %>
 
 	<div id="main-wrapper">
-		<!-- Page Header -->
-		<div class="page-header">
-			<i class="fas fa-check-double"></i>
-			<h5>Completed Services</h5>
+		<%- include('../partials/alerts') %>
+
+		<div class="mb-5">
+			<h1 class="hero-title mb-0">Field <span>Log</span></h1>
+			<p class="text-muted">Archive of successfully executed roadside extractions and repairs.</p>
 		</div>
 
-		<!-- Content Container -->
-		<div class="content-container">
-			<% if (completedServices.length === 0) { %>
-				<div class="empty-state">
-					<i class="fas fa-inbox"></i>
-					<p>No completed service requests yet.</p>
-					<small>Your completed jobs will appear here.</small>
-				</div>
-			<% } else { %>
-				<% completedServices.forEach((service, index) => { %>
-					<div class="request-card">
-						<!-- Card Header -->
-						<div class="request-header">
-							<h6 class="request-title">
-								<i class="fas fa-star"></i>
-								Completed Request <%= index + 1 %>
-							</h6>
-							<span class="request-badge">
-								<i class="fas fa-check me-1"></i>Completed
-							</span>
+		<% if (completedServices.length === 0) { %>
+			<div class="empty-quest-state">
+				<i class="fas fa-archive mb-4" style="font-size: 4rem; color: #333;"></i>
+				<h4>Field logs are currently empty.</h4>
+				<p>History will populate once service missions are marked as concluded.</p>
+			</div>
+		<% } else { %>
+			<% completedServices.forEach((service, index) => { %>
+				<div class="history-card">
+					<div class="completion-stamp">
+						<i class="fas fa-check-double"></i> Operation Concluded
+					</div>
+
+					<h4 class="fw-800 mb-1"><%= service.serviceCategory || 'Rapid Response' %></h4>
+					<p class="small text-muted mb-4">Conclusion Hash: #<%= service._id.toString().substring(18).toUpperCase() %></p>
+
+					<div class="row g-4">
+						<div class="col-md-3">
+							<div class="history-label">Target Specialist</div>
+							<div class="history-value"><%= service.customer.firstName %> <%= service.customer.lastName %></div>
 						</div>
-
-						<!-- Request Info Grid -->
-						<div class="request-info">
-							<!-- Service Category -->
-							<div class="info-item">
-								<div class="info-icon" style="background: linear-gradient(135deg, #3498db 0%, #2980b9 100%);">
-									<i class="fas fa-cog"></i>
-								</div>
-								<div class="info-content">
-									<div class="info-label">Service Type</div>
-									<div class="info-value"><%= service.serviceCategory || 'N/A' %></div>
-								</div>
-							</div>
-
-							<!-- Sub-services -->
-							<div class="info-item">
-								<div class="info-icon" style="background: linear-gradient(135deg, #9b59b6 0%, #8e44ad 100%);">
-									<i class="fas fa-list"></i>
-								</div>
-								<div class="info-content">
-									<div class="info-label">Sub-services</div>
-									<div class="info-value">
-										<% if (service.subServices && service.subServices.length > 0) { %>
-											<%= service.subServices.slice(0, 2).join(", ") %>
-										<% } else { %>
-											None
-										<% } %>
-									</div>
-								</div>
-							</div>
-
-							<!-- Customer Name -->
-							<div class="info-item">
-								<div class="info-icon" style="background: linear-gradient(135deg, #27ae60 0%, #2ecc71 100%);">
-									<i class="fas fa-user"></i>
-								</div>
-								<div class="info-content">
-									<div class="info-label">Customer</div>
-									<div class="info-value"><%= service.customer.firstName %> <%= service.customer.lastName %></div>
-								</div>
-							</div>
-
-							<!-- Phone -->
-							<div class="info-item">
-								<div class="info-icon" style="background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);">
-									<i class="fas fa-phone"></i>
-								</div>
-								<div class="info-content">
-									<div class="info-label">Contact</div>
-									<div class="info-value"><%= service.customer.phone %></div>
-								</div>
-							</div>
-
-							<!-- Location -->
-							<div class="info-item">
-								<div class="info-icon" style="background: linear-gradient(135deg, #f39c12 0%, #e67e22 100%);">
-									<i class="fas fa-map-marker-alt"></i>
-								</div>
-								<div class="info-content">
-									<div class="info-label">Location</div>
-									<div class="info-value"><%= service.address %></div>
-								</div>
+						<div class="col-md-3">
+							<div class="history-label">Extraction Point</div>
+							<div class="history-value"><%= service.address.substring(0, 30) %>...</div>
+						</div>
+						<div class="col-md-3">
+							<div class="history-label">Operation Specs</div>
+							<div class="history-value">
+								<% if (service.subServices && service.subServices.length > 0) { %>
+									<%= service.subServices.join(", ") %>
+								<% } else { %>Direct Intervention<% } %>
 							</div>
 						</div>
-
-						<!-- Service Note Section -->
-						<div class="note-section">
-							<label class="note-label">
-								<i class="fas fa-clipboard"></i>
-								Service Notes
-							</label>
-							<form class="note-form" data-id="<%= service._id %>">
-								<textarea name="mechanicNote" class="form-control" rows="4" placeholder="Add your service notes here (e.g., repairs completed, parts replaced, customer feedback)..."><%= service.mechanicNote || '' %></textarea>
-								<button type="submit" class="btn-save-note">
-									<i class="fas fa-save me-2"></i>Save Note
-								</button>
-							</form>
+						<div class="col-md-3 text-end">
+							<div class="history-label">Logged Date</div>
+							<div class="history-value text-muted small"><%= new Date(service.createdAt).toLocaleDateString() %></div>
 						</div>
 					</div>
-				<% }); %>
-			<% } %>
-		</div>
+
+					<div class="note-vault">
+						<h6 class="fw-800 mb-3"><i class="fas fa-file-signature me-2 text-warning"></i>Field Observations</h6>
+						<form class="note-form" data-id="<%= service._id %>">
+							<textarea name="mechanicNote" rows="3" placeholder="Log technical details, parts used, or client feedback..."><%= service.mechanicNote || '' %></textarea>
+							<button type="submit" class="btn-yellow px-4">Update Log Entries</button>
+						</form>
+					</div>
+				</div>
+			<% }); %>
+		<% } %>
 	</div>
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
-<script src="/assets/js/script.js"></script>
-<script>
-	document.querySelectorAll('.note-form').forEach(form => {
-		form.addEventListener('submit', async function (e) {
-			e.preventDefault();
-	
-			const serviceId = form.dataset.id;
-			const note = form.querySelector('textarea').value;
-	
-			try {
-				const res = await fetch(`/mechanic/note/${serviceId}`, {
-					method: 'POST',
-					headers: {
-						'Content-Type': 'application/json'
-					},
-					body: JSON.stringify({ mechanicNote: note })
-				});
-	
-				if (res.ok) {
-					alert('Note saved successfully!');
-				} else {
-					alert('Failed to save note');
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+	<script>
+		document.querySelectorAll('.note-form').forEach(form => {
+			form.addEventListener('submit', async function (e) {
+				e.preventDefault();
+				const serviceId = form.dataset.id;
+				const note = form.querySelector('textarea').value;
+				try {
+					const res = await fetch(`/mechanic/note/${serviceId}`, {
+						method: 'POST',
+						headers: { 'Content-Type': 'application/json' },
+						body: JSON.stringify({ mechanicNote: note })
+					});
+					if (res.ok) alert('Mission log updated.');
+					else alert('Failed to sync log.');
+				} catch (err) {
+					console.error(err);
+					alert('Connection error during sync.');
 				}
-			} catch (err) {
-				console.error(err);
-				alert('Error occurred while saving note');
-			}
+			});
 		});
-	});
-</script>
-  
+	</script>
 </body>
 </html>
