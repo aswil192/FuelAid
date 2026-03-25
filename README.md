@@ -8,13 +8,6 @@
 
 FuelAid is a **real-time full-stack web application** built using **Node.js, Express, MongoDB, and Socket.io**, designed to assist users with **emergency roadside services and fuel delivery**. The platform supports **live geolocation tracking**, **role-based dashboards**, and **automated receipt generation** — ensuring seamless coordination between **customers**, **mechanics**, **fuel delivery agents**, and **admins**.
 
-## 🎥 Preview
-
-👉 [Watch Demo on Loom](https://www.loom.com/share/104109e602514fa785520f15b7c29287?sid=8d869f48-6d03-479f-952e-88847bd3a90c)
-
-
-<a target="blank"><img align="center" src="https://github.com/Nikki-ta/fuel_aid/blob/main/img1.png" width="70%"></a>
-
 ## 🚀 Novelty
 
 FuelAid stands out from traditional service platforms due to its real-time geolocation, live tracking, and tailored role-based workflows. Key innovations include:
