@@ -12,7 +12,7 @@
 
 6. **Dribbble.com** - Used as a design reference for modern user interface layouts, bento-grid dashboard styles, and map-centric component styling ideas.
 
-7. **OpenAI.com (ChatGPT models)** - Researched for understanding conversational interaction patterns, natural language location queries, and designing the FuelAid Assistant interface.
+7. **deepseek.com (Deepseek models)** - Researched for understanding conversational interaction patterns, natural language location queries, and designing the FuelAid Assistant interface.
 
 8. **Antigravity AI** - Referred for studying advanced agentic AI capabilities, context-aware coding assistants, and modern AI-driven software development practices.
 
